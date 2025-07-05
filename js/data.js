@@ -36,18 +36,6 @@ const products = [
     features: ["Strong magnets", "Adjustable width", "Easy to clean"]
   }
   {
-    id: "magnetic-fridge-shelf",
-    name: "Magnetic Fridge Shelf Rack",
-    description: "Extra storage space that attaches magnetically to your fridge",
-    priceINR: 1199,
-    priceUSD: 14.00,
-    category: "Storage",
-    link: "https://amzn.to/44rEZEO",
-    image: "https://m.media-amazon.com/images/I/81gCEjDOpSL._SL1500_.jpg",
-    rating: 4.3,
-    features: ["Strong magnets", "Adjustable width", "Easy to clean"]
-  },
-  {
     id: "fridge-organizer-bins",
     name: "Fridge Organizer Bins (Clear, Stackable)",
     description: "Set of clear plastic bins for better fridge organization",
