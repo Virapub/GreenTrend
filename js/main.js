@@ -7,15 +7,10 @@ window.addEventListener("DOMContentLoaded", () => {
   noResultsMessage.style.display = 'none';
   productList.parentNode.insertBefore(noResultsMessage, productList.nextSibling);
 
-  // Enhanced product display function
   function displayProducts(productsToShow) {
-    if (!productList) {
-      console.error("Product list container not found!");
-      return;
-    }
-
+    if (!productList) return;
     productList.innerHTML = "";
-    
+
     if (productsToShow.length === 0) {
       noResultsMessage.style.display = 'block';
       productList.style.display = 'none';
@@ -52,7 +47,6 @@ window.addEventListener("DOMContentLoaded", () => {
       productList.appendChild(card);
     });
 
-    // Add event listeners to wishlist buttons
     document.querySelectorAll('.wishlist-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -64,10 +58,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Search functionality with debounce
   function handleSearch() {
     if (!searchBox) return;
-    
     const query = searchBox.value.trim().toLowerCase();
     const filtered = products.filter(p =>
       p.name.toLowerCase().includes(query) ||
@@ -78,7 +70,6 @@ window.addEventListener("DOMContentLoaded", () => {
     displayProducts(filtered);
   }
 
-  // Debounce function to limit search frequency
   function debounce(func, delay) {
     let timeoutId;
     return function() {
@@ -87,26 +78,19 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  // Wishlist functionality
   function toggleWishlist(productId) {
-    // Implement your wishlist logic here
-    console.log(`Toggled wishlist for product ${productId}`);
-    // Example: Add/remove from localStorage
     const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     const index = wishlist.indexOf(productId);
-    
     if (index === -1) {
       wishlist.push(productId);
     } else {
       wishlist.splice(index, 1);
     }
-    
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }
 
-  // Initialize
   displayProducts(products);
-  
+
   if (searchBox) {
     searchBox.addEventListener("input", debounce(handleSearch, 300));
     searchBox.addEventListener('keydown', (e) => {
@@ -117,7 +101,6 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Add clear search button functionality
   const clearSearch = document.createElement('button');
   clearSearch.className = 'clear-search';
   clearSearch.innerHTML = '&times;';
