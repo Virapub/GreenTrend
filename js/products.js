@@ -1,19 +1,35 @@
 window.addEventListener("DOMContentLoaded", () => {
   const productList = document.getElementById("product-list");
   const searchBox = document.getElementById("searchBox");
+  
+  // Create no results message element
   const noResultsMessage = document.createElement('div');
   noResultsMessage.className = 'no-results';
-  noResultsMessage.textContent = 'No products found matching your search.';
+  noResultsMessage.innerHTML = `
+    <img src="images/no-results.svg" alt="No products found">
+    <h3>No Products Found</h3>
+    <p>Try adjusting your search or filters</p>
+    <button class="btn">Reset Search</button>
+  `;
   noResultsMessage.style.display = 'none';
   productList.parentNode.insertBefore(noResultsMessage, productList.nextSibling);
 
+  // Display products function
   function displayProducts(productsToShow) {
     if (!productList) return;
+    
     productList.innerHTML = "";
-
+    
     if (productsToShow.length === 0) {
       noResultsMessage.style.display = 'block';
       productList.style.display = 'none';
+      
+      // Add reset button functionality
+      const resetBtn = noResultsMessage.querySelector('.btn');
+      resetBtn.addEventListener('click', () => {
+        if (searchBox) searchBox.value = '';
+        displayProducts(products);
+      });
       return;
     } else {
       noResultsMessage.style.display = 'none';
@@ -47,6 +63,7 @@ window.addEventListener("DOMContentLoaded", () => {
       productList.appendChild(card);
     });
 
+    // Add wishlist button functionality
     document.querySelectorAll('.wishlist-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -58,18 +75,21 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Search function with debounce
   function handleSearch() {
     if (!searchBox) return;
+    
     const query = searchBox.value.trim().toLowerCase();
     const filtered = products.filter(p =>
       p.name.toLowerCase().includes(query) ||
       p.description.toLowerCase().includes(query) ||
       p.category.toLowerCase().includes(query) ||
-      p.tags?.some(tag => tag.toLowerCase().includes(query))
+      (p.tags && p.tags.some(tag => tag.toLowerCase().includes(query)))
     );
     displayProducts(filtered);
   }
 
+  // Debounce function
   function debounce(func, delay) {
     let timeoutId;
     return function() {
@@ -78,36 +98,53 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  // Wishlist toggle function
   function toggleWishlist(productId) {
     const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     const index = wishlist.indexOf(productId);
+    
     if (index === -1) {
       wishlist.push(productId);
     } else {
       wishlist.splice(index, 1);
     }
+    
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
   }
 
+  // Initialize product display
   displayProducts(products);
-
+  
+  // Set up search functionality
   if (searchBox) {
     searchBox.addEventListener("input", debounce(handleSearch, 300));
+    
+    // Clear search on Escape key
     searchBox.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         searchBox.value = '';
         handleSearch();
       }
     });
+    
+    // Create clear search button
+    const clearSearch = document.createElement('button');
+    clearSearch.className = 'clear-search';
+    clearSearch.innerHTML = '&times;';
+    clearSearch.setAttribute('aria-label', 'Clear search');
+    
+    clearSearch.addEventListener('click', () => {
+      searchBox.value = '';
+      handleSearch();
+      searchBox.focus();
+    });
+    
+    // Add clear button to search container
+    searchBox.parentNode.appendChild(clearSearch);
+    
+    // Show/hide clear button based on input
+    searchBox.addEventListener('input', function() {
+      clearSearch.style.display = this.value ? 'block' : 'none';
+    });
   }
-
-  const clearSearch = document.createElement('button');
-  clearSearch.className = 'clear-search';
-  clearSearch.innerHTML = '&times;';
-  clearSearch.addEventListener('click', () => {
-    searchBox.value = '';
-    handleSearch();
-    searchBox.focus();
-  });
-  searchBox.parentNode.appendChild(clearSearch);
 });
