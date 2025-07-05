@@ -7,22 +7,22 @@ window.addEventListener("DOMContentLoaded", () => {
   // Slide data
   const slides = [
     { 
-      src: "images/slide4.jpg", 
+      src: "images/slide1.jpg", 
       title: "Premium Quality", 
-      text: "Discover our eco-friendly products",
+      text: "Discover our Multi-functional products",
       link: "products.html"
     },
     { 
-      src: "images/slide5.jpg", 
-      title: "Summer Collection", 
+      src: "images/slide2.jpg", 
+      title: "Unique Gadgets Collection", 
       text: "New arrivals for the sunny season",
-      link: "summer-collection.html"
+      link: "products.html"
     },
     { 
-      src: "images/slide6.jpg", 
+      src: "images/slide3.jpg", 
       title: "Special Offers", 
       text: "Limited time discounts on selected items",
-      link: "offers.html"
+      link: "products.html"
     }
   ];
 
