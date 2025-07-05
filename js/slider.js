@@ -1,9 +1,9 @@
 window.addEventListener("DOMContentLoaded", () => {
   const slider = document.getElementById("slider");
   const slides = [
-    { src: "images/slide1.jpg", title: "Slide 1", text: "Green Trend" },
-    { src: "images/slide2.jpg", title: "Slide 2", text: "Green Trend" },
-    { src: "images/slide3.jpg", title: "Slide 3", text: "Green Trend" }
+    { src: "images/slide4.jpg", title: "Slide 1", text: "Green Trend" },
+    { src: "images/slide5.jpg", title: "Slide 2", text: "Green Trend" },
+    { src: "images/slide6.jpg", title: "Slide 3", text: "Green Trend" }
   ];
   let currentSlide = 0;
 
