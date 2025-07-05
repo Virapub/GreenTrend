@@ -3,10 +3,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const slideContainer = document.getElementById("slides");
 
   const bannerImages = [
-    "images/slide6.jpg",
-    "images/slide7.jpg",
-    "images/slide8.jpg",
-    
+    "images/slide1.jpg",
+    "images/slide2.jpg",
+    "images/slide3.jpg"
   ];
 
   bannerImages.forEach((src, index) => {
