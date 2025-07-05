@@ -2,76 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GreenTrend - Smart Kitchen Deals</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Green Trend - Smart Kitchen Gadgets</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <!-- Navbar -->
+
+  <!-- Navigation -->
   <nav class="navbar">
-    <div class="logo">GreenTrend</div>
+    <div class="logo">Green Trend</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="products.html">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
-    <input type="text" id="searchBox" placeholder="Search products..." />
+    <input type="text" id="searchBox" placeholder="Search gadgets..." />
   </nav>
 
-  <!-- Header -->
+  <!-- Hero Header -->
   <header class="header">
-    <h1>GreenTrend</h1>
-    <p>Discover Trending Smart Kitchen Gadgets</p>
+    <h1>Smart Kitchen Gadgets</h1>
+    <p>Explore our collection of innovative, time-saving tools for your modern kitchen.</p>
   </header>
 
-  <!-- Hero Slider -->
-  <section class="slider-container">
-    <div class="slider" id="slider">
-      <!-- Slides will be injected by slider.js -->
-    </div>
+  <!-- Slider Section -->
+  <div class="slider-container">
+    <div class="slider"></div>
     <div class="slider-nav">
-      <button class="prev-slide">❮</button>
-      <button class="next-slide">❯</button>
+      <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+      <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
     </div>
     <div class="slider-dots"></div>
-  </section>
-
-  <!-- Products Section -->
-  <section class="products" id="product-list">
-    <h2>Top Products</h2>
-    <!-- Products will be injected by main.js -->
-  </section>
+  </div>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" id="contact">
     <div class="footer-container">
       <div class="footer-col">
         <h4>About Us</h4>
-        <p>GreenTrend is your go-to place for discovering trending smart kitchen gadgets. We showcase top products with honest information.</p>
+        <p>Green Trend brings you the best smart kitchen gadgets to upgrade your lifestyle. All products are affiliate-linked to Amazon India.</p>
       </div>
       <div class="footer-col">
-        <h4>Disclosure</h4>
-        <p>This website contains affiliate links. If you click through and make a purchase, we may earn a small commission at no extra cost to you.</p>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <form id="contact-form" action="https://formspree.io/f/mzzgqebb" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <textarea name="message" placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
+        <form>
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message" required></textarea>
+          <button type="submit">Send</button>
         </form>
       </div>
     </div>
+    <p class="copyright">
+      &copy; 2025 Green Trend. All rights reserved.
+    </p>
   </footer>
 
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/slider.js"></script>
-  <script>
-    document.getElementById("contact-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Thank you for your message! We'll get back to you soon.");
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="slider.js"></script>
+  <script src="search.js"></script>
 </body>
 </html>
