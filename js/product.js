@@ -18,8 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
       ${product.features.map(feature => `<li>${feature}</li>`).join("")}
     </ul>
     <a href="${product.link}" class="buy-btn" target="_blank">Buy Now</a>
-      <!-- All Products Button -->
-     </div>
+    </div>
   </div>
     <p>Rating: ${"★".repeat(Math.round(product.rating))}${".5".repeat(product.rating % 1 ? 1 : 0)}</p>
   `;
