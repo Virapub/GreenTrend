@@ -1,4 +1,3 @@
-// data.js
 const products = [
   {
     id: "collapsible-electric-kettle",
@@ -9,7 +8,6 @@ const products = [
     category: "Appliances",
     link: "https://amzn.to/448SSZx",
     image: "https://m.media-amazon.com/images/I/61WQVNM0LCL._SL1500_.jpg",
-    page: "products.html#collapsible-electric-kettle",
     rating: 4.5,
     features: ["Collapsible design", "800W power", "BPA-free materials"]
   },
@@ -22,7 +20,6 @@ const products = [
     category: "Smart Gadgets",
     link: "https://amzn.to/46sLIRc",
     image: "https://m.media-amazon.com/images/I/61Vqx4KEHuL._SL1024_.jpg",
-    page: "products.html#automatic-soap-dispenser",
     rating: 4.2,
     features: ["Touchless operation", "Battery powered", "Adjustable soap volume"]
   },
@@ -35,7 +32,6 @@ const products = [
     category: "Storage",
     link: "https://amzn.to/44rEZEO",
     image: "https://m.media-amazon.com/images/I/81gCEjDOpSL._SL1500_.jpg",
-    page: "products.html#magnetic-fridge-shelf",
     rating: 4.3,
     features: ["Strong magnets", "Adjustable width", "Easy to clean"]
   }
