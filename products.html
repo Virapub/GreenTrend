@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Products - Green Trend</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>  <!-- Navbar -->  <nav class="navbar">
+    <div class="logo">Green Trend</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+    </ul>
+  </nav>  <!-- Products Section -->  <section class="products" id="product-list">
+    <!-- Product cards will be injected here -->
+  </section>  <script src="js/data.js"></script>  <script>
+    const container = document.getElementById("product-list");
+
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p class="price">Price: ₹${product.priceINR} / $${product.priceUSD}</p>
+        <a href="product.html?id=${product.id}" class="buy-btn">View Details</a>
+      `;
+
+      container.appendChild(card);
+    });
+  </script></body>
+</html>
