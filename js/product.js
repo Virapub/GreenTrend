@@ -19,8 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
     </ul>
     <a href="${product.link}" class="buy-btn" target="_blank">Buy Now</a>
       <!-- All Products Button -->
-      <a href="products.html" class="all-products-btn">← All Products</a>
-    </div>
+     </div>
   </div>
     <p>Rating: ${"★".repeat(Math.round(product.rating))}${".5".repeat(product.rating % 1 ? 1 : 0)}</p>
   `;
