@@ -265,6 +265,24 @@ body {
 .product-card .buy-btn:hover {
   background-color: var(--primary-dark);
 }
+.all-product-card .buy-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.all-product-card .buy-btn:hover {
+  background-color: var(--primary-dark);
+}
 
 /* Footer */
 .footer {
