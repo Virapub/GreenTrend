@@ -1,10 +1,11 @@
 window.addEventListener("DOMContentLoaded", () => {
+  // DOM Elements
   const slider = document.querySelector(".slider");
   const prevBtn = document.querySelector(".prev-slide");
   const nextBtn = document.querySelector(".next-slide");
   const dotsContainer = document.querySelector(".slider-dots");
   
-  // Slide data
+  // Slide Data
   const slides = [
     { 
       src: "images/slide1.jpg", 
@@ -26,11 +27,13 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+  // Slider State
   let currentSlide = 0;
   let slideInterval;
   const slideDuration = 5000; // 5 seconds
+  let isAutoSliding = true;
 
-  // Initialize the slider
+  // Initialize Slider
   function initSlider() {
     if (!slider) {
       console.error("Slider container not found!");
@@ -44,86 +47,103 @@ window.addEventListener("DOMContentLoaded", () => {
     setupEventListeners();
   }
 
-  // Create slide elements
+  // Create Slide Elements
   function createSlides() {
     slider.innerHTML = slides.map((slide, index) => `
-      <div class="slide" data-index="${index}">
+      <div class="slide" data-index="${index}" aria-hidden="${index !== 0}">
         <img src="${slide.src}" alt="${slide.title}" loading="lazy">
         <div class="slide-content">
-          <h3>${slide.title}</h3>
+          <h2>${slide.title}</h2>
           <p>${slide.text}</p>
-          <a href="${slide.link}" class="slide-btn">Shop Now</a>
+          <a href="${slide.link}" class="slide-btn" aria-label="Shop ${slide.title}">Shop Now</a>
         </div>
       </div>
     `).join("");
   }
 
-  // Create navigation dots
+  // Create Navigation Dots
   function createDots() {
     if (!dotsContainer) return;
     
     dotsContainer.innerHTML = slides.map((_, index) => `
-      <span class="slider-dot" data-index="${index}"></span>
+      <button class="slider-dot" data-index="${index}" aria-label="Go to slide ${index + 1}">
+        <span class="sr-only">Slide ${index + 1}</span>
+      </button>
     `).join("");
     
     updateDots();
   }
 
-  // Update active dot
+  // Update Active Dot and ARIA Attributes
   function updateDots() {
     if (!dotsContainer) return;
     
     const dots = dotsContainer.querySelectorAll(".slider-dot");
+    const slideElements = slider.querySelectorAll(".slide");
+    
     dots.forEach((dot, index) => {
-      dot.classList.toggle("active", index === currentSlide);
+      const isActive = index === currentSlide;
+      dot.classList.toggle("active", isActive);
+      dot.setAttribute("aria-current", isActive);
+    });
+    
+    slideElements.forEach((slide, index) => {
+      slide.setAttribute("aria-hidden", index !== currentSlide);
     });
   }
 
-  // Show specific slide
+  // Show Specific Slide
   function showSlide(index) {
     const totalSlides = slides.length;
     
     // Handle slide boundaries
-    if (index >= totalSlides) {
-      currentSlide = 0;
-    } else if (index < 0) {
-      currentSlide = totalSlides - 1;
-    } else {
-      currentSlide = index;
-    }
+    currentSlide = (index + totalSlides) % totalSlides;
     
     // Update slider position
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     
-    // Update dots
+    // Update navigation
     updateDots();
     
     // Reset auto-slide timer
-    resetAutoSlide();
+    if (isAutoSliding) {
+      resetAutoSlide();
+    }
   }
 
-  // Start auto-sliding
+  // Auto-Slide Controls
   function startAutoSlide() {
+    isAutoSliding = true;
     slideInterval = setInterval(() => {
       showSlide(currentSlide + 1);
     }, slideDuration);
   }
 
-  // Reset auto-slide timer
-  function resetAutoSlide() {
+  function stopAutoSlide() {
+    isAutoSliding = false;
     clearInterval(slideInterval);
+  }
+
+  function resetAutoSlide() {
+    stopAutoSlide();
     startAutoSlide();
   }
 
-  // Set up event listeners
+  // Event Listeners
   function setupEventListeners() {
     // Navigation buttons
     if (prevBtn) {
-      prevBtn.addEventListener("click", () => showSlide(currentSlide - 1));
+      prevBtn.addEventListener("click", () => {
+        showSlide(currentSlide - 1);
+        stopAutoSlide();
+      });
     }
     
     if (nextBtn) {
-      nextBtn.addEventListener("click", () => showSlide(currentSlide + 1));
+      nextBtn.addEventListener("click", () => {
+        showSlide(currentSlide + 1);
+        stopAutoSlide();
+      });
     }
     
     // Dot navigation
@@ -133,30 +153,37 @@ window.addEventListener("DOMContentLoaded", () => {
         if (dot) {
           const index = parseInt(dot.dataset.index);
           showSlide(index);
+          stopAutoSlide();
         }
       });
     }
     
-    // Pause on hover
-    slider.addEventListener("mouseenter", () => clearInterval(slideInterval));
+    // Pause on hover/focus
+    slider.addEventListener("mouseenter", stopAutoSlide);
     slider.addEventListener("mouseleave", startAutoSlide);
+    slider.addEventListener("focusin", stopAutoSlide);
+    slider.addEventListener("focusout", startAutoSlide);
     
     // Keyboard navigation
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") {
         showSlide(currentSlide - 1);
+        stopAutoSlide();
       } else if (e.key === "ArrowRight") {
         showSlide(currentSlide + 1);
+        stopAutoSlide();
       }
     });
     
     // Handle window resize
+    let resizeTimeout;
     window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
       slider.style.transition = "none";
       slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-      setTimeout(() => {
+      resizeTimeout = setTimeout(() => {
         slider.style.transition = "transform 0.5s ease-in-out";
-      }, 10);
+      }, 100);
     });
   }
 
