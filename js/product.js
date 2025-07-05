@@ -76,3 +76,8 @@ window.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 });
+ <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="product.js"></script>
+</body>
+</html>
