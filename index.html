@@ -1,44 +1,64 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
+<!-- index.html --><!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Green Trend - Smart Kitchen Deals</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header class="header">
+  <nav class="navbar">
+    <div class="logo">Green Trend</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#disclosure">Disclosure</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <input type="text" id="searchBox" placeholder="Search products...">
+  </nav>  <header class="header">
     <h1>Green Trend</h1>
-    <p>Explore Smart Kitchen Gadgets at Best Deals!</p>
-  </header>
-
-  <section class="hero">
-    <h2>🔥 Trending Deals</h2>
-    <div class="hero-banner">
-      <img src="images/banner1.jpg" alt="Trending Smart Gadgets" />
+    <p>Discover Trending Smart Kitchen Gadgets</p>
+  </header>  <!-- 🔄 Hero Slider Start -->  <section class="slider">
+    <div class="slides" id="slides">
+      <img src="images/banner1.jpg" alt="Slide 1">
+      <img src="images/banner2.jpg" alt="Slide 2">
+      <img src="images/banner3.jpg" alt="Slide 3">
     </div>
   </section>
-
-  <section class="categories">
-    <h2>📦 Categories</h2>
-    <div class="category-grid">
-      <div class="category">Blenders</div>
-      <div class="category">Air Fryers</div>
-      <div class="category">Coffee Makers</div>
-      <div class="category">Smart Weighing Scale</div>
-      <div class="category">Microwaves</div>
-    </div>
-  </section>
-
-  <section class="products">
-    <h2>🛒 Top Smart Kitchen Gadgets</h2>
+  <!-- 🔄 Hero Slider End -->  <section class="products">
+    <h2>Top Products</h2>
     <div class="product-grid" id="product-list">
-      <!-- Products will be injected from data.js -->
+      <!-- JS will inject product cards here -->
     </div>
-  </section>
+  </section>  <section id="about" class="info-section">
+    <h2>About Green Trend</h2>
+    <p>Green Trend is your go-to destination for discovering smart kitchen gadgets that make your daily cooking tasks easier, faster, and more efficient. We research and list the best products available on Amazon with honest insights and user-friendly presentation.</p>
+  </section>  <section id="disclosure" class="info-section">
+    <h2>Affiliate Disclosure</h2>
+    <p>Green Trend participates in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.in. This means we may earn a small commission on qualifying purchases made through our links, at no extra cost to you.</p>
+  </section>  <section id="contact" class="info-section">
+    <h2>Contact Us</h2>
+    <form onsubmit="handleContact(event)">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="contact-message"></p>
+  </section>  <script src="js/data.js"></script>  <script src="js/main.js"></script>  <script src="js/slider.js"></script>  <script>
+    function handleContact(e) {
+      e.preventDefault();
+      document.getElementById('contact-message').textContent = "Thank you for your message! We'll get back to you soon.";
+    }
+  </script></body>
+</html>/* style.css (append additional styles at the end) */ .slider { width: 100%; overflow: hidden; position: relative; margin-top: 1rem; }
 
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-</body>
-</html>
+.slides { display: flex; width: 300%; animation: slide 12s infinite; }
+
+.slides img { width: 100vw; height: auto; object-fit: cover; }
+
+@keyframes slide { 0% { transform: translateX(0%); } 33% { transform: translateX(-100%); } 66% { transform: translateX(-200%); } 100% { transform: translateX(0%); } }
+
+/* js/slider.js */ // Empty for now – animation is handled by CSS // Can be extended later if manual controls needed
+
