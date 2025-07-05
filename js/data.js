@@ -34,7 +34,7 @@ const products = [
     image: "https://m.media-amazon.com/images/I/81gCEjDOpSL._SL1500_.jpg",
     rating: 4.3,
     features: ["Strong magnets", "Adjustable width", "Easy to clean"]
-  }
+  },
   {
     id: "fridge-organizer-bins",
     name: "Fridge Organizer Bins (Clear, Stackable)",
