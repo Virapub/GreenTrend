@@ -43,7 +43,7 @@ body {
 }
 .slider { display: flex; transition: transform 0.5s ease-in-out; }
 .slide { min-width: 100%; position: relative; }
-.slide img { width: 100%; height: auto; object-fit: cover; }
+.slide img { width: 100%; height: auto; object-fit: cover; /* Optional if cropping required */ }
 .slide-content {
   position: absolute; bottom: 0; left: 0; right: 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
