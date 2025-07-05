@@ -45,3 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
   createSlides();
   setInterval(() => showSlide(currentSlide + 1), 5000); // Auto slide every 5 seconds
 });
+const slides = document.querySelectorAll(".slide");
+const slider = document.querySelector(".slider");
+slider.style.width = `${slides.length * 100}vw`;
+slides.forEach(slide => slide.style.width = "100vw");
