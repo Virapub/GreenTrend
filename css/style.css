@@ -34,12 +34,11 @@ body {
 .header p { color: var(--text-light); }
 
 .slider-container {
-  position: relative;
-  max-width: 1200px;
-  margin: 2rem auto;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px var(--shadow);
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .slider { display: flex; transition: transform 0.5s ease-in-out; }
 .slide { min-width: 100%; position: relative; }
