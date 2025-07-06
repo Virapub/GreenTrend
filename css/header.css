@@ -53,3 +53,24 @@ nav a::after {
 nav a:hover::after, nav a.active::after {
   width: 100%;
 }
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--primary);
+}
