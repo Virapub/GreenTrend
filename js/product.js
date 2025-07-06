@@ -11,21 +11,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
   container.innerHTML = `
     <img src="${product.image}" alt="${product.name}">
-    <h3>${product.name}</h3>
-    <p class="price">Price: ₹${product.priceINR} / $${product.priceUSD}</p>
-    <p>${product.description}</p>
-    <ul>
-      ${product.features.map(feature => `<li>${feature}</li>`).join("")}
-    </ul>
-    <a href="${product.link}" class="buy-btn" target="_blank">Buy Now</a>
-    <p>Rating: ${"★".repeat(Math.round(product.rating))}${".5".repeat(product.rating % 1 ? 1 : 0)}</p>
+    <div class="product-info">
+      <h3>${product.name}</h3>
+      <p class="price">Price: ₹${product.priceINR} / $${product.priceUSD}</p>
+      <p>${product.description}</p>
+      <ul>
+        ${product.features.map(feature => `<li>${feature}</li>`).join("")}
+      </ul>
+      <a href="${product.link}" class="buy-btn" target="_blank">Buy Now</a>
+      <p>Rating: ${"★".repeat(Math.round(product.rating))}${product.rating % 1 ? "½" : ""}</p>
+    </div>
   `;
 });
-card.innerHTML = `
-  <img src="${product.image}" alt="${product.name}">
-  <div class="product-details">
-    <h3>${product.name}</h3>
-    <p class="price">₹${product.priceINR.toLocaleString()}</p>
-    <a href="product.html?id=${product.id}" class="buy-btn">View Details</a>
-  </div>
-`;
