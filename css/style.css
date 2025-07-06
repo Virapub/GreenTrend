@@ -1,3 +1,175 @@
+/* ===== Base Styles ===== */
+:root {
+  --primary: #2a9d8f;
+  --primary-dark: #21867a;
+  --secondary: #264653;
+  --accent: #e9c46a;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --gray: #e9ecef;
+  --border: #dee2e6;
+  --success: #28a745;
+  --danger: #e63946;
+  --warning: #fd7e14;
+  --info: #17a2b8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Typography ===== */
+h1, h2, h3, h4 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--secondary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+
+p {
+  margin-bottom: 1rem;
+  color: #495057;
+}
+
+/* ===== Layout Components ===== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ===== Header Styles ===== */
+header {
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+.logo {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo::before {
+  content: "⚡";
+  font-size: 1.5rem;
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+nav a:hover, nav a.active {
+  color: var(--primary);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after, nav a.active::after {
+  width: 100%;
+}
+
+/* ===== Search Bar Styles ===== */
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+  background: linear-gradient(135deg, rgba(42,157,143,0.08) 0%, rgba(233,196,106,0.04) 100%);
+  margin: 0 auto 2rem;
+  width: 100%;
+}
+
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  padding-right: 3rem;
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(42,157,143,0.15);
+}
+
+.search-button {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
   border-radius: 0 0 1rem 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   z-index: 100;
@@ -44,12 +216,4 @@
 /* Active search state */
 .search-bar.active .search-results {
   display: block;
-}
-/* ===== Hero Section ===== */
-.hero {
-  text-align: center;
-  padding: 5rem 1rem;
-  background: linear-gradient(135deg, rgba(42,157,143,0.1) 0%, rgba(233,196,106,0.05) 100%);
-  border-radius: 0 0 1rem 1rem;
-  margin-bottom: 3rem;
 }
