@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +7,6 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">Green Trend</div>
@@ -29,63 +27,54 @@
   </header>
 
   <!-- Hero Slider -->
-  <section class="slider">
-    <div class="slides" id="slides">
-      <img src="images/banner1.jpg" alt="Slide 1" />
-      <img src="images/banner2.jpg" alt="Slide 2" />
-      <img src="images/banner3.jpg" alt="Slide 3" />
+  <section class="slider-container">
+    <div class="slider" id="slider">
+      <!-- Slides will be injected by slider.js -->
     </div>
+    <div class="slider-nav">
+      <button class="prev-slide">❮</button>
+      <button class="next-slide">❯</button>
+    </div>
+    <div class="slider-dots"></div>
   </section>
 
   <!-- Products Section -->
-  <section class="products">
+  <section class="products" id="product-list">
     <h2>Top Products</h2>
-    <div class="product-grid" id="product-list">
-      <!-- Products will be injected here via JS -->
+    <!-- Products will be injected by main.js -->
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>About Us</h4>
+        <p>Green Trend is your go-to place for discovering trending smart kitchen gadgets. We showcase top products with honest information.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Disclosure</h4>
+        <p>This website contains affiliate links. If you click through and make a purchase, we may earn a small commission at no extra cost to you.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
     </div>
-  </section>
+  </footer>
 
-  <!-- About -->
-  <section id="about" class="info-section">
-    <h2>About Green Trend</h2>
-    <p>
-      Green Trend is your go-to destination for discovering smart kitchen gadgets
-      that make your daily cooking tasks easier, faster, and more efficient.
-      We list only the best Amazon products with helpful summaries and clean layout.
-    </p>
-  </section>
-
-  <!-- Disclosure -->
-  <section id="disclosure" class="info-section">
-    <h2>Affiliate Disclosure</h2>
-    <p>
-      As an Amazon Associate, Green Trend earns from qualifying purchases. This means
-      we may earn a small commission if you buy through our links – at no extra cost to you.
-    </p>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="info-section">
-    <h2>Contact Us</h2>
-    <form onsubmit="handleContact(event)">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-    <p id="contact-message"></p>
-  </section>
-
-  <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/slider.js"></script>
   <script>
-    function handleContact(e) {
+    document.getElementById("contact-form").addEventListener("submit", (e) => {
       e.preventDefault();
-      document.getElementById("contact-message").textContent =
-        "Thank you for your message! We'll get back to you soon.";
-    }
+      alert("Thank you for your message! We'll get back to you soon.");
+    });
   </script>
 </body>
 </html>
