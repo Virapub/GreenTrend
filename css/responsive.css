@@ -43,6 +43,21 @@
     grid-template-columns: 1fr;
   }
 
+  @media (max-width: 480px) {
+  .product-card img {
+    height: 180px;
+  }
+
+  .product-card h3 {
+    font-size: 1rem;
+  }
+
+  .product-card .buy-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  }
+
   /* Slider */
   .slide img {
     height: 250px;
