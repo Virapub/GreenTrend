@@ -50,3 +50,26 @@
     display: flex;
   }
 }
+@media (max-width: 768px) {
+  .slide img {
+    height: 250px;
+  }
+
+  .slide-content {
+    padding: 1rem;
+  }
+
+  .slide-content h3 {
+    font-size: 1.4rem;
+  }
+
+  .slide-content p {
+    font-size: 0.95rem;
+  }
+
+  .slider-nav button {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+}
