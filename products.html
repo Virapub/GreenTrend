@@ -1,72 +1,42 @@
+<!-- products.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Products - Green Trend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Trend - All Products</title>
   <link rel="stylesheet" href="css/style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">Green Trend</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="products.html">Products</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#disclosure">Disclosure</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
     </ul>
-    <input type="text" id="searchBox" placeholder="Search gadgets..." />
+    <input type="text" id="searchBox" placeholder="Search products..." />
   </nav>
 
   <!-- Header -->
   <header class="header">
-    <h1>Our Product Collection</h1>
-    <p>Explore our curated selection of smart kitchen gadgets that make cooking easier and more fun.</p>
+    <h1>All Smart Kitchen Products</h1>
+    <p>Handpicked gadgets to enhance your kitchen experience</p>
   </header>
 
-  <!-- Search Container -->
-  <div class="search-container">
-    <input type="text" id="searchBox" class="search-box" placeholder="Search products..." />
-  </div>
-
-  <!-- Products List -->
-  <section class="products" id="product-list"></section>
-
-  <!-- Footer -->
-  <footer class="footer" id="contact">
-    <div class="footer-container">
-      <div class="footer-col">
-        <h4>About Us</h4>
-        <p>Green Trend brings you the best smart kitchen gadgets to upgrade your lifestyle. All products are affiliate-linked to Amazon India.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="#about">About</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <form>
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Your Email" required />
-          <textarea placeholder="Your Message" required></textarea>
-          <button type="submit">Send</button>
-        </form>
-      </div>
+  <!-- Product List -->
+  <section class="products">
+    <div class="product-grid" id="product-list">
+      <!-- JS will load product cards here -->
     </div>
-    <p class="copyright">
-      &copy; 2025 Green Trend. All rights reserved.
-    </p>
-  </footer>
+  </section>
 
   <!-- Scripts -->
-  <script src="data.js"></script>
-  <script src="products.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
