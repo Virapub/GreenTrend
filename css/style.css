@@ -1,60 +1,55 @@
-:root {
-  --primary: #00b894;
-  --text-dark: #2d3436;
-  --text-light: #636e72;
-  --bg-light: #f9f9f9;
-  --white: #ffffff;
-  --shadow: rgba(0, 0, 0, 0.1);
-}
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-light);
-  color: var(--text-dark);
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 100;
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
 }
 
-.navbar {
-  background-color: var(--white);
+.search-result {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.search-result:hover {
+  background: var(--gray);
+}
+
+.search-result a {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 5px var(--shadow);
-}
-
-.logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
-.nav-links { list-style: none; display: flex; gap: 1rem; margin: 0; }
-.nav-links li a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
-.nav-links li a:hover { color: var(--primary); }
-#searchBox { padding: 0.5rem; border: 1px solid var(--shadow); border-radius: 4px; }
-
-.header {
-  text-align: center;
-  padding: 2rem;
-  max-width: 100%; /* Ensures it doesn't exceed the viewport */
-  margin: 0 auto; /* Centers the header */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap; /* Allows items to wrap if needed */
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 2.5rem;
-}
-
-.header p {
-  color: #666;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 1rem; /* Space between menu items */
-}
-
-.nav-menu a {
+  gap: 1rem;
   text-decoration: none;
-  color: #000; /* Adjust as needed */
-  padding: 0.5rem 1rem;
+  color: var(--dark);
+}
+
+.search-result-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.search-result-info h4 {
+  margin-bottom: 0.25rem;
+  color: var(--secondary);
+}
+
+.search-result-info p {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Active search state */
+.search-bar.active .search-results {
+  display: block;
+}
+/* ===== Hero Section ===== */
+.hero {
+  text-align: center;
+  padding: 5rem 1rem;
+  background: linear-gradient(135deg, rgba(42,157,143,0.1) 0%, rgba(233,196,106,0.05) 100%);
+  border-radius: 0 0 1rem 1rem;
+  margin-bottom: 3rem;
 }
