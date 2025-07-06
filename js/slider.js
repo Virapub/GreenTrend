@@ -1,14 +1,17 @@
+// slider.js
 window.addEventListener("DOMContentLoaded", () => {
   const slider = document.getElementById("slider");
+  const dotsContainer = document.querySelector(".slider-dots");
   const slides = [
-    { src: "images/slide1.jpg", title: "Slide 1", text: "Green Trend" },
-    { src: "images/slide2.jpg", title: "Slide 2", text: "Green Trend" },
-    { src: "images/slide3.jpg", title: "Slide 3", text: "Green Trend" }
+    { src: "images/slide1.jpg", title: "Smart Juicer", text: "Extracts juice in seconds!" },
+    { src: "images/slide2.jpg", title: "Multi-Cooker", text: "Cook fast with smart presets." },
+    { src: "images/slide3.jpg", title: "Blender Pro", text: "Smooth blending, easy cleaning." }
   ];
+
   let currentSlide = 0;
 
   function createSlides() {
-    slides.forEach((slide, index) => {
+    slides.forEach((slide) => {
       const slideDiv = document.createElement("div");
       slideDiv.className = "slide";
       slideDiv.innerHTML = `
@@ -26,15 +29,20 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateDots() {
-    const dotsContainer = document.querySelector(".slider-dots");
-    dotsContainer.innerHTML = slides.map((_, idx) => `<span class="slider-dot ${idx === currentSlide ? "active" : ""}"></span>`).join("");
+    dotsContainer.innerHTML = "";
+    slides.forEach((_, idx) => {
+      const dot = document.createElement("span");
+      dot.className = "slider-dot" + (idx === currentSlide ? " active" : "");
+      dot.addEventListener("click", () => showSlide(idx));
+      dotsContainer.appendChild(dot);
+    });
   }
 
   function showSlide(index) {
-    const totalSlides = slides.length;
-    if (index >= totalSlides) currentSlide = 0;
-    else if (index < 0) currentSlide = totalSlides - 1;
+    if (index >= slides.length) currentSlide = 0;
+    else if (index < 0) currentSlide = slides.length - 1;
     else currentSlide = index;
+
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     updateDots();
   }
@@ -43,25 +51,5 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".next-slide").addEventListener("click", () => showSlide(currentSlide + 1));
 
   createSlides();
-  setInterval(() => showSlide(currentSlide + 1), 5000); // Auto slide every 5 seconds
+  setInterval(() => showSlide(currentSlide + 1), 5000); // Auto-slide
 });
-// slider.js
-const slider = document.getElementById("slider");
-const slides = document.querySelectorAll(".slide");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-let index = 0;
-
-function showSlide(i) {
-  if (i < 0) index = slides.length - 1;
-  else if (i >= slides.length) index = 0;
-  else index = i;
-
-  slider.style.transform = `translateX(-${index * 100}%)`;
-}
-
-prevBtn.addEventListener("click", () => showSlide(index - 1));
-nextBtn.addEventListener("click", () => showSlide(index + 1));
-
-document.addEventListener("DOMContentLoaded", () => showSlide(index));
