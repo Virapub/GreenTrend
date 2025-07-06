@@ -6,3 +6,9 @@
   --white: #ffffff;
   --shadow: rgba(0, 0, 0, 0.1);
 }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
