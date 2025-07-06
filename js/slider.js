@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
       link: "products.html"
     },
     {
-      src: "images/slide3.jpg",
+      src: "images/slide3_20250706_173751_0000.jpg",
       title: "Magnetic Shelf Rack",
       text: "Organize your fridge with magnetic storage",
       link: "products.html"
