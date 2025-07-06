@@ -4,46 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Products - Green Trend</title>
-  <link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="css/search.css">
-<link rel="stylesheet" href="css/slider.css">
-<link rel="stylesheet" href="css/product-card.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/responsive.css">
 
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/slider.css">
+  <link rel="stylesheet" href="css/product-card.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">Green Trend</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="products.html">Products</a></li>
-    </ul>
-  </nav>
 
+  <!-- ===== HEADER with Navbar & Search ===== -->
   <header>
- <div class="search-container">
-  <div class="search-bar">
-    <input type="text" class="search-input" placeholder="Search smart kitchen gadgets..." />
-    <button class="search-button">
-      🔍
-    </button>
+    <div class="nav-container">
+      <div class="logo">⚡ <span style="color: var(--primary)">GreenTrend</span></div>
 
-    <!-- Optional: Search Results Dropdown -->
-    <div class="search-results" id="searchResults">
-      <!-- Results injected by JS -->
+      <!-- Mobile Toggle Button -->
+      <button class="nav-toggle" id="navToggle">&#9776;</button>
+
+      <!-- Navigation Menu -->
+      <nav id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="#">About</a>
+        <a href="#">Disclosure</a>
+        <a href="#">Contact</a>
+      </nav>
     </div>
-  </div>
- </div> 
+
+    <!-- Search Section -->
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" id="searchBox" class="search-input" placeholder="Search smart kitchen gadgets..." />
+        <button class="search-button">🔍</button>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
   </header>
 
-  <!-- Products Section -->
-  <section class="products" id="product-list">
-    <!-- Product cards will be injected here -->
-  </section>
-<!-- Footer -->
+  <!-- ===== Products Section ===== -->
+  <main>
+    <section class="products" id="product-list">
+      <!-- Product cards will be injected via JS -->
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-col">
@@ -66,7 +74,20 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    // Mobile Nav Toggle
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggle = document.getElementById("navToggle");
+      const menu = document.getElementById("navMenu");
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          menu.classList.toggle("show");
+        });
+      }
+    });
+  </script>
 </body>
 </html>
