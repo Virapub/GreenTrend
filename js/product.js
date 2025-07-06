@@ -21,3 +21,11 @@ window.addEventListener("DOMContentLoaded", () => {
     <p>Rating: ${"★".repeat(Math.round(product.rating))}${".5".repeat(product.rating % 1 ? 1 : 0)}</p>
   `;
 });
+card.innerHTML = `
+  <img src="${product.image}" alt="${product.name}">
+  <div class="product-details">
+    <h3>${product.name}</h3>
+    <p class="price">₹${product.priceINR.toLocaleString()}</p>
+    <a href="product.html?id=${product.id}" class="buy-btn">View Details</a>
+  </div>
+`;
