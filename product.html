@@ -4,56 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Details - Green Trend</title>
-
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/reset.css" />
-  <link rel="stylesheet" href="css/header.css" />
-  <link rel="stylesheet" href="css/search.css" />
-  <link rel="stylesheet" href="css/slider.css" />
-  <link rel="stylesheet" href="css/product-card.css" />
-  <link rel="stylesheet" href="css/footer.css" />
-  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/product-detail.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
-  <!-- ===== HEADER with NAV & SEARCH ===== -->
+  <!-- Header/Navbar -->
   <header>
     <div class="nav-container">
       <div class="logo">⚡ <span style="color: var(--primary)">GreenTrend</span></div>
-
       <button class="nav-toggle" id="navToggle">&#9776;</button>
-
       <nav id="navMenu">
         <a href="index.html">Home</a>
-        <a href="products.html" class="active">Products</a>
+        <a href="products.html">Products</a>
         <a href="#">About</a>
         <a href="#">Disclosure</a>
         <a href="#">Contact</a>
       </nav>
     </div>
-
-    <!-- Search Section -->
+    <!-- Search -->
     <div class="search-container">
       <div class="search-bar">
-        <input type="text" id="searchBox" class="search-input" placeholder="Search smart kitchen gadgets..." />
+        <input type="text" class="search-input" placeholder="Search smart kitchen gadgets..." />
         <button class="search-button">🔍</button>
-        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
   </header>
 
-  <!-- ===== Product Details Section ===== -->
-  <main>
-    <section class="products">
-      <div class="container">
-        <div class="product-card" id="product-details">
-          <!-- JS will inject selected product details here -->
-        </div>
-      </div>
-    </section>
-  </main>
+  <!-- Product Details -->
+  <section class="product-details-section">
+    <div class="product-detail-container" id="product-details">
+      <!-- Product details injected by product.js -->
+    </div>
+  </section>
 
-  <!-- ===== Footer ===== -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-col">
@@ -76,19 +65,14 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/product.js"></script>
   <script>
-    // Mobile Nav Toggle
-    document.addEventListener("DOMContentLoaded", () => {
-      const toggle = document.getElementById("navToggle");
-      const menu = document.getElementById("navMenu");
-      if (toggle) {
-        toggle.addEventListener("click", () => {
-          menu.classList.toggle("show");
-        });
-      }
+    // Mobile nav toggle
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleBtn = document.getElementById("navToggle");
+      const navMenu = document.getElementById("navMenu");
+      toggleBtn.addEventListener("click", () => navMenu.classList.toggle("show"));
     });
   </script>
 </body>
