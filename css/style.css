@@ -21,3 +21,9 @@ body {
   padding: 1rem 2rem;
   box-shadow: 0 2px 5px var(--shadow);
 }
+
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+.nav-links { list-style: none; display: flex; gap: 1rem; margin: 0; }
+.nav-links li a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
+.nav-links li a:hover { color: var(--primary); }
+#searchBox { padding: 0.5rem; border: 1px solid var(--shadow); border-radius: 4px; }
