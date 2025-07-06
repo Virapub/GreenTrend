@@ -1,58 +1,20 @@
-/* reset.css */
-:root {
-  --primary: #2a9d8f;
-  --primary-dark: #21867a;
-  --secondary: #264653;
-  --accent: #e9c46a;
-  --light: #f8f9fa;
-  --dark: #212529;
-  --gray: #e9ecef;
-  --border: #dee2e6;
-  --success: #28a745;
-  --danger: #e63946;
-  --warning: #fd7e14;
-  --info: #17a2b8;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --white: #ffffff;
-  --transition: all 0.3s ease;
-}
-
-*,
-*::before,
-*::after {
+/* ================== reset.css ================== */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+:root {
+  --primary: #00b894;
+  --primary-dark: #019172;
+  --white: #fff;
+  --dark: #2d3436;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --border: #ccc;
+  --transition: all 0.3s ease;
+}
 body {
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-  background-color: var(--light);
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
   color: var(--dark);
   line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-:focus-visible {
-  outline: 3px solid var(--primary);
-  outline-offset: 2px;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
