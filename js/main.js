@@ -1,9 +1,14 @@
-window.addEventListener("DOMContentLoaded", () => {
+// main.js
+
+// Wait for DOM to load
+document.addEventListener("DOMContentLoaded", () => {
   const productList = document.getElementById("product-list");
   const searchBox = document.getElementById("searchBox");
 
+  // Display products dynamically
   function displayProducts(productsToShow) {
     productList.innerHTML = "";
+
     productsToShow.forEach(product => {
       const card = document.createElement("div");
       card.className = "product-card";
@@ -17,25 +22,33 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  displayProducts(products);
+  // Check if products exist and display
+  if (typeof products !== "undefined" && Array.isArray(products)) {
+    displayProducts(products);
 
-  if (searchBox) {
-    searchBox.addEventListener("input", () => {
-      const query = searchBox.value.toLowerCase();
-      const filtered = products.filter(p =>
-        p.name.toLowerCase().includes(query) ||
-        p.description.toLowerCase().includes(query) ||
-        p.category.toLowerCase().includes(query)
-      );
-      displayProducts(filtered);
-    });
+    // Live Search functionality
+    if (searchBox) {
+      searchBox.addEventListener("input", () => {
+        const query = searchBox.value.toLowerCase().trim();
+        const filtered = products.filter(product =>
+          product.name.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query)
+        );
+        displayProducts(filtered);
+      });
+    }
+  } else {
+    console.error("❌ 'products' array not found. Check your data.js file.");
   }
-});
-document.addEventListener("DOMContentLoaded", function () {
+
+  // Hamburger menu toggle
   const toggleBtn = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
 
-  toggleBtn.addEventListener("click", () => {
-    navMenu.classList.toggle("show");
-  });
+  if (toggleBtn && navMenu) {
+    toggleBtn.addEventListener("click", () => {
+      navMenu.classList.toggle("show");
+    });
+  }
 });
