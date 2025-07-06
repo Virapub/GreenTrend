@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Details - Green Trend</title>
-  <link rel="stylesheet" href="css/reset.css" />
-  <link rel="stylesheet" href="css/header.css" />
-  <link rel="stylesheet" href="css/search.css" />
-  <link rel="stylesheet" href="css/product-card.css" />
-  <link rel="stylesheet" href="css/footer.css" />
-  <link rel="stylesheet" href="css/responsive.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products - Green Trend</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/product-card.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+
   <!-- Header/Navbar -->
   <header>
     <div class="nav-container">
@@ -19,25 +20,27 @@
       <button class="nav-toggle" id="navToggle">&#9776;</button>
       <nav id="navMenu">
         <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
+        <a href="products.html" class="active">Products</a>
         <a href="#">About</a>
         <a href="#">Disclosure</a>
         <a href="#">Contact</a>
       </nav>
     </div>
+
+    <!-- Search -->
     <div class="search-container">
       <div class="search-bar">
-        <input type="text" class="search-input" placeholder="Search smart kitchen gadgets..." />
+        <input type="text" id="searchBox" class="search-input" placeholder="Search smart kitchen gadgets..." />
         <button class="search-button">🔍</button>
-        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
   </header>
 
-  <!-- Product Detail Section -->
-  <section class="product-detail-section">
-    <div class="product-detail-container" id="product-details">
-      <!-- JS will inject details here -->
+  <!-- Product Grid -->
+  <section class="products">
+    <h2 style="text-align:center; margin-top: 1rem;">All Products</h2>
+    <div class="products-grid" id="product-list">
+      <!-- Product cards injected by main.js -->
     </div>
   </section>
 
@@ -46,11 +49,11 @@
     <div class="footer-container">
       <div class="footer-col">
         <h4>About Us</h4>
-        <p>Green Trend is your go-to place for discovering trending smart kitchen gadgets.</p>
+        <p>Green Trend is your go-to place for discovering trending smart kitchen gadgets. We showcase top products with honest information.</p>
       </div>
       <div class="footer-col">
         <h4>Disclosure</h4>
-        <p>This website contains affiliate links. We may earn a small commission if you purchase through them.</p>
+        <p>This website contains affiliate links. If you click through and make a purchase, we may earn a small commission at no extra cost to you.</p>
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
@@ -65,6 +68,14 @@
   </footer>
 
   <script src="js/data.js"></script>
-  <script src="js/product.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Toggle navbar on mobile
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleBtn = document.getElementById("navToggle");
+      const navMenu = document.getElementById("navMenu");
+      toggleBtn.addEventListener("click", () => navMenu.classList.toggle("show"));
+    });
+  </script>
 </body>
 </html>
