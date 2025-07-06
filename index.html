@@ -4,79 +4,83 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Green Trend - Smart Kitchen Deals</title>
-<link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="css/search.css">
-<link rel="stylesheet" href="css/slider.css">
-<link rel="stylesheet" href="css/product-card.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/responsive.css">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/search.css" />
+  <link rel="stylesheet" href="css/slider.css" />
+  <link rel="stylesheet" href="css/product-card.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-  
-   <!-- Header (Responsive Navbar) -->
-<header>
-  <div class="nav-container">
-    <div class="logo">⚡ <span style="color: var(--primary)">GreenTrend</span></div>
 
-    <!-- Hamburger Icon for Mobile -->
-    <button class="nav-toggle" id="navToggle">&#9776;</button>
+  <!-- ===== HEADER / NAVIGATION ===== -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">⚡ <span style="color: var(--primary)">GreenTrend</span></div>
 
-    <!-- Navigation Menu -->
-    <nav id="navMenu">
-      <a href="index.html" class="active">Home</a>
-      <a href="products.html">Products</a>
-      <a href="#">About</a>
-      <a href="#">Disclosure</a>
-      <a href="#">Contact</a>
-    </nav>
-  </div>
-  <!-- Search Section -->
-<div class="search-container">
-  <div class="search-bar">
-    <input type="text" class="search-input" placeholder="Search smart kitchen gadgets..." />
-    <button class="search-button">
-      🔍
-    </button>
+      <!-- Hamburger Icon -->
+      <button class="nav-toggle" id="navToggle">&#9776;</button>
 
-    <!-- Optional: Search Results Dropdown -->
-    <div class="search-results" id="searchResults">
-      <!-- Results injected by JS -->
+      <!-- Nav Menu -->
+      <nav id="navMenu">
+        <a href="index.html" class="active">Home</a>
+        <a href="products.html">Products</a>
+        <a href="#">About</a>
+        <a href="#">Disclosure</a>
+        <a href="#">Contact</a>
+      </nav>
     </div>
-  </div>
-</div>
-</header>
 
-  <section class="slider-container">
-  <div class="slider" id="slider">
-    <div class="slide">
-      <img src="images/slider1.jpg" alt="Slide 1" />
-      <div class="slide-content">
-        <h3>Smart Blender</h3>
-        <p>High-speed kitchen blender with multiple modes</p>
-        <a href="#" class="slide-btn">Buy Now</a>
+    <!-- ===== SEARCH BAR ===== -->
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" id="searchBox" class="search-input" placeholder="Search smart kitchen gadgets..." />
+        <button class="search-button">🔍</button>
+
+        <!-- Search Results (Injected via JS) -->
+        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
-    <!-- Add more .slide blocks for more slides -->
-  </div>
+  </header>
 
-  <div class="slider-nav">
-    <button id="prevBtn">&#10094;</button>
-    <button id="nextBtn">&#10095;</button>
-  </div>
+  <!-- ===== SLIDER SECTION ===== -->
+  <section class="slider-container">
+    <div class="slider" id="slider">
+      <div class="slide">
+        <img src="images/slider1.jpg" alt="Slide 1" />
+        <div class="slide-content">
+          <h3>Smart Blender</h3>
+          <p>High-speed kitchen blender with multiple modes</p>
+          <a href="products.html" class="slide-btn">Buy Now</a>
+        </div>
+      </div>
+      <!-- More slides will be injected via JS -->
+    </div>
 
-  <div class="slider-dots" id="sliderDots"></div> <!-- Optional dots -->
-    
+    <!-- Slider Controls -->
+    <div class="slider-nav">
+      <button id="prevBtn">&#10094;</button>
+      <button id="nextBtn">&#10095;</button>
+    </div>
+
+    <!-- Slider Dots -->
+    <div class="slider-dots" id="sliderDots"></div>
   </section>
-  
 
-  <!-- Products Section -->
-  <section class="products" id="product-list">
-    <h2>Top Products</h2>
-    <!-- Products will be injected by main.js -->
+  <!-- ===== PRODUCTS SECTION ===== -->
+  <section class="products-section">
+    <div class="container">
+      <h2 class="section-title">Top Products</h2>
+      <div class="products-grid" id="product-list">
+        <!-- Product cards injected by JS -->
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-col">
@@ -97,15 +101,22 @@
         </form>
       </div>
     </div>
+    <div class="copyright">
+      &copy; 2025 Green Trend. All rights reserved.
+    </div>
   </footer>
 
+  <!-- ===== JS FILES ===== -->
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/slider.js"></script>
+
+  <!-- Contact Form Alert -->
   <script>
     document.getElementById("contact-form").addEventListener("submit", (e) => {
       e.preventDefault();
       alert("Thank you for your message! We'll get back to you soon.");
+      e.target.reset();
     });
   </script>
 </body>
