@@ -26,23 +26,24 @@
     <input type="text" id="searchBox" placeholder="Search products..." />
   </nav>
 
-  <!-- Header -->
-  <header class="header">
-    <h1>Green Trend</h1>
-    <p>Discover Trending Smart Kitchen Gadgets</p>
-  </header>
+   <!-- Header (Responsive Navbar) -->
+<header>
+  <div class="nav-container">
+    <div class="logo">⚡ Green <span style="color: var(--primary)">Trend</span></div>
 
-  <!-- Hero Slider -->
-  <section class="slider-container">
-    <div class="slider" id="slider">
-      <!-- Slides will be injected by slider.js -->
-    </div>
-    <div class="slider-nav">
-      <button class="prev-slide">❮</button>
-      <button class="next-slide">❯</button>
-    </div>
-    <div class="slider-dots"></div>
-  </section>
+    <!-- Hamburger Icon for Mobile -->
+    <button class="nav-toggle" id="navToggle">&#9776;</button>
+
+    <!-- Navigation Menu -->
+    <nav id="navMenu">
+      <a href="index.html" class="active">Home</a>
+      <a href="products.html">Products</a>
+      <a href="#">About</a>
+      <a href="#">Disclosure</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</header>
 
   <!-- Products Section -->
   <section class="products" id="product-list">
