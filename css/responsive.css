@@ -27,3 +27,26 @@
     height: 300px;
   }
 }
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  nav {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    display: none;
+  }
+
+  nav a {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    background-color: var(--white);
+  }
+
+  nav.show {
+    display: flex;
+  }
+}
