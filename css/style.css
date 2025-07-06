@@ -27,9 +27,16 @@ body {
 .nav-links li a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
 .nav-links li a:hover { color: var(--primary); }
 #searchBox { padding: 0.5rem; border: 1px solid var(--shadow); border-radius: 4px; }
+
 .header {
   text-align: center;
   padding: 2rem;
+  max-width: 100%; /* Ensures it doesn't exceed the viewport */
+  margin: 0 auto; /* Centers the header */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Allows items to wrap if needed */
 }
 
 .header h1 {
@@ -38,5 +45,16 @@ body {
 }
 
 .header p {
-  color: #666; /* Default fallback color, replace with your --text-light value if defined */
+  color: #666;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 1rem; /* Space between menu items */
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #000; /* Adjust as needed */
+  padding: 0.5rem 1rem;
 }
