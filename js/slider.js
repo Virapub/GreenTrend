@@ -6,42 +6,16 @@ window.addEventListener("DOMContentLoaded", () => {
     { src: "images/slide3.jpg", title: "Slide 3", text: "Green Trend" }
   ];
   let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
 
-  function createSlides() {
-    slides.forEach((slide, index) => {
-      const slideDiv = document.createElement("div");
-      slideDiv.className = "slide";
-      slideDiv.innerHTML = `
-        <img src="${slide.src}" alt="${slide.title}">
-        <div class="slide-content">
-          <h3>${slide.title}</h3>
-          <p>${slide.text}</p>
-          <a href="products.html" class="slide-btn">Shop Now</a>
-        </div>
-      `;
-      slider.appendChild(slideDiv);
-    });
-    updateDots();
-    showSlide(currentSlide);
-  }
+function goToSlide(index) {
+  const slider = document.querySelector('.slider');
+  const offset = -index * 100;
+  slider.style.transform = `translateX(${offset}%)`;
+}
 
-  function updateDots() {
-    const dotsContainer = document.querySelector(".slider-dots");
-    dotsContainer.innerHTML = slides.map((_, idx) => `<span class="slider-dot ${idx === currentSlide ? "active" : ""}"></span>`).join("");
-  }
-
-  function showSlide(index) {
-    const totalSlides = slides.length;
-    if (index >= totalSlides) currentSlide = 0;
-    else if (index < 0) currentSlide = totalSlides - 1;
-    else currentSlide = index;
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    updateDots();
-  }
-
-  document.querySelector(".prev-slide").addEventListener("click", () => showSlide(currentSlide - 1));
-  document.querySelector(".next-slide").addEventListener("click", () => showSlide(currentSlide + 1));
-
-  createSlides();
-  setInterval(() => showSlide(currentSlide + 1), 5000); // Auto slide every 5 seconds
-});
+setInterval(() => {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  goToSlide(currentSlide);
+}, 5000); // Changes slide every 5 seconds
