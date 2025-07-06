@@ -71,7 +71,6 @@ body {
 }
 .slider {
   display: flex;
-  flex-direction: banner;
   transition: transform 0.5s ease-in-out;
 }
 .slide {
