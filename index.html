@@ -1,75 +1,91 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Green Trend - Smart Kitchen Gadgets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Trend - Smart Kitchen Deals</title>
   <link rel="stylesheet" href="css/style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">Green Trend</div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="products.html">Products</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#disclosure">Disclosure</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <input type="text" id="searchBox" placeholder="Search gadgets..." />
+    <input type="text" id="searchBox" placeholder="Search products..." />
   </nav>
 
-  <!-- Hero Header -->
+  <!-- Header -->
   <header class="header">
-    <h1>Smart Kitchen Gadgets</h1>
-    <p>Explore our collection of innovative, time-saving tools for your modern kitchen.</p>
+    <h1>Green Trend</h1>
+    <p>Discover Trending Smart Kitchen Gadgets</p>
   </header>
 
-  <!-- Slider Section -->
-  <div class="slider-container">
-    <div class="slider"></div>
-    <div class="slider-nav">
-      <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
-      <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+  <!-- Hero Slider -->
+  <section class="slider">
+    <div class="slides" id="slides">
+      <img src="images/banner1.jpg" alt="Slide 1" />
+      <img src="images/banner2.jpg" alt="Slide 2" />
+      <img src="images/banner3.jpg" alt="Slide 3" />
     </div>
-    <div class="slider-dots"></div>
-  </div>
+  </section>
 
-  <!-- Footer -->
-  <footer class="footer" id="contact">
-    <div class="footer-container">
-      <div class="footer-col">
-        <h4>About Us</h4>
-        <p>Green Trend brings you the best smart kitchen gadgets to upgrade your lifestyle. All products are affiliate-linked to Amazon India.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="#about">About</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <form>
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Your Email" required />
-          <textarea placeholder="Your Message" required></textarea>
-          <button type="submit">Send</button>
-        </form>
-      </div>
+  <!-- Products Section -->
+  <section class="products">
+    <h2>Top Products</h2>
+    <div class="product-grid" id="product-list">
+      <!-- Products will be injected here via JS -->
     </div>
-    <p class="copyright">
-      &copy; 2025 Green Trend. All rights reserved.
+  </section>
+
+  <!-- About -->
+  <section id="about" class="info-section">
+    <h2>About Green Trend</h2>
+    <p>
+      Green Trend is your go-to destination for discovering smart kitchen gadgets
+      that make your daily cooking tasks easier, faster, and more efficient.
+      We list only the best Amazon products with helpful summaries and clean layout.
     </p>
-  </footer>
+  </section>
+
+  <!-- Disclosure -->
+  <section id="disclosure" class="info-section">
+    <h2>Affiliate Disclosure</h2>
+    <p>
+      As an Amazon Associate, Green Trend earns from qualifying purchases. This means
+      we may earn a small commission if you buy through our links – at no extra cost to you.
+    </p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="info-section">
+    <h2>Contact Us</h2>
+    <form onsubmit="handleContact(event)">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="contact-message"></p>
+  </section>
 
   <!-- Scripts -->
-  <script src="data.js"></script>
-  <script src="slider.js"></script>
-  <script src="search.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/slider.js"></script>
+  <script>
+    function handleContact(e) {
+      e.preventDefault();
+      document.getElementById("contact-message").textContent =
+        "Thank you for your message! We'll get back to you soon.";
+    }
+  </script>
 </body>
 </html>
