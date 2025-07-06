@@ -45,3 +45,23 @@ window.addEventListener("DOMContentLoaded", () => {
   createSlides();
   setInterval(() => showSlide(currentSlide + 1), 5000); // Auto slide every 5 seconds
 });
+// slider.js
+const slider = document.getElementById("slider");
+const slides = document.querySelectorAll(".slide");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+let index = 0;
+
+function showSlide(i) {
+  if (i < 0) index = slides.length - 1;
+  else if (i >= slides.length) index = 0;
+  else index = i;
+
+  slider.style.transform = `translateX(-${index * 100}%)`;
+}
+
+prevBtn.addEventListener("click", () => showSlide(index - 1));
+nextBtn.addEventListener("click", () => showSlide(index + 1));
+
+document.addEventListener("DOMContentLoaded", () => showSlide(index));
