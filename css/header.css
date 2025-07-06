@@ -6,12 +6,18 @@ header {
   top: 0;
   z-index: 1000;
 }
+
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
 }
+
+/* Logo */
 .logo {
   font-size: 1.75rem;
   font-weight: 700;
@@ -20,14 +26,19 @@ header {
   align-items: center;
   gap: 0.5rem;
 }
+
 .logo::before {
-  content: "⚡";
+  content: "⚡⚡";
   font-size: 1.5rem;
+  color: var(--accent);
 }
+
+/* Navigation Menu */
 nav {
   display: flex;
   gap: 2rem;
 }
+
 nav a {
   text-decoration: none;
   color: var(--dark);
@@ -37,9 +48,12 @@ nav a {
   position: relative;
   padding: 0.5rem 0;
 }
-nav a:hover, nav a.active {
+
+nav a:hover,
+nav a.active {
   color: var(--primary);
 }
+
 nav a::after {
   content: '';
   position: absolute;
@@ -50,22 +64,13 @@ nav a::after {
   background-color: var(--primary);
   transition: width var(--transition);
 }
-nav a:hover::after, nav a.active::after {
+
+nav a:hover::after,
+nav a.active::after {
   width: 100%;
 }
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  flex-wrap: wrap;
-}
 
-nav {
-  display: flex;
-  gap: 2rem;
-}
-
+/* Hamburger Menu Button */
 .nav-toggle {
   display: none;
   background: none;
@@ -73,4 +78,31 @@ nav {
   font-size: 2rem;
   cursor: pointer;
   color: var(--primary);
+}
+
+/* ========================
+   Mobile Responsive Nav
+======================== */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: var(--white);
+    padding: 1rem;
+    box-shadow: 0 4px 8px var(--shadow);
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
