@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Detailed information about products at Green Trend. Learn more about smart kitchen gadgets." />
   <title>Product Details - Green Trend</title>
-  <link rel="stylesheet" href="css/reset.css">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon"> <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/search.css">
   <link rel="stylesheet" href="css/product-detail.css">
@@ -13,11 +14,10 @@
 </head>
 <body>
 
-  <!-- Header/Navbar -->
   <header>
     <div class="nav-container">
       <div class="logo">⚡ <span style="color: var(--primary)">GreenTrend</span></div>
-      <button class="nav-toggle" id="navToggle">&#9776;</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">&#9776;</button>
       <nav id="navMenu">
         <a href="index.html">Home</a>
         <a href="products.html">Products</a>
@@ -26,23 +26,19 @@
         <a href="#">Contact</a>
       </nav>
     </div>
-    <!-- Search -->
     <div class="search-container">
       <div class="search-bar">
-        <input type="text" class="search-input" placeholder="Search smart kitchen gadgets..." />
-        <button class="search-button">🔍</button>
+        <input type="text" class="search-input" id="searchBox" placeholder="Search smart kitchen gadgets..." aria-label="Search products" />
+        <button class="search-button" aria-label="Perform search">🔍</button>
       </div>
     </div>
   </header>
 
-  <!-- Product Details -->
   <section class="product-details-section">
     <div class="product-detail-container" id="product-details">
-      <!-- Product details injected by product.js -->
-    </div>
+      </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-col">
@@ -56,9 +52,9 @@
       <div class="footer-col">
         <h4>Contact</h4>
         <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required />
-          <input type="email" name="email" placeholder="Your Email" required />
-          <textarea name="message" placeholder="Your Message" required></textarea>
+          <input type="text" name="name" placeholder="Your Name" required aria-label="Your Name" />
+          <input type="email" name="email" placeholder="Your Email" required aria-label="Your Email" />
+          <textarea name="message" placeholder="Your Message" required aria-label="Your Message"></textarea>
           <button type="submit">Send Message</button>
         </form>
       </div>
@@ -66,14 +62,7 @@
   </footer>
 
   <script src="js/data.js"></script>
-  <script src="js/product.js"></script>
-  <script>
-    // Mobile nav toggle
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggleBtn = document.getElementById("navToggle");
-      const navMenu = document.getElementById("navMenu");
-      toggleBtn.addEventListener("click", () => navMenu.classList.toggle("show"));
-    });
-  </script>
+  <script src="js/product.js" defer></script>
+  <script src="js/main.js" defer></script> <script src="js/contactForm.js" defer></script>
 </body>
 </html>
