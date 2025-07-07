@@ -1,20 +1,54 @@
 /* ================== reset.css ================== */
+/* Universal reset for margin, padding, and box-sizing */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Root variables for consistent theming */
 :root {
-  --primary: #00b894;
-  --primary-dark: #019172;
+  --primary: #00b894; /* Teal green */
+  --primary-dark: #019172; /* Darker teal green */
   --white: #fff;
-  --dark: #2d3436;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --border: #ccc;
-  --transition: all 0.3s ease;
+  --dark: #2d3436; /* Dark gray for text */
+  --shadow: rgba(0, 0, 0, 0.1); /* Light shadow for cards/elements */
+  --border: #ccc; /* Light gray for borders */
+  --transition: all 0.3s ease; /* Smooth transition effect */
 }
+
+/* Basic body styling */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Segoe UI', 'Roboto', sans-serif; /* More modern font stack */
+  background-color: #f8f9fa; /* Light background for the page */
   color: var(--dark);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+  -moz-osx-font-smoothing: grayscale; /* Smoother font rendering */
+}
+
+/* Basic link styling */
+a {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--primary-dark);
+}
+
+/* Basic button styling to normalize */
+button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+/* Image optimization for responsiveness */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Removes extra space below images */
+}
