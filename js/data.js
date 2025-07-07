@@ -59,5 +59,30 @@ const products = [
     image: "https://m.media-amazon.com/images/I/71v-sB1lFmL._SL1500_.jpg",
     rating: 4.7,
     features: ["Tare function", "Multiple unit conversion (g, oz, ml, lb)", "LCD display", "Sleek, slim design"]
+  },
+{
+    id: "instant-pot-duo-7-in-1-electric-pressure-cooker",
+    name: "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
+    description: "7-in-1 functionality: pressure cooker, slow cooker, rice cooker, steamer, sauté pan, yogurt maker and warmer",
+    priceINR: 6999,
+    priceUSD: 85.48,
+    category: "cooking",
+    link: "https://amzn.to/3Go8aR6",
+    image: "https://m.media-amazon.com/images/I/81SQ-TvA+2L._SL1500.jpg",
+    rating: 4.6,
+    features: ["Keep Warm Setting", "Control Method-App","Controller Type-Push Button","Operation Mode-Automatic", "Voltage	230 Volts"]
+   },
+  {
+    id: "ninja-foodi-8-in-1-digital-air-fryer",
+    name: "Ninja Foodi 8-in-1 Digital Air Fryer",
+    description: "8-in-1 functionality: Air Fry, Air Roast, Bake, Reheat, Dehydrate, Air Broil, Bagel and Toast",
+    priceINR: 12999,
+    priceUSD: 158.82,
+    category: "cooking",
+    link: "https://amzn.to/3Tpn64r",
+    image: "https://m.media-amazon.com/images/I/81UnVRZkvbL._SL1500_.jpg",
+    rating: 4.6,
+    features: ["Automatic Shut-Off", "Output Wattage-1500 Watts", "Wattage-1500 Watts", "Voltage-120 Volts", "Control Method-Touch", "Min Temperature Setting	-75 Degrees Celsius", "Controller Type-Touch Panel"
+               "Max Temperature Setting-450 Degrees Fahrenheit"]
   }
 ];
