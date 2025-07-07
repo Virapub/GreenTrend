@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ${product.features.map(f => `<li>✔ ${f}</li>`).join("")}
         </ul>
       </div>
-      <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-btn">Buy Now on Amazon</a>
+      <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-btn">Buy Now</a>
       <p class="rating">Rating: ${"★".repeat(Math.floor(product.rating))}${product.rating % 1 ? "½" : ""} (${product.rating.toFixed(1)}/5)</p>
       <p class="category">Category: <span>${product.category}</span></p>
     </div>
