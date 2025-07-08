@@ -1,140 +1,138 @@
-/* ================== responsive.css ================== */
+/* Responsive styles */
 
-/* Medium devices (tablets, 992px and down) */
-@media (max-width: 992px) {
-  .nav-container {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start; /* Align logo and nav toggle to start */
-  }
-  nav {
-    width: 100%; /* Ensure nav takes full width when stacked */
-    justify-content: center; /* Center nav items horizontally */
-    gap: 1rem; /* Adjust gap for stacked items */
-  }
-  /* Footer adjustments */
-  .footer-container {
-    grid-template-columns: 1fr; /* Stack footer columns */
-    text-align: center;
-  }
-  .footer-col form {
-    max-width: 400px; /* Constrain form width in stacked layout */
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-/* Small devices (phones, 768px and down) */
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: block; /* Show hamburger icon */
-    align-self: flex-end; /* Push toggle to the right */
-  }
-  nav {
-    flex-direction: column;
-    width: 100%;
-    gap: 0; /* Remove gap for full-width menu items */
-    display: none; /* Hidden by default for mobile toggle */
-    box-shadow: 0 5px 15px var(--shadow); /* Add shadow to dropdown nav */
-  }
-  nav a {
-    padding: 1rem;
-    border-top: 1px solid var(--border);
-    width: 100%;
-    background-color: var(--white);
-    text-align: center; /* Center nav links */
-  }
-  nav a:last-child {
-      border-bottom: 1px solid var(--border); /* Add border to last item for clean look */
-  }
-  nav.show {
-    display: flex; /* Show nav menu when 'show' class is active */
-  }
+    .header-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-  /* Slider adjustments */
-  .slide img {
-    height: 250px; /* Smaller height for slides on mobile */
-  }
-  .slide-content {
-    padding: 1rem;
-    text-align: center; /* Center slider content */
-  }
-  .slide-content h3 {
-    font-size: 1.4rem;
-  }
-  .slide-content p {
-    font-size: 0.95rem;
-    max-width: 90%; /* Allow text to take more width */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .slider-nav button {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-  }
+    .logo {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
 
-  /* Product grid adjusts to single column */
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
+    .search-bar-desktop {
+        display: none; /* Hide desktop search bar on mobile */
+    }
 
-  /* Search bar adjustments */
-  .search-input {
-      padding: 0.85rem 1.5rem; /* Adjust padding for smaller screens */
-  }
-  .search-button {
-      right: 0.5rem; /* Adjust button position */
-  }
+    .search-bar-mobile {
+        display: flex; /* Show mobile search bar */
+        justify-content: center;
+        width: 100%;
+        padding: 0 20px; /* Ensure padding is consistent */
+        box-sizing: border-box;
+    }
+    .search-bar-mobile input[type="text"] {
+        flex-grow: 1;
+    }
 
-  /* Product detail page adjustments */
-  .product-detail-container {
-    flex-direction: column; /* Stack image and info */
-    padding: 1.5rem;
-  }
-  .product-image {
-    min-width: unset; /* Remove min-width to allow full flexibility */
-  }
-  .product-info {
-    min-width: unset; /* Remove min-width */
-  }
-  .product-info h2 {
-    font-size: 2rem;
-  }
-  .product-info .price {
-    font-size: 1.5rem;
-  }
-  .product-info .buy-btn {
-    width: 100%;
-    text-align: center;
-  }
+
+    .main-nav {
+        width: 100%;
+        justify-content: flex-end; /* Push toggle to the right */
+    }
+
+    .nav-toggle {
+        display: block; /* Show toggle button on mobile */
+        order: 1; /* Move to the right if needed */
+        margin-left: auto; /* Push to the far right */
+    }
+
+    .nav-menu {
+        display: none; /* Hide menu by default */
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        position: absolute;
+        top: 60px; /* Below header */
+        left: 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 10px 0;
+        z-index: 990;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Show menu when active */
+    }
+
+    .nav-menu li {
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .nav-menu li a {
+        padding: 10px 20px;
+        display: block; /* Make links clickable across full width */
+        font-size: 1.1rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding: 40px 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    /* Categories Grid */
+    .categories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Smaller cards on mobile */
+        gap: 15px;
+    }
+
+    .category-card img {
+        height: 100px;
+    }
+
+    /* Product Grid */
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjust product card size */
+        gap: 15px;
+    }
+
+    .product-card img {
+        height: 150px;
+    }
+
+    .product-details h3 {
+        font-size: 1.1rem;
+    }
+
+    .product-details .price {
+        font-size: 1.15rem;
+    }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .footer-column {
+        min-width: unset; /* Remove min-width on mobile */
+    }
+
+    .footer-column ul {
+        margin-bottom: 10px;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
 }
 
-/* Extra small devices (less than 480px) */
 @media (max-width: 480px) {
-    .logo {
-        font-size: 1.5rem;
+    .product-grid {
+        grid-template-columns: 1fr; /* Stack products on very small screens */
     }
-    .nav-container {
-        padding: 0.8rem 1rem;
-    }
-    .search-input {
-        font-size: 0.9rem;
-    }
-    .products h2 {
-        font-size: 1.75rem;
-    }
-    .product-info h2 {
-        font-size: 1.8rem;
-    }
-    .product-info .price {
-        font-size: 1.3rem;
-    }
-    .slide-content h3 {
-        font-size: 1.2rem;
-    }
-    .slide-btn {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
+    .categories-grid {
+        grid-template-columns: 1fr 1fr; /* 2 columns on very small screens */
     }
 }
