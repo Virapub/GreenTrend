@@ -3,7 +3,7 @@
 /* Section for the main hero heading with background image */
 .main-hero-section {
   /* Correction: 'background' property syntax updated */
-  background: url('../images/smart-kitchen-background.jpg') no-repeat center center / cover; /* Apni image ka path yahan daalein */
+  background: url('images/smart-kitchen-background.jpg') no-repeat center center / cover; /* Apni image ka path yahan daalein */
   position: relative; /* Added: Important for ::before pseudo-element */
   width: 100%;
   padding: 4rem 1.5rem; /* Padding adjust karein zaroorat ke hisaab se */
