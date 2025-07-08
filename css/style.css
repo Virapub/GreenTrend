@@ -1,5 +1,6 @@
-/* css/style.css */
+/* css/style.css - UPDATED VERSION */
 
+/* --- Base Styles --- */
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
@@ -13,7 +14,7 @@ body {
     padding: 0 20px;
 }
 
-/* Hero Section */
+/* --- Hero Section --- */
 .hero-section {
     background: url('../images/hero-bg.jpg') no-repeat center center/cover;
     color: white;
@@ -64,7 +65,7 @@ body {
 
 .cta-button {
     display: inline-block;
-    background-color: #f43397;
+    background-color: #f43397; /* Your primary action color */
     color: white;
     padding: 15px 30px;
     text-decoration: none;
@@ -79,7 +80,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Section Headings */
+/* --- Section Headings --- */
 section h2 {
     font-size: 2rem;
     color: #333;
@@ -100,8 +101,7 @@ section h2::after {
     border-radius: 2px;
 }
 
-
-/* Category Section */
+/* --- Category Section --- */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -150,7 +150,7 @@ section h2::after {
     display: block;
 }
 
-/* Products Section (for products.html) */
+/* --- Products Section (for products.html and featured products) --- */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -200,17 +200,21 @@ section h2::after {
     -webkit-box-orient: vertical;
 }
 
-.product-details .price {
+/* Price display styling for product cards */
+.product-card .price {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #f43397;
-    margin-top: auto;
+    /* Using a CSS variable if you've defined one, otherwise default to #f43397 */
+    color: var(--primary-color, #f43397);
+    margin-top: auto; /* Pushes price to the bottom in flex column */
     margin-bottom: 15px;
+    white-space: nowrap; /* Prevent price from wrapping */
 }
+
 
 .product-details .buy-btn {
     display: block;
-    background-color: #007bff;
+    background-color: #007bff; /* Button color for 'View Details' */
     color: white;
     padding: 10px 15px;
     text-align: center;
@@ -232,7 +236,7 @@ section h2::after {
 
 .view-all-button {
     display: inline-block;
-    background-color: #28a745;
+    background-color: #28a745; /* Green button */
     color: white;
     padding: 12px 25px;
     text-decoration: none;
@@ -247,7 +251,7 @@ section h2::after {
     transform: translateY(-2px);
 }
 
-/* Footer */
+/* --- Footer --- */
 .main-footer {
     background-color: #333;
     color: #f8f8f8;
@@ -324,7 +328,7 @@ section h2::after {
     color: #aaa;
 }
 
-/* Specific styling for All Products Page Heading */
+/* --- Specific styling for All Products Page Heading --- */
 .all-products-heading {
     text-align: center;
     font-size: 2.5rem;
@@ -333,7 +337,7 @@ section h2::after {
     color: #333;
 }
 
-/* Text Sections (About Us, Disclosure, Contact - common style for content pages) */
+/* --- Text Sections (About Us, Disclosure, Contact - common style for content pages) --- */
 .text-section {
     padding: 40px 20px;
     background-color: #fff;
@@ -357,7 +361,7 @@ section h2::after {
     line-height: 1.7;
 }
 
-/* Contact Form Specifics */
+/* --- Contact Form Specifics --- */
 .contact-form {
     display: flex;
     flex-direction: column;
@@ -397,7 +401,7 @@ section h2::after {
     background-color: #d12c82;
 }
 
-/* Product Details Page Specific Styles (Moved from product.html) */
+/* --- Product Details Page Specific Styles --- */
 .product-detail-container {
     display: flex;
     flex-direction: column; /* Default for mobile */
@@ -438,10 +442,11 @@ section h2::after {
     line-height: 1.2;
 }
 
+/* Price display styling for product detail page */
 .product-info .price-details {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #f43397; /* Meesho pink */
+    color: var(--primary-color, #f43397); /* Using a CSS variable, default to #f43397 */
     margin-bottom: 20px;
     display: flex;
     align-items: baseline;
@@ -497,10 +502,10 @@ section h2::after {
 }
 
 .product-features ul li::before {
-    font-family: "Font Awesome 5 Free"; /* Use Font Awesome 5 Free */
-    font-weight: 900; /* Solid icon */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     content: "\f00c"; /* Unicode for fa-check */
-    color: #28a745; /* Green checkmark */
+    color: #28a745;
     position: absolute;
     left: 0;
     top: 0;
@@ -511,11 +516,11 @@ section h2::after {
     display: flex;
     gap: 15px;
     margin-top: 25px;
-    flex-wrap: wrap; /* Wrap buttons on small screens */
+    flex-wrap: wrap;
 }
 
 .add-to-cart-btn, .buy-now-btn {
-    flex: 1; /* Allow buttons to take equal space */
+    flex: 1;
     padding: 15px 25px;
     border: none;
     border-radius: 5px;
@@ -524,11 +529,11 @@ section h2::after {
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     text-align: center;
-    white-space: nowrap; /* Prevent button text from wrapping */
+    white-space: nowrap;
 }
 
 .add-to-cart-btn {
-    background-color: #ff9800; /* Orange for Add to Cart */
+    background-color: #ff9800;
     color: white;
 }
 
@@ -538,7 +543,7 @@ section h2::after {
 }
 
 .buy-now-btn {
-    background-color: #f43397; /* Meesho pink */
+    background-color: #f43397;
     color: white;
 }
 
@@ -555,10 +560,11 @@ section h2::after {
     color: #777;
 }
 #product-detail-content.error {
-    color: #dc3545; /* Red for error */
+    color: #dc3545;
 }
-/* css/header.css or css/style.css */
 
+/* --- Currency Toggle Button Styling --- */
+/* This section was duplicated, moved and cleaned up here */
 .currency-toggle-button {
     background-color: #007bff; /* A nice blue */
     color: white;
@@ -572,108 +578,37 @@ section h2::after {
     transition: background-color 0.3s ease;
     min-width: 60px; /* Ensure consistent width */
     text-align: center;
+    flex-shrink: 0; /* Prevent button from shrinking on small screens */
 }
 
 .currency-toggle-button:hover {
     background-color: #0056b3;
 }
 
-/* Adjustments for responsive layout */
+/* Adjustments for responsive layout for currency toggle button */
 @media (max-width: 768px) {
     .currency-toggle-button {
-        order: 1; /* Place it before nav toggle on mobile if needed */
-        margin-left: auto; /* Push it to the right */
-        margin-right: 15px; /* Space from hamburger icon */
-        font-size: 0.85rem;
-        padding: 6px 10px;
-    }
-}
-
-/* Price display styling (optional, but good for consistency) */
-.product-card .price {
-    display: flex; /* To easily manage INR/USD spans */
-    align-items: baseline;
-    gap: 5px; /* Space between prices if both were shown, but we toggle display */
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-top: auto;
-    margin-bottom: 15px;
-}
-
-.product-card .price .inr-price,
-.product-card .price .usd-price {
-    white-space: nowrap; /* Prevent price from wrapping */
-    }
-    
-/* css/style.css OR css/header.css */
-
-/* --- Currency Toggle Button Styling --- */
-.currency-toggle-button {
-    background-color: #007bff; /* Aap apni website ke theme color ke hisaab se change kar sakte hain */
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-left: 15px; /* Button ko navigation links se thoda door rakhega */
-    transition: background-color 0.3s ease;
-    min-width: 60px; /* Button ki width consistent rakhega */
-    text-align: center;
-    flex-shrink: 0; /* Ensures button doesn't shrink on small screens */
-}
-
-.currency-toggle-button:hover {
-    background-color: #0056b3; /* Hover effect */
-}
-
-/* --- Responsive Adjustments for Currency Button (for smaller screens) --- */
-@media (max-width: 768px) {
-    .currency-toggle-button {
-        order: 0; /* Flexbox mein order set karta hai, taaki mobile par button logo ya nav toggle ke paas dikhe */
+        order: 0; /* Place it logically in flex order, e.g., before nav toggle */
         margin-left: 0;
-        margin-right: 10px; /* Hamburger icon se thoda space */
-        font-size: 0.8rem;
+        margin-right: 10px; /* Space from hamburger icon */
+        font-size: 0.85rem; /* Slightly smaller on mobile */
         padding: 6px 10px;
     }
-    /* Agar header-container flexbox hai, toh button ko right push karne ke liye */
+    /* Ensure header container is using flex to allow 'order' property to work */
     .header-container {
-        justify-content: space-between;
+        display: flex; /* Make sure this is flex for order to work */
+        justify-content: space-between; /* Distribute items */
+        align-items: center; /* Vertically align items */
     }
-    /* Agar nav bhi flex hai, toh button aur nav toggle ko align karne ke liye */
+    /* Main nav could also be flex for internal ordering */
     .main-nav {
         display: flex;
         align-items: center;
-        width: auto; /* Ensure nav doesn't take full width unnecessarily */
     }
 }
 
-/* --- Styling for Product Prices (both in product cards and detail page) --- */
-.product-card .price {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: var(--primary-color, #007bff); /* Agar aapne --primary-color CSS variable define kiya hai, toh use karein */
-    margin-top: auto; /* Agar product-details flex column hai, toh price ko bottom mein push karega */
-    margin-bottom: 15px;
-    white-space: nowrap; /* Price ko ek hi line mein rakhega */
-}
-
-/* Styling for Product Detail Page Price */
-.product-info .price-details {
-    font-size: 1.8rem; /* Bada font size for detail page price */
-    font-weight: bold;
-    color: var(--primary-color, #007bff);
-    margin-bottom: 20px;
-    display: flex; /* Original price ko side by side align karne ke liye */
-    align-items: baseline; /* Prices ki base line align karega */
-    gap: 15px; /* Original price aur current price ke beech space */
-}
-
-.product-info .price-details .original-price {
-    font-size: 1.2rem; /* Old price ke liye chhota font */
-    color: #888; /* Gray color for old price */
-    text-decoration: line-through; /* Strikethrough effect */
-    font-weight: normal;
+/* Fallback for --primary-color variable if not defined elsewhere.
+   It's good practice to define it in a :root pseudo-class at the very top of your CSS file. */
+:root {
+    --primary-color: #f43397; /* Define your primary color here if you haven't already */
 }
