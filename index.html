@@ -1,57 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Green Trend - Discover smart kitchen gadgets and deals. Your ultimate source for innovative kitchen tech and affiliate products." />
-  <title>Green Trend - Smart Kitchen Deals</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Green Trend - Discover smart kitchen gadgets and deals. Your ultimate source for innovative kitchen tech and affiliate products, similar to Meesho's clean look.">
+    <title>Green Trend - Smart Kitchen Deals (Meesho-like)</title>
 
-  <link rel="icon" href="images/favicon.ico" sizes="any" type="image/x-icon">
-  <link rel="apple-touch-icon" href="images/apple-touch-icon.png"> <link rel="preload" href="css/reset.css" as="style">
-  <link rel="preload" href="css/header.css" as="style">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
+    <link rel="icon" href="images/favicon.ico" sizes="any" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/search.css">
-  <link rel="stylesheet" href="css/slider.css">
-  <link rel="stylesheet" href="css/product-card.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preload" href="css/reset.css" as="style">
+    <link rel="preload" href="css/header.css" as="style">
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
-  </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
 <body>
 
-  <header>
-      <nav id="mainNav">
-          <button id="navToggle" aria-label="Toggle navigation">☰</button>
-          <ul id="navMenu">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="products.html">Products</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="contact.html">Contact</a></li>
-          </ul>
-      </nav>
-      <div class="search-container">
-          <input type="text" id="searchBox" placeholder="Search for products...">
-          <button class="search-button"><i class="fas fa-search"></i></button>
-          <div id="searchResults" class="search-results"></div>
-      </div>
-  </header>
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Green Trend Logo">
+            </a>
+            <div class="search-bar-desktop">
+                <input type="text" id="searchBox" placeholder="Search for products, categories, brands...">
+                <button class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            <nav class="main-nav">
+                <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="navMenu" class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="products.html"><i class="fas fa-box"></i> Products</a></li>
+                    <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                    <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-bar-mobile">
+            <input type="text" id="searchBoxMobile" placeholder="Search for products, categories, brands...">
+            <button class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+        </div>
+    </header>
 
-  <main>
-      <section id="product-list" class="product-grid">
-          </section>
-  </main>
+    <main class="container">
+        <section class="hero-section">
+            <h1>Discover Smart Kitchen Essentials</h1>
+            <p>Your one-stop shop for innovative gadgets and trending deals.</p>
+            <a href="products.html" class="cta-button">Shop Now</a>
+        </section>
 
-  <footer>
-      <p>&copy; 2023 Green Trend. All rights reserved.</p>
-  </footer>
+        <section class="category-section">
+            <h2>Top Categories</h2>
+            <div class="categories-grid">
+                <a href="#" class="category-card">
+                    <img src="images/cat1.jpg" alt="Blenders">
+                    <span>Blenders</span>
+                </a>
+                <a href="#" class="category-card">
+                    <img src="images/cat2.jpg" alt="Coffee Makers">
+                    <span>Coffee Makers</span>
+                </a>
+                <a href="#" class="category-card">
+                    <img src="images/cat3.jpg" alt="Air Fryers">
+                    <span>Air Fryers</span>
+                </a>
+                <a href="#" class="category-card">
+                    <img src="images/cat4.jpg" alt="Cookware">
+                    <span>Cookware</span>
+                </a>
+            </div>
+        </section>
 
-  <script src="js/main.js"></script>
+        <section class="products-section">
+            <h2>Featured Products</h2>
+            <div id="product-list" class="product-grid">
+                </div>
+            <div class="view-all-btn-container">
+                <a href="products.html" class="view-all-button">View All Products</a>
+            </div>
+        </section>
+    </main>
 
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-column">
+                <h3>Green Trend</h3>
+                <p>Innovative kitchen solutions for a smarter home.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> Green Trend. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
