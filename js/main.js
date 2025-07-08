@@ -1,6 +1,9 @@
+// js/main.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const productListDiv = document.getElementById("product-list");
   const searchBox = document.getElementById("searchBox");
+  const searchResultsDiv = document.getElementById("searchResults"); // Get the search results div
   const navToggleBtn = document.getElementById("navToggle");
   const navMenu = document.getElementById("navMenu");
 
@@ -38,65 +41,86 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Initial Display of products on products.html and index.html (if product-list exists)
-  // For index.html, we only want to show a subset, typically "top products".
-  // For products.html, we show all products.
-  if (productListDiv) { // Check if the product list container exists on the current page
+  if (productListDiv) {
       if (window.location.pathname.includes("products.html")) {
-          // On products.html, display all products
-          displayProducts(products);
+          displayProducts(products); // Assuming 'products' is available globally from data.js
       } else if (window.location.pathname.includes("index.html")) {
-          // On index.html, display a limited number of top products (e.g., first 3-6)
-          // You can define which products are "top" or just slice the array.
           displayProducts(products.slice(0, 6)); // Display top 6 products on homepage
       }
   }
 
+  // --- Search Functionality ---
+  if (searchBox && searchResultsDiv) { // Ensure search elements exist
+    const performSearch = () => {
+        const query = searchBox.value.toLowerCase().trim();
+        const filteredProducts = products.filter(product =>
+            product.name.toLowerCase().includes(query) ||
+            product.description.toLowerCase().includes(query) ||
+            product.category.toLowerCase().includes(query)
+        );
 
-  // Search Functionality (for both index.html and products.html)
-  if (searchBox) {
-    searchBox.addEventListener("input", () => {
-      const query = searchBox.value.toLowerCase().trim();
-      const filtered = products.filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query)
-      );
-
-      // Display search results in a dedicated search results area (e.g., dropdown)
-      // For simplicity, here we will just update the main product list on products.html
-      // or show a simple "no results" message if on index.html's search bar (no specific searchResults div shown here)
-      const currentPath = window.location.pathname;
-
-      if (currentPath.includes("products.html")) {
-        displayProducts(filtered); // Update product list on products.html
-      } else if (currentPath.includes("index.html")) {
-        // On index.html, you might want a separate search results overlay or simply
-        // link to products.html with the search query.
-        // For now, if on index.html, we'll just log the search and not change the main product display.
-        // If you had a #searchResults div, you'd populate that.
-        const searchResultsDiv = document.getElementById("searchResults");
-        if (searchResultsDiv) {
-            if (query === "") {
-                searchResultsDiv.innerHTML = "";
-                searchResultsDiv.style.display = "none";
-            } else if (filtered.length > 0) {
-                searchResultsDiv.innerHTML = filtered.map(product =>
-                    `<a href="product.html?id=${product.id}">${product.name}</a>`
-                ).join("");
-                searchResultsDiv.style.display = "block";
-            } else {
-                searchResultsDiv.innerHTML = "<p>No matches found.</p>";
-                searchResultsDiv.style.display = "block";
-            }
+        if (query === "") {
+            searchResultsDiv.innerHTML = "";
+            searchResultsDiv.style.display = "none";
+        } else if (filteredProducts.length > 0) {
+            searchResultsDiv.innerHTML = filteredProducts.map(product =>
+                `<a href="product.html?id=${product.id}">${product.name}</a>`
+            ).join("");
+            searchResultsDiv.style.display = "block";
+        } else {
+            searchResultsDiv.innerHTML = "<p>No matches found.</p>";
+            searchResultsDiv.style.display = "block";
         }
-      }
+
+        // On products.html, update the main product list
+        if (window.location.pathname.includes("products.html")) {
+            displayProducts(filteredProducts);
+        }
+    };
+
+    searchBox.addEventListener("input", performSearch); // Live search as user types
+
+    // Optional: If you also have a search button and want it to trigger search
+    const searchButton = document.querySelector('.search-button');
+    if (searchButton) {
+        searchButton.addEventListener("click", performSearch);
+    }
+
+    // Hide search results when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!searchBox.contains(event.target) && !searchResultsDiv.contains(event.target)) {
+            searchResultsDiv.style.display = 'none';
+        }
     });
+
+    // Handle pressing Enter key
+    searchBox.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            performSearch();
+            searchBox.blur(); // Hide keyboard on mobile after pressing Enter
+        }
+    });
+
+  } else {
+      console.warn("Search elements (searchBox or searchResults) not found.");
   }
 
-  // Responsive nav toggle (moved here from individual HTML files)
+  // --- Responsive nav toggle ---
   if (navToggleBtn && navMenu) {
     navToggleBtn.addEventListener("click", () => {
-      navMenu.classList.toggle("show");
+      navMenu.classList.toggle("active"); // Changed from "show" to "active"
     });
+
+    // Optional: Close menu when clicking outside
+    document.addEventListener('click', (event) => {
+        // Check if the click was outside the nav menu and not on the toggle button
+        if (!navMenu.contains(event.target) && !navToggleBtn.contains(event.target)) {
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        }
+    });
+  } else {
+      console.warn("Navigation elements (navToggleBtn or navMenu) not found.");
   }
 });
