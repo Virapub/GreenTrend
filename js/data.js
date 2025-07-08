@@ -82,5 +82,56 @@ const products = [
     image: "https://m.media-amazon.com/images/I/81UnVRZkvbL._SL1500_.jpg", // Consider optimizing image size/format for web performance.
     rating: 4.6,
     features: ["Automatic Shut-Off for safety", "Powerful 1500 Watts Output", "Voltage: 120 Volts (Note: Check compatibility for Indian voltage if targeting India)", "Touch Panel Control Method", "Wide Temperature Range: 75°C to 232°C (167°F to 450°F)"] // Clarified features
-  }
+  },
+  {
+    id: "ibell-smart-digital-kitchen-scale",
+    name: "iBell Smart Digital Kitchen Scale",
+    description: "Precision digital kitchen scale with LCD display, measures up to 5kg with 1g accuracy",
+    priceINR: 899,
+    priceUSD: 10.98,
+    category: "measuring",
+    link: "https://amzn.to/4nwJpml",
+    image: "https://m.media-amazon.com/images/I/41ZZg0CayBL.jpg",
+    rating: 4.2,
+    features: [Special Features	Portable
+Display Type	LCD
+Weight Capacity Maximum	0.2 Kilograms
+Form Factor	Mini
+Readout Accuracy	0.01g
+Weigh Scale Type	Counter Scale
+Measurement Type	Weight]
+  },
+  {
+    id: "wonderchef-nutri-blend-400w-mixer-grinder",
+    name: "Wonderchef Nutri-Blend 400W Mixer Grinder",
+    description: "High performance mixer grinder with 400W motor, 3 stainless steel jars and 2 years warranty",
+    priceINR: 3499,
+    priceUSD: 42.75,
+    category: "blenders",
+    link: "https://amzn.to/45ZhPIm",
+    image: "https://m.media-amazon.com/images/I/618cVgk6ELL._SL1080_.jpg",
+    rating: 4.3,
+    features: [
+Other Special Features of the Product	Preset Blend Modes | 6-leaf laser-cut stainless steel blades | Unbreakable jars
+Power Source Type	Electric
+Wattage	1200 Watts
+Number Of Speeds	4
+Voltage	220 Volts
+Controls Type	Push]
+  },
+  {
+    id: "morphy-richards-400-watt-hand-blender",
+    name: "Morphy Richards 400-Watt Hand Blender",
+    description: "400W powerful motor with 2 speed control, stainless steel blades and whisk attachment",
+    priceINR: 1999,
+    priceUSD: 24.42,
+    category: "blenders",
+    link: "https://amzn.to/4eC6HTT",
+    image: "https://m.media-amazon.com/images/I/61LRXlumFTL._SL1200_.jpg",
+    rating: 4.1,
+    features: [
+Power Source Type	Corded Electric
+Wattage	1500 Watts
+Materials & Care]
+      }
 ];
