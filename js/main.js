@@ -1,50 +1,87 @@
-// js/main.js
+// js/main.js - FINAL UPDATED VERSION (Includes all previous corrections for price display,
+//              affiliate links, ratings, categories, and HTML ID compatibility)
 
 // --- Global Variables ---
 let currentCurrency = 'INR'; // Default currency when page loads
-const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (e.g., 1 USD = 83.5 INR)
+// const USD_EXCHANGE_RATE = 83.5; // Not needed if priceUSD is directly in data.js, but kept for context.
 
 // --- Helper Functions ---
 
 // Function to format price based on the current currency
-// It takes the raw INR price as input
-function formatPrice(priceInINR) {
+// It now takes the product object directly to access both INR and USD prices
+function formatPrice(product) {
     if (currentCurrency === 'INR') {
-        return `₹${priceInINR.toLocaleString('en-IN')}`;
+        // Ensure priceINR is a number before using toLocaleString
+        const price = typeof product.priceINR === 'number' ? product.priceINR : parseFloat(product.priceINR);
+        return `₹${price.toLocaleString('en-IN')}`;
     } else {
-        const priceInUSD = (priceInINR / USD_EXCHANGE_RATE).toFixed(2);
-        return `$${priceInUSD}`;
+        // Use the pre-calculated priceUSD from the product data
+        const price = typeof product.priceUSD === 'number' ? product.priceUSD : parseFloat(product.priceUSD);
+        return `$${price.toFixed(2)}`;
     }
 }
 
 // Function to update all displayed prices on the current page
 function updateDisplayedPrices() {
     // 1. Update prices in all product cards (on Home/Products page)
-    document.querySelectorAll('.product-card .price').forEach(priceElement => {
-        // Ensure data-inr-price exists and is a number
-        const productPriceInINR = parseFloat(priceElement.dataset.inrPrice);
-        if (!isNaN(productPriceInINR)) {
-            // Find the span inside .price that holds the actual price text
-            let currentPriceSpan = priceElement.querySelector('.current-price');
-            if (!currentPriceSpan) {
-                // If .current-price span doesn't exist, create it (for robustness)
-                currentPriceSpan = document.createElement('span');
-                currentPriceSpan.className = 'current-price';
-                priceElement.appendChild(currentPriceSpan);
+    document.querySelectorAll('.product-card').forEach(cardElement => {
+        // Get product ID from the link inside the card
+        const linkElement = cardElement.querySelector('a');
+        if (linkElement && linkElement.href) {
+            // Use URL object for safer parsing of query parameters
+            const url = new URL(linkElement.href);
+            const productId = url.searchParams.get('id');
+            const product = products.find(p => p.id === productId);
+
+            if (product) {
+                const priceElement = cardElement.querySelector('.price');
+                let currentPriceSpan = priceElement.querySelector('.current-price');
+                if (!currentPriceSpan) {
+                    // If .current-price span doesn't exist, create it (for robustness)
+                    currentPriceSpan = document.createElement('span');
+                    currentPriceSpan.className = 'current-price';
+                    priceElement.appendChild(currentPriceSpan);
+                }
+                currentPriceSpan.textContent = formatPrice(product);
             }
-            currentPriceSpan.textContent = formatPrice(productPriceInINR);
         }
     });
 
     // 2. Update price on the single product detail page (product-detail.html)
     const detailPriceElement = document.getElementById('product-detail-price');
     if (detailPriceElement) {
-        const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
-        if (!isNaN(priceInINR)) {
-            detailPriceElement.textContent = formatPrice(priceInINR);
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            detailPriceElement.textContent = formatPrice(product);
+            // If you have an oldPrice element and want it to toggle currency too, you'd add similar logic here
+            // For now, oldPrice is displayed only in INR from data.js.
         }
     }
 }
+
+// Function to render star ratings
+function renderStars(rating) {
+    let starsHtml = '';
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+
+    for (let i = 0; i < fullStars; i++) {
+        starsHtml += '<i class="fas fa-star"></i>';
+    }
+    if (hasHalfStar) {
+        starsHtml += '<i class="fas fa-star-half-alt"></i>';
+    }
+    // Fill remaining with empty stars for a fixed 5-star display
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+        starsHtml += '<i class="far fa-star"></i>'; // 'far' for empty star icon
+    }
+    return starsHtml;
+}
+
 
 // --- Render Functions ---
 
@@ -62,13 +99,14 @@ function renderProducts(productList, containerId) {
     productList.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
+        // Corrected price rendering for dynamic display using formatPrice(product)
         productCard.innerHTML = `
             <a href="product-detail.html?id=${product.id}">
                 <img src="${product.image}" alt="${product.name}">
                 <div class="product-details">
                     <h3>${product.name}</h3>
-                    <div class="price" data-inr-price="${product.price}">
-                        <span class="current-price">${formatPrice(product.price)}</span>
+                    <div class="price">
+                        <span class="current-price">${formatPrice(product)}</span>
                     </div>
                     <button class="buy-btn">View Details</button>
                 </div>
@@ -93,6 +131,7 @@ function renderCategories(categoryList, containerId) {
 
     categoryList.forEach(category => {
         const categoryCard = document.createElement('a');
+        // Use category.slug for cleaner URLs
         categoryCard.href = `products.html?category=${category.slug}`;
         categoryCard.className = 'category-card';
         categoryCard.innerHTML = `
@@ -131,6 +170,9 @@ async function renderProductDetail(productId) {
         ? product.features.map(feature => `<li>${feature}</li>`).join('')
         : '';
 
+    // Use product.description for the short description, and product.details for the long one (if it exists)
+    const longDescription = product.details ? product.details : product.description;
+
     // Render product details
     contentDiv.innerHTML = `
         <div class="product-image-gallery">
@@ -139,12 +181,12 @@ async function renderProductDetail(productId) {
         <div class="product-info">
             <h1>${product.name}</h1>
             <div class="price-details">
-                <span id="product-detail-price" data-inr-price="${product.price}">${formatPrice(product.price)}</span>
+                <span id="product-detail-price">${formatPrice(product)}</span>
                 ${product.oldPrice ? `<span class="original-price">₹${product.oldPrice.toLocaleString('en-IN')}</span>` : ''}
             </div>
             <div class="rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                <span>(4.5/5)</span>
+                ${renderStars(product.rating)}
+                <span>(${product.rating}/5)</span>
             </div>
             <p>${product.description}</p>
             ${featuresHtml ? `
@@ -152,9 +194,9 @@ async function renderProductDetail(productId) {
                 <h3>Key Features:</h3>
                 <ul>${featuresHtml}</ul>
             </div>` : ''}
-            <p>${product.details}</p>
+            <p>${longDescription}</p>
             <div class="action-buttons">
-                <a href="${product.affiliateLink}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now on Amazon</a>
+                <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now on Amazon</a>
             </div>
         </div>
     `;
@@ -178,7 +220,8 @@ function setupSearch() {
         const filteredProducts = products.filter(product =>
             product.name.toLowerCase().includes(query.toLowerCase()) ||
             product.description.toLowerCase().includes(query.toLowerCase()) ||
-            product.category.toLowerCase().includes(query.toLowerCase())
+            (product.details && product.details.toLowerCase().includes(query.toLowerCase())) || // Search in 'details' too
+            product.category.toLowerCase().includes(query.toLowerCase()) // Search by category name
         );
 
         if (filteredProducts.length > 0) {
@@ -192,7 +235,7 @@ function setupSearch() {
             resultsContainer.style.display = 'block';
         } else {
             resultsContainer.innerHTML = '<div class="no-results-msg">No results found.</div>';
-            resultsContainer.style.display = 'block';
+            resultsResultsContainer.style.display = 'block';
         }
     };
 
@@ -215,11 +258,7 @@ function setupSearch() {
     }
 
     // Event listener for mobile search box (if you want real-time search on mobile too)
-    // For mobile, we generally don't show a dropdown like desktop due to space constraints.
-    // You might want to redirect to a search results page or implement a full-screen overlay for results.
-    // For now, it won't show a dropdown search result like desktop on mobile.
     if (searchBoxMobile) {
-        // You can add an event listener here if you want to trigger something on mobile search
         searchBoxMobile.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const query = e.target.value.trim();
@@ -265,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } else if (document.body.classList.contains('products-page')) {
         const urlParams = new URLSearchParams(window.location.search);
-        const categorySlug = urlParams.get('category');
+        const categorySlug = urlParams.get('category'); // We now get slug, but filter by category name
         const searchQuery = urlParams.get('search');
         const productsPageHeading = document.getElementById('all-products-heading');
 
@@ -275,13 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchQuery) {
             productsToRender = products.filter(p =>
                 p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                p.description.toLowerCase().includes(searchQuery.toLowerCase())
+                p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (p.details && p.details.toLowerCase().includes(searchQuery.toLowerCase()))
             );
             headingText = `Search Results for "${searchQuery}"`;
         } else if (categorySlug) {
+            // Find category by slug, then filter products by its name
             const selectedCategory = categories.find(cat => cat.slug === categorySlug);
             if (selectedCategory) {
-                productsToRender = products.filter(p => p.category === selectedCategory.slug);
+                productsToRender = products.filter(p => p.category === selectedCategory.name);
                 headingText = selectedCategory.name + ' Products';
             } else {
                 productsToRender = products; // Fallback to all if category not found
@@ -353,7 +394,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (event) => {
         const searchBox = document.getElementById('searchBox');
         const searchResults = document.getElementById('searchResults');
-        if (searchResults && !searchBox.contains(event.target) && !searchResults.contains(event.target)) {
+        // Check if the click was outside the search box and results
+        if (searchResults && searchBox && !searchBox.contains(event.target) && !searchResults.contains(event.target)) {
             searchResults.style.display = 'none';
         }
     });
