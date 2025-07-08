@@ -1,66 +1,124 @@
-/* ================== header.css ================== */
+/* header.css */
+
+:root {
+  --primary: #2a9d8f; /* Greenish teal */
+  --primary-dark: #264653; /* Dark blue/green */
+  --secondary: #e9c46a; /* Goldenrod */
+  --accent: #f4a261; /* Orange */
+  --danger: #e76f51; /* Red-orange */
+  --text: #333;
+  --light-text: #666;
+  --white: #fff;
+  --light-grey: #f8f8f8;
+  --border: #ddd;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+  --font-heading: 'Poppins', sans-serif; /* Example font */
+  --font-body: 'Open Sans', sans-serif; /* Example font */
+}
+
 header {
-  background: var(--white);
-  box-shadow: 0 2px 10px var(--shadow);
+  background-color: var(--white);
+  box-shadow: 0 2px 8px var(--shadow);
   position: sticky;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
+  padding: 1rem 0;
 }
+
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
+
+/* Logo styling */
 .logo {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--primary);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  /* Removed font specific styles as it's an image now */
 }
-.logo::before {
-  content: "⚡"; /* This is already defined, logo text includes it too. Consider removing this pseudo-element if the text emoji is sufficient. */
-  font-size: 1.5rem;
+
+.logo .site-logo {
+  height: 50px; /* Logo ki height adjust karein */
+  width: auto; /* Width auto rahegi, aspect ratio maintain karne ke liye */
+  max-width: 180px; /* Max width set karein taaki bahut badi na ho jaye */
+  vertical-align: middle; /* Align with text if any */
 }
+
 nav {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
+
 nav a {
+  color: var(--text);
   text-decoration: none;
-  color: var(--dark);
   font-weight: 500;
-  font-size: 1.1rem;
-  transition: var(--transition);
-  position: relative;
   padding: 0.5rem 0;
+  position: relative;
+  transition: var(--transition);
 }
-nav a:hover,
-nav a.active {
-  color: var(--primary);
-}
+
 nav a::after {
   content: '';
   position: absolute;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   width: 0;
   height: 2px;
   background-color: var(--primary);
-  transition: width var(--transition);
+  transition: var(--transition);
 }
+
 nav a:hover::after,
 nav a.active::after {
   width: 100%;
 }
+
 .nav-toggle {
-  display: none; /* Hidden by default, shown in responsive.css */
+  display: none; /* Hide on desktop */
   background: none;
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: var(--primary);
+  color: var(--primary-dark);
+}
+
+/* Responsive adjustments for header (existing, just for context) */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-wrap: wrap; /* Allow wrapping for logo and toggle */
+    justify-content: space-between;
+  }
+  nav {
+    display: none; /* Hide by default on mobile */
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  nav.active {
+    display: flex; /* Show when active */
+  }
+  nav a {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  nav a:last-child {
+    border-bottom: none;
+  }
+  .nav-toggle {
+    display: block; /* Show toggle button on mobile */
+  }
+  .logo .site-logo {
+    height: 40px; /* Smaller logo on mobile */
+    max-width: 150px;
+  }
 }
