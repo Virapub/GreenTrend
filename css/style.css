@@ -557,3 +557,52 @@ section h2::after {
 #product-detail-content.error {
     color: #dc3545; /* Red for error */
 }
+/* css/header.css or css/style.css */
+
+.currency-toggle-button {
+    background-color: #007bff; /* A nice blue */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 15px; /* Space from navigation links or search bar */
+    transition: background-color 0.3s ease;
+    min-width: 60px; /* Ensure consistent width */
+    text-align: center;
+}
+
+.currency-toggle-button:hover {
+    background-color: #0056b3;
+}
+
+/* Adjustments for responsive layout */
+@media (max-width: 768px) {
+    .currency-toggle-button {
+        order: 1; /* Place it before nav toggle on mobile if needed */
+        margin-left: auto; /* Push it to the right */
+        margin-right: 15px; /* Space from hamburger icon */
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+}
+
+/* Price display styling (optional, but good for consistency) */
+.product-card .price {
+    display: flex; /* To easily manage INR/USD spans */
+    align-items: baseline;
+    gap: 5px; /* Space between prices if both were shown, but we toggle display */
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+.product-card .price .inr-price,
+.product-card .price .usd-price {
+    white-space: nowrap; /* Prevent price from wrapping */
+    }
+    
