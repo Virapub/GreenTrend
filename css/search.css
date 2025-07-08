@@ -1,53 +1,20 @@
 /* search.css */
 
-/* Section for the main hero heading with background image */
-.main-hero-section {
-  background: url('../images/smart-kitchen-background.jpg') no-repeat center center / cover;
-  position: relative;
-  width: 100%;
-  padding: 4rem 1.5rem; /* Default padding for larger screens */
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 250px; /* Default min-height for larger screens */
-  margin-bottom: 2rem;
-  overflow: hidden;
-}
+/* main-hero-section styles removed entirely as this section is no longer present */
 
-/* Background overlay for the hero section */
-.main-hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Default dark overlay */
-  z-index: 1;
-}
-
-/* Styling for the heading inside the hero section */
-.main-hero-section h2 {
-  font-size: 2.8rem;
-  color: var(--white);
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
-  z-index: 2;
-  position: relative;
-  margin-bottom: 0;
-}
-
-/* Search bar container - NO background image here */
+/* Search bar container */
 .search-container {
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0;
-  margin: 0 auto 2rem;
+  /* Ab header ke andar hai, toh margin ki zaroorat nahi */
+  /* margin: 0 auto 2rem; */
+  padding: 0.5rem 1.5rem; /* Header ke andar ki padding */
   width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Optional: Bottom shadow for search bar */
+  background-color: var(--white); /* Search bar ka background */
 }
 
-/* Search bar and input styles (no changes needed here from previous version unless specifically requested) */
+/* Search bar and input styles */
 .search-bar {
   position: relative;
   width: 100%;
@@ -56,19 +23,21 @@
 
 .search-input {
   width: 100%;
-  padding: 0.85rem 3rem 0.85rem 1.5rem;
-  border: 2px solid var(--border);
+  padding: 0.7rem 3rem 0.7rem 1.5rem; /* Padding adjust ki */
+  border: 1px solid var(--border); /* Border thoda kam kiya */
   border-radius: 2rem;
   font-size: 1rem;
   transition: var(--transition);
-  box-shadow: 0 2px 8px var(--shadow);
+  box-shadow: none; /* Header ke andar hai toh shadow ki zaroorat nahi */
+  background-color: var(--light-grey); /* Light background for input */
   color: var(--dark);
 }
 
 .search-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
+  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2); /* Focus shadow */
+  background-color: var(--white);
 }
 
 .search-button {
@@ -80,7 +49,7 @@
   border: none;
   color: var(--primary);
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.1rem; /* Icon size thoda kam kiya */
   transition: var(--transition);
 }
 
@@ -88,45 +57,31 @@
   color: var(--primary-dark);
 }
 
-/* --- Responsive adjustments for Mobile --- */
+/* Responsive adjustments for the search bar */
 @media (max-width: 768px) {
-  .main-hero-section {
-    padding: 2.5rem 1rem; /* Slightly reduced padding for mobile */
-    min-height: 180px; /* Reduced min-height for mobile */
-    /* Optional: background-position adjust for mobile if parts are cut off */
-    /* background-position: center 30%; /* Example: focus more on top part of image */
-    background-color: #888; /* Fallback for very small screens or if image fails */
-  }
-
-  /* Overlay adjustment for mobile */
-  .main-hero-section::before {
-    background-color: rgba(0, 0, 0, 0.3); /* Slightly lighter overlay for mobile */
-  }
-
-  .main-hero-section h2 {
-    font-size: 1.8rem; /* Adjusted heading size for mobile */
-    line-height: 1.3; /* Better line spacing for long text on small screens */
-  }
-
   .search-container {
-      padding: 1rem 1rem; /* Adjust padding for smaller screens, add horizontal padding */
+    padding: 0.5rem 1rem; /* Mobile par padding adjust ki */
+  }
+  .search-input {
+    padding: 0.6rem 2.8rem 0.6rem 1rem; /* Mobile input padding */
+    font-size: 0.9rem;
+  }
+  .search-button {
+    right: 0.8rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-    .main-hero-section {
-        padding: 2rem 0.8rem; /* Further reduced padding */
-        min-height: 150px; /* Further reduced min-height */
-    }
-    .main-hero-section h2 {
-        font-size: 1.5rem; /* Even smaller font size for very small screens */
-        /* If text is still too long, consider max-width or text-wrap balance */
-    }
-    .search-input {
-        padding: 0.75rem 2.5rem 0.75rem 1rem; /* Adjust search input padding */
-    }
-    .search-button {
-        right: 0.5rem; /* Adjust search button position */
-        font-size: 1rem;
-    }
+  .search-container {
+    padding: 0.4rem 0.8rem;
+  }
+  .search-input {
+    padding: 0.5rem 2.5rem 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  .search-button {
+    right: 0.6rem;
+    font-size: 0.9rem;
+  }
 }
