@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="action-buttons">
                     <button class="add-to-cart-btn">Add to Cart</button>
-                    <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy on Amazon <i class="fas fa-external-link-alt"></i></a>
+                    <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
         `;
