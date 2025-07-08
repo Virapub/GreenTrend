@@ -1,142 +1,8 @@
 /* search.css */
-.search-container {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem 0;
-  background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(233,196,106,0.04));
-  margin: 0 auto 2rem;
-  width: 100%;
-}
-.search-bar {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-}
-.search-input {
-  width: 100%;
-  padding: 0.85rem 3rem 0.85rem 1.5rem;
-  border: 2px solid var(--border);
-  border-radius: 2rem;
-  font-size: 1rem;
-  transition: var(--transition);
-  box-shadow: 0 2px 8px var(--shadow);
-}
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
-}
-.search-button {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--primary);
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: var(--transition);
-}
-.search-button:hover {
-  color: var(--primary-dark);
-}
-/* search.css */
-.search-container {
-  display: flex;
-  justify-content: center;
-  padding: 3rem 0; /* Padding badhaya taaki background image ke liye jagah mile */
-  /* Purana background gradient hataya, naya image background lagaya */
-  background: url('../images/smart-kitchen-background.jpg') no-repeat center center / cover; /* Yahan apni image ka path daalein */
-  position: relative; /* Relative positioning for pseudo-element overlay */
-  margin: 0 auto 2rem;
-  width: 100%;
-  color: var(--white); /* Text color white kiya taaki background par dikhe */
-  text-align: center; /* Text ko center kiya */
-  min-height: 200px; /* Minimum height di taaki image dikhe */
-  display: flex; /* Flexbox properties for centering content */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
-/* Background overlay ke liye naya pseudo-element */
-.search-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text readability */
-  z-index: 1; /* Search bar ke peeche rahe */
-}
-
-.search-bar {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  z-index: 2; /* Search bar ko overlay ke upar rakha */
-}
-
-/* Search input aur button ke styles */
-.search-input {
-  width: 100%;
-  padding: 0.85rem 3rem 0.85rem 1.5rem;
-  border: 2px solid var(--border);
-  border-radius: 2rem;
-  font-size: 1rem;
-  transition: var(--transition);
-  box-shadow: 0 2px 8px var(--shadow);
-  background-color: rgba(255, 255, 255, 0.9); /* Thoda transparent white background */
-  color: var(--dark);
-}
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
-}
-.search-button {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--primary);
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: var(--transition);
-  z-index: 3; /* Button ko search input ke upar rakha */
-}
-.search-button:hover {
-  color: var(--primary-dark);
-}
-
-/* Naya style "Discovering Trending Smart Kitchen Gadgets" text ke liye */
-.search-container h2 {
-    font-size: 2.5rem;
-    color: var(--white);
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7); /* Text shadow for readability */
-    z-index: 2; /* Text ko overlay ke upar rakha */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .search-container {
-    padding: 2rem 0;
-    min-height: 150px;
-  }
-  .search-container h2 {
-    font-size: 1.8rem;
-  }
-}
-/* search.css */
-
-/* Naya section jahan background image chahiye */
+/* Section for the main hero heading with background image */
 .main-hero-section {
-  background: url('../images/smart-kitchen-background.jpg') no-repeat center center / cover; /* Apni image ka path daalein */
+  background: url('../images/smart-kitchen-background.jpg') no-repeat center center / cover; /* Apni image ka path yahan daalein */
   position: relative;
   width: 100%;
   padding: 4rem 1.5rem; /* Padding adjust karein zaroorat ke hisaab se */
@@ -147,9 +13,10 @@
   justify-content: center;
   min-height: 250px; /* Minimum height for visibility */
   margin-bottom: 2rem; /* Search bar ke upar space */
+  overflow: hidden; /* Ensure content doesn't spill out */
 }
 
-/* Background overlay */
+/* Background overlay for the hero section */
 .main-hero-section::before {
   content: '';
   position: absolute;
@@ -161,30 +28,35 @@
   z-index: 1;
 }
 
+/* Styling for the heading inside the hero section */
 .main-hero-section h2 {
   font-size: 2.8rem; /* Heading size badhaya */
   color: var(--white);
   text-shadow: 2px 2px 6px rgba(0,0,0,0.8); /* Stronger text shadow */
   z-index: 2; /* Overlay ke upar */
   position: relative; /* Z-index apply karne ke liye */
-  margin-bottom: 0; /* No margin below heading if search bar is separate */
+  margin-bottom: 0; /* No margin below heading */
 }
 
-/* Ab search-container ke styles, jahan background nahi chahiye */
+/* Search bar container - NO background image here */
 .search-container {
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0; /* Purana padding wapas */
-  /* background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(233,196,106,0.04)); */ /* Yeh line hata do */
-  margin: 0 auto 2rem;
+  padding: 1.5rem 0; /* Standard padding */
+  /* background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(233,196,106,0.04)); */
+  /* Above line is commented out/removed as per your request to remove background from search bar */
+  margin: 0 auto 2rem; /* Consistent margin */
   width: 100%;
 }
+
+/* Search bar and input styles */
 .search-bar {
   position: relative;
   width: 100%;
   max-width: 600px;
-  z-index: 2; /* Z-index for search bar */
+  /* z-index removed from here, as it's not strictly needed here unless overlapping other elements */
 }
+
 .search-input {
   width: 100%;
   padding: 0.85rem 3rem 0.85rem 1.5rem;
@@ -193,12 +65,16 @@
   font-size: 1rem;
   transition: var(--transition);
   box-shadow: 0 2px 8px var(--shadow);
+  /* background-color: rgba(255, 255, 255, 0.9); /* Thoda transparent white background - remove if not desired */
+  color: var(--dark); /* Standard text color */
 }
+
 .search-input:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
 }
+
 .search-button {
   position: absolute;
   right: 1rem;
@@ -210,12 +86,14 @@
   cursor: pointer;
   font-size: 1.2rem;
   transition: var(--transition);
+  /* z-index removed from here, as it's not strictly needed unless overlapping other elements */
 }
+
 .search-button:hover {
   color: var(--primary-dark);
 }
 
-/* Responsive adjustments for the new hero section */
+/* Responsive adjustments for the hero section */
 @media (max-width: 768px) {
   .main-hero-section {
     padding: 3rem 1rem;
@@ -224,6 +102,10 @@
   .main-hero-section h2 {
     font-size: 2rem;
   }
+  /* search-container specific adjustments for smaller screens if needed */
+  .search-container {
+      padding: 1rem 0; /* Adjust padding for smaller screens */
+  }
 }
 
 @media (max-width: 480px) {
@@ -231,4 +113,3 @@
         font-size: 1.7rem;
     }
 }
-
