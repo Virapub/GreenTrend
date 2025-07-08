@@ -25,7 +25,7 @@ header {
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 1rem 0; /* Default padding */
 }
 
 .nav-container {
@@ -34,45 +34,39 @@ header {
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1.5rem; /* Default padding */
 }
 
 /* Logo and Site Name Container */
 .logo {
-  display: flex; /* Make it a flex container to align logo and text */
-  align-items: center; /* Vertically align image and text */
-  gap: 0.5rem; /* Space between logo image and text */
-}
-
-.logo-link { /* New class for the anchor tag wrapping logo and text */
   display: flex;
   align-items: center;
-  text-decoration: none; /* Remove underline from the link */
-  color: var(--text); /* Set a default color for the link text */
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text);
 }
 
 .site-logo {
-  height: 50px; /* Logo ki height adjust karein */
-  width: auto; /* Width auto rahegi, aspect ratio maintain karne ke liye */
-  max-width: 180px; /* Max width set karein taaki bahut badi na ho jaye */
+  height: 50px;
+  width: auto;
+  max-width: 180px;
   vertical-align: middle;
+  display: block;
 }
 
 .site-name {
-  font-family: var(--font-heading); /* Use a consistent font */
-  font-size: 1.8rem; /* Adjust font size as needed */
-  font-weight: 700; /* Make it bold */
-  color: var(--primary-dark); /* Color greenTrend text */
-  white-space: nowrap; /* Prevent text from wrapping */
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  white-space: nowrap;
+  line-height: 1;
 }
-/* Optional: "GreenTrend" me 'Green' aur 'Trend' ko alag color dene ke liye */
-.site-name span:first-child {
-  color: var(--primary); /* 'Green' ko primary color de sakte hain */
-}
-.site-name span:last-child {
-  color: var(--primary-dark); /* 'Trend' ko primary-dark color de sakte hain */
-}
-
 
 nav {
   display: flex;
@@ -105,7 +99,7 @@ nav a.active::after {
 }
 
 .nav-toggle {
-  display: none; /* Hide on desktop */
+  display: none;
   background: none;
   border: none;
   font-size: 2rem;
@@ -115,9 +109,14 @@ nav a.active::after {
 
 /* Responsive adjustments for header */
 @media (max-width: 768px) {
+  header {
+    padding: 0.8rem 0; /* Header ki top/bottom padding kam ki */
+  }
+
   .nav-container {
     flex-wrap: wrap;
     justify-content: space-between;
+    padding: 0 1rem; /* Nav container ki horizontal padding kam ki */
   }
   nav {
     display: none;
@@ -125,13 +124,13 @@ nav a.active::after {
     width: 100%;
     gap: 0;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.5rem; /* Nav menu ki top margin kam ki */
   }
   nav.active {
     display: flex;
   }
   nav a {
-    padding: 0.8rem 0;
+    padding: 0.6rem 0; /* Nav items ki padding kam ki */
     border-bottom: 1px solid var(--border);
   }
   nav a:last-child {
@@ -141,18 +140,29 @@ nav a.active::after {
     display: block;
   }
 
-  /* Mobile specific logo/site-name adjustments */
   .site-logo {
-    height: 40px; /* Smaller logo on mobile */
-    max-width: 150px;
+    height: 35px; /* Logo size aur kam kiya mobile ke liye */
+    max-width: 130px;
   }
   .site-name {
-    font-size: 1.4rem; /* Smaller text size on mobile */
+    font-size: 1.2rem; /* Text size aur kam kiya mobile ke liye */
   }
 }
 
 @media (max-width: 480px) {
+    header {
+        padding: 0.5rem 0; /* Even less padding for very small screens */
+    }
+    .nav-container {
+        padding: 0 0.8rem;
+    }
+    .site-logo {
+        height: 30px; /* Smallest logo size */
+    }
     .site-name {
-        font-size: 1.2rem; /* Even smaller text size on very small mobile screens */
+        font-size: 1.1rem; /* Smallest text size */
+    }
+    nav a {
+        padding: 0.5rem 0;
     }
 }
