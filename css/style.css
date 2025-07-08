@@ -606,3 +606,74 @@ section h2::after {
     white-space: nowrap; /* Prevent price from wrapping */
     }
     
+/* css/style.css OR css/header.css */
+
+/* --- Currency Toggle Button Styling --- */
+.currency-toggle-button {
+    background-color: #007bff; /* Aap apni website ke theme color ke hisaab se change kar sakte hain */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 15px; /* Button ko navigation links se thoda door rakhega */
+    transition: background-color 0.3s ease;
+    min-width: 60px; /* Button ki width consistent rakhega */
+    text-align: center;
+    flex-shrink: 0; /* Ensures button doesn't shrink on small screens */
+}
+
+.currency-toggle-button:hover {
+    background-color: #0056b3; /* Hover effect */
+}
+
+/* --- Responsive Adjustments for Currency Button (for smaller screens) --- */
+@media (max-width: 768px) {
+    .currency-toggle-button {
+        order: 0; /* Flexbox mein order set karta hai, taaki mobile par button logo ya nav toggle ke paas dikhe */
+        margin-left: 0;
+        margin-right: 10px; /* Hamburger icon se thoda space */
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+    /* Agar header-container flexbox hai, toh button ko right push karne ke liye */
+    .header-container {
+        justify-content: space-between;
+    }
+    /* Agar nav bhi flex hai, toh button aur nav toggle ko align karne ke liye */
+    .main-nav {
+        display: flex;
+        align-items: center;
+        width: auto; /* Ensure nav doesn't take full width unnecessarily */
+    }
+}
+
+/* --- Styling for Product Prices (both in product cards and detail page) --- */
+.product-card .price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary-color, #007bff); /* Agar aapne --primary-color CSS variable define kiya hai, toh use karein */
+    margin-top: auto; /* Agar product-details flex column hai, toh price ko bottom mein push karega */
+    margin-bottom: 15px;
+    white-space: nowrap; /* Price ko ek hi line mein rakhega */
+}
+
+/* Styling for Product Detail Page Price */
+.product-info .price-details {
+    font-size: 1.8rem; /* Bada font size for detail page price */
+    font-weight: bold;
+    color: var(--primary-color, #007bff);
+    margin-bottom: 20px;
+    display: flex; /* Original price ko side by side align karne ke liye */
+    align-items: baseline; /* Prices ki base line align karega */
+    gap: 15px; /* Original price aur current price ke beech space */
+}
+
+.product-info .price-details .original-price {
+    font-size: 1.2rem; /* Old price ke liye chhota font */
+    color: #888; /* Gray color for old price */
+    text-decoration: line-through; /* Strikethrough effect */
+    font-weight: normal;
+}
