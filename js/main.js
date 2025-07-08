@@ -232,3 +232,174 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Navigation toggle button or menu not found. Menu functionality may not work.");
     }
 });
+// js/main.js
+
+// Global variables for currency
+let currentCurrency = 'INR'; // Default currency
+const USD_EXCHANGE_RATE = 83.5; // Example: 1 USD = 83.5 INR (Update this regularly!)
+
+// Function to format price based on currency
+function formatPrice(priceInINR) {
+    if (currentCurrency === 'INR') {
+        return `₹${priceInINR.toLocaleString('en-IN')}`;
+    } else {
+        const priceInUSD = (priceInINR / USD_EXCHANGE_RATE).toFixed(2); // Keep 2 decimal places
+        return `$${priceInUSD}`;
+    }
+}
+
+// Function to render products (updated to show both prices or current price)
+function renderProducts(productList, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return; // Exit if container not found
+
+    container.innerHTML = ''; // Clear previous products
+
+    productList.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <a href="product-detail.html?id=${product.id}">
+                <img src="${product.image}" alt="${product.name}">
+                <div class="product-details">
+                    <h3>${product.name}</h3>
+                    <div class="price">
+                        <span class="inr-price">${formatPrice(product.price)}</span>
+                        <span class="usd-price" style="display: none;">${formatPrice(product.price)}</span>
+                    </div>
+                    <button class="buy-btn">View Details</button>
+                </div>
+            </a>
+        `;
+        container.appendChild(productCard);
+    });
+
+    // Initial display of prices based on currentCurrency
+    updateDisplayedPrices();
+}
+
+
+// Function to render categories (no change needed here for currency)
+function renderCategories(categoryList, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return; // Exit if container not found
+
+    container.innerHTML = '';
+    categoryList.forEach(category => {
+        const categoryCard = document.createElement('a');
+        categoryCard.href = `products.html?category=${category.slug}`;
+        categoryCard.className = 'category-card';
+        categoryCard.innerHTML = `
+            <img src="${category.image}" alt="${category.name}">
+            <span>${category.name}</span>
+        `;
+        container.appendChild(categoryCard);
+    });
+}
+
+// Function to update all displayed prices
+function updateDisplayedPrices() {
+    document.querySelectorAll('.product-card .price').forEach(priceElement => {
+        const inrSpan = priceElement.querySelector('.inr-price');
+        const usdSpan = priceElement.querySelector('.usd-price');
+
+        if (currentCurrency === 'INR') {
+            inrSpan.style.display = 'inline';
+            usdSpan.style.display = 'none';
+        } else {
+            inrSpan.style.display = 'none';
+            usdSpan.style.display = 'inline';
+        }
+    });
+
+    // Update product detail page price if on that page
+    const detailPriceElement = document.getElementById('product-detail-price');
+    if (detailPriceElement) {
+        const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
+        if (!isNaN(priceInINR)) {
+            detailPriceElement.textContent = formatPrice(priceInINR);
+        }
+    }
+}
+
+
+// Event Listener for Currency Toggle Button
+document.addEventListener('DOMContentLoaded', () => {
+    // Render initial content
+    renderCategories(categories, 'category-list');
+    renderProducts(featuredProducts, 'featured-product-list');
+
+    // Setup currency toggle
+    const currencyToggleButton = document.getElementById('currency-toggle-button');
+    if (currencyToggleButton) {
+        currencyToggleButton.textContent = currentCurrency; // Set initial text
+        currencyToggleButton.addEventListener('click', () => {
+            currentCurrency = currentCurrency === 'INR' ? 'USD' : 'INR';
+            currencyToggleButton.textContent = currentCurrency;
+            updateDisplayedPrices(); // Update all prices on the page
+        });
+    }
+
+    // Check if on product detail page and render specific product
+    if (document.body.classList.contains('product-detail-page')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        if (productId) {
+            renderProductDetail(productId); // This function will also call updateDisplayedPrices for the detail page
+        }
+    }
+
+    // Initialize search functionality (if you have it)
+    setupSearch(); // Assuming you have a setupSearch function
+});
+
+
+// Product Detail Page Specific Rendering Function (Add this if not already present, or modify)
+async function renderProductDetail(productId) {
+    const product = products.find(p => p.id === productId);
+    const contentDiv = document.getElementById('product-detail-content');
+
+    if (!product) {
+        contentDiv.innerHTML = '<div class="error">Product not found.</div>';
+        contentDiv.classList.add('error');
+        return;
+    }
+
+    contentDiv.classList.remove('loading', 'error');
+
+    document.title = `${product.name} - GreenTrend`; // Update page title
+
+    const featuresHtml = product.features.map(feature => `<li>${feature}</li>`).join('');
+
+    contentDiv.innerHTML = `
+        <div class="product-image-gallery">
+            <img src="${product.image}" alt="${product.name}" class="product-main-image">
+        </div>
+        <div class="product-info">
+            <h1>${product.name}</h1>
+            <div class="price-details">
+                <span id="product-detail-price" data-inr-price="${product.price}">${formatPrice(product.price)}</span>
+                ${product.oldPrice ? `<span class="original-price">₹${product.oldPrice.toLocaleString('en-IN')}</span>` : ''}
+            </div>
+            <div class="rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                <span>(4.5/5)</span>
+            </div>
+            <p>${product.description}</p>
+            ${product.features && product.features.length > 0 ? `
+            <div class="product-features">
+                <h3>Key Features:</h3>
+                <ul>${featuresHtml}</ul>
+            </div>` : ''}
+            <p>${product.details}</p>
+            <div class="action-buttons">
+                <a href="${product.affiliateLink}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now on Amazon</a>
+            </div>
+        </div>
+    `;
+
+    // Important: Update displayed prices for the detail page after rendering
+    updateDisplayedPrices();
+}
+
+// ... (Rest of your main.js code, like setupSearch, etc.) ...
