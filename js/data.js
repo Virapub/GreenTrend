@@ -42,8 +42,8 @@ const products = [
     priceINR: 999,
     priceUSD: 11.67, // USD price (approx)
     category: "Appliances", // Consistent category name
-    link: "https://amzn.to/your-mini-chopper-link", // IMPORTANT: REPLACE WITH YOUR ACTUAL AMAZON AFFILIATE LINK.
-    image: "https://m.media-amazon.com/images/I/71b2k7+vKBL._SL1500_.jpg", // SUGGESTION: Download, optimize, and host this image on your server for better performance.
+    link: "https://amzn.to/44k5wVJ", // IMPORTANT: REPLACE WITH YOUR ACTUAL AMAZON AFFILIATE LINK.
+    image: "https://m.media-amazon.com/images/I/71heLXktbuL._SL1200_.jpg", // SUGGESTION: Download, optimize, and host this image on your server for better performance.
     rating: 4.6,
     features: ["USB rechargeable for cordless convenience", "One-button operation for ease of use", "Easy to clean components", "Portable design for small kitchens or travel", "Capacity: 250ml (approx)"] // Added capacity
   },
@@ -54,8 +54,8 @@ const products = [
     priceINR: 850,
     priceUSD: 9.93, // USD price (approx)
     category: "Smart Gadgets", // Consistent category name
-    link: "https://amzn.to/your-kitchen-scale-link", // IMPORTANT: REPLACE WITH YOUR ACTUAL AMAZON AFFILIATE LINK.
-    image: "https://m.media-amazon.com/images/I/71v-sB1lFmL._SL1500_.jpg", // SUGGESTION: Download, optimize, and host this image on your server for better performance.
+    link: "https://amzn.to/3Iffdfu", // IMPORTANT: REPLACE WITH YOUR ACTUAL AMAZON AFFILIATE LINK.
+    image: "https://m.media-amazon.com/images/I/31VsuZSjjBL.jpg", // SUGGESTION: Download, optimize, and host this image on your server for better performance.
     rating: 4.7,
     features: ["Tare function for zeroing containers", "Multiple unit conversion (g, oz, ml, lb)", "Clear LCD display", "Sleek, slim design for easy storage", "Weight Capacity: 5kg"]
   },
@@ -67,7 +67,7 @@ const products = [
     priceUSD: 85.48, // USD price (approx)
     category: "Appliances", // Consistent category name
     link: "https://amzn.to/3Go8aR6", // IMPORTANT: Verify this Amazon link is correct and active for your affiliate ID.
-    image: "https://m.media-amazon.com/images/I/81SQ-TvA+2L._SL1500.jpg", // SUGGESTION: Download, optimize, and host this image on your server for better performance.
+    image: "https://m.media-amazon.com/images/I/81SQ-TvA+2L._SL1500_.jpg", // SUGGESTION: Download, optimize, and host this image on your server for better performance.
     rating: 4.6,
     features: [
       "Automatic Keep Warm Setting",
