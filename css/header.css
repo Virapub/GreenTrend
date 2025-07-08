@@ -30,11 +30,12 @@ header {
 
 .nav-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Logo left, Menu/Toggle right */
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem; /* Default padding */
+  position: relative; /* Nav toggle ke absolute positioning ke liye */
 }
 
 /* Logo and Site Name Container */
@@ -69,7 +70,7 @@ header {
 }
 
 nav {
-  display: flex;
+  display: flex; /* Desktop: Flex row */
   gap: 1.5rem;
 }
 
@@ -99,70 +100,98 @@ nav a.active::after {
 }
 
 .nav-toggle {
-  display: none;
+  display: none; /* Hide on desktop */
   background: none;
   border: none;
   font-size: 2rem;
   cursor: pointer;
   color: var(--primary-dark);
+  z-index: 1001; /* Ensure it's above other elements if needed */
 }
 
 /* Responsive adjustments for header */
 @media (max-width: 768px) {
   header {
-    padding: 0.8rem 0; /* Header ki top/bottom padding kam ki */
+    padding: 0.8rem 0;
   }
 
   .nav-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 0 1rem; /* Nav container ki horizontal padding kam ki */
+    /* flex-wrap removed from here, as we'll position nav absolutely */
+    justify-content: space-between; /* Logo left, toggle right */
+    padding: 0 1rem;
+    align-items: flex-start; /* For better alignment with toggle if toggle is taller */
   }
+
   nav {
-    display: none;
+    display: none; /* Hide by default on mobile */
     flex-direction: column;
-    width: 100%;
+    position: absolute; /* Position nav absolutely */
+    top: 100%; /* Header ke theek neeche se shuru hoga */
+    right: 0; /* Right aligned */
+    width: 100%; /* Full width for the dropdown menu */
+    max-width: 250px; /* Max width for the dropdown menu, adjust as needed */
+    background-color: var(--white); /* Background for the dropdown menu */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Shadow for dropdown */
+    border-top: 1px solid var(--border); /* Optional: Separator from header */
+    padding: 0.5rem 0; /* Padding for the dropdown */
     gap: 0;
-    text-align: center;
-    margin-top: 0.5rem; /* Nav menu ki top margin kam ki */
+    text-align: left; /* Text align left within dropdown */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth transition */
+    transform: translateY(-10px); /* Initially slightly off */
+    opacity: 0;
+    pointer-events: none; /* Prevent clicks when hidden */
   }
+
   nav.active {
-    display: flex;
+    display: flex; /* Show when active */
+    transform: translateY(0); /* Slide into view */
+    opacity: 1;
+    pointer-events: auto; /* Allow clicks when active */
   }
+
   nav a {
-    padding: 0.6rem 0; /* Nav items ki padding kam ki */
+    padding: 0.8rem 1.5rem; /* Padding for menu items in dropdown */
     border-bottom: 1px solid var(--border);
   }
   nav a:last-child {
     border-bottom: none;
   }
   .nav-toggle {
-    display: block;
+    display: block; /* Show toggle button on mobile */
+    /* Position of the toggle button */
+    /* Agar toggle button nav-container ke andar hi theek se align nahi ho raha */
+    /* toh aap ise absolute position de sakte hain nav-container ke relative */
+    /* top: 50%; */
+    /* right: 1rem; */
+    /* transform: translateY(-50%); */
   }
 
   .site-logo {
-    height: 35px; /* Logo size aur kam kiya mobile ke liye */
+    height: 35px;
     max-width: 130px;
   }
   .site-name {
-    font-size: 1.2rem; /* Text size aur kam kiya mobile ke liye */
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
     header {
-        padding: 0.5rem 0; /* Even less padding for very small screens */
+        padding: 0.5rem 0;
     }
     .nav-container {
         padding: 0 0.8rem;
     }
     .site-logo {
-        height: 30px; /* Smallest logo size */
+        height: 30px;
     }
     .site-name {
-        font-size: 1.1rem; /* Smallest text size */
+        font-size: 1.1rem;
+    }
+    nav {
+        max-width: 200px; /* Smaller dropdown for very small screens */
     }
     nav a {
-        padding: 0.5rem 0;
+        padding: 0.6rem 1rem;
     }
 }
