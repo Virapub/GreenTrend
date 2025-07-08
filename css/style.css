@@ -1,4 +1,4 @@
-/* --- style.css for GreenTrend - Meesho Inspired Design --- */
+/* --- style.css for GreenTrend - Inspired by Meesho Design (Image 2 Layout) --- */
 
 /* IMPORTS & ROOT VARIABLES */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap');
@@ -16,6 +16,7 @@
     --background-card: #ffffff; /* White for cards and main content areas */
     --background-dark: #212121; /* Dark sections like footer */
     --border-color: #eeeeee; /* Lighter border for clean look */
+    --input-border-focus: rgba(244, 51, 151, 0.2); /* For input focus state */
 
     /* Fonts */
     --heading-font: 'Lato', sans-serif;
@@ -158,6 +159,16 @@ ul { list-style: none; }
     height: 35px;
     margin-right: 8px;
 }
+.logo-text-small { /* For "Smart Kitchen Gadgets" tagline */
+    font-size: 0.6em; /* Adjust as needed */
+    color: var(--secondary-color);
+    margin-left: -48px; /* Adjust to position below GreenTrend */
+    margin-top: 25px; /* Adjust as needed */
+    position: absolute; /* Allows precise positioning */
+    width: 120px; /* Adjust width as needed */
+    white-space: normal; /* Allow text to wrap if necessary */
+    line-height: 1.2;
+}
 
 /* Desktop Navigation Menu */
 .nav-menu {
@@ -226,11 +237,12 @@ ul { list-style: none; }
     position: relative;
     max-width: 450px; /* Limit desktop search bar width */
     margin: 0 20px;
+    display: flex; /* Make it a flex container */
 }
 
 .search-input {
-    width: 100%;
-    padding: 10px 50px 10px 18px;
+    flex-grow: 1; /* Allow input to take available space */
+    padding: 10px 50px 10px 18px; /* Room for icon */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-sm);
     font-size: 0.95em;
@@ -240,24 +252,22 @@ ul { list-style: none; }
 }
 .search-input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(244, 51, 151, 0.2);
+    box-shadow: 0 0 0 2px var(--input-border-focus);
 }
 
 .search-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 50px; /* Make search button slightly wider */
+    flex-shrink: 0; /* Prevent button from shrinking */
+    width: 50px; /* Fixed width for button */
     background-color: var(--primary-color); /* Search button color */
     color: var(--text-color-light); /* Icon color */
     border: none;
-    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; /* Only right corners rounded */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: -1px; /* Overlap border with input */
 }
 .search-button:hover {
     background-color: var(--primary-hover-color);
@@ -309,7 +319,7 @@ ul { list-style: none; }
 
 /* --- Hero Section (Homepage Only) --- */
 .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/hero-bg.jpg') no-repeat center center/cover;
+    background-color: #888; /* Grey background as per image 2 */
     color: var(--text-color-light);
     text-align: center;
     padding: var(--padding-section-desktop);
@@ -319,6 +329,10 @@ ul { list-style: none; }
     justify-content: center;
     flex-direction: column;
     margin-top: 0; /* No margin-top needed if header is sticky on top */
+    border-radius: var(--border-radius-md); /* Rounded corners as in image 2 */
+    margin: 20px auto; /* Add margin around hero section */
+    max-width: calc(var(--container-max-width) - 30px); /* Adjust to fit container width */
+    box-shadow: var(--shadow-medium); /* Add shadow */
 }
 .hero-section h1 {
     font-size: 3.5em;
@@ -362,7 +376,7 @@ ul { list-style: none; }
 /* --- Category List (Homepage) --- */
 .categories-section {
     padding: var(--padding-section-desktop);
-    background-color: var(--background-card);
+    background-color: transparent; /* Changed to transparent for background-light behind it */
 }
 .category-list {
     display: grid;
@@ -373,7 +387,7 @@ ul { list-style: none; }
     margin: 0;
 }
 .category-card {
-    background-color: var(--background-light);
+    background-color: var(--background-card); /* White background for cards */
     border-radius: var(--border-radius-md);
     box-shadow: none; /* No initial shadow, add on hover */
     border: 1px solid var(--border-color);
@@ -802,23 +816,27 @@ ul { list-style: none; }
     .logo img {
         height: 30px;
     }
+    .logo-text-small {
+        margin-left: -38px; /* Adjust for smaller logo image */
+    }
 
     .currency-toggle-button {
         margin-left: auto; /* Push to the right */
         order: 2; /* Position after search toggle, before nav toggle if search toggle exists */
     }
 
-    /* Mobile specific search container visible on mobile */
-    .search-container.mobile-visible { /* This class will be added by JS to show it */
-        display: block; /* Show the mobile search bar */
+    /* Search bar moves to a new line on mobile */
+    .search-container {
         width: 100%;
         order: 4; /* Pushed below header elements */
         margin: 15px 0 0 0; /* Add top margin */
-        padding: 0 15px; /* Match container padding */
+        padding: 0 0; /* No horizontal padding here, container handles it */
     }
-
-    .search-container { /* Default hidden on mobile */
-        display: none; /* Hide desktop search bar */
+    .search-input {
+        border-radius: var(--border-radius-sm); /* Full radius for single element */
+    }
+    .search-button {
+        border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; /* Only right corners rounded */
     }
 
     .nav-toggle {
@@ -860,6 +878,7 @@ ul { list-style: none; }
     .hero-section {
         padding: var(--padding-section-mobile);
         min-height: 320px;
+        margin: 15px auto; /* Adjust margin */
     }
     .hero-section h1 {
         font-size: 2.8em;
@@ -944,10 +963,14 @@ ul { list-style: none; }
     .logo img {
         height: 28px;
     }
+    .logo-text-small {
+        margin-left: -35px; /* Adjust for smaller logo image */
+        font-size: 0.55em;
+    }
 
     /* Mobile search bar appearance - adjust for overlay or slide down */
-    .search-container.mobile-visible {
-        padding: 0 10px; /* Match container padding */
+    .search-container {
+        padding: 0 0; /* Match container padding */
     }
     .search-input {
         padding: 8px 45px 8px 15px;
@@ -961,6 +984,7 @@ ul { list-style: none; }
     .hero-section {
         padding: 30px 10px;
         min-height: 250px;
+        margin: 10px auto; /* Adjust margin */
     }
     .hero-section h1 {
         font-size: 2em;
@@ -1020,6 +1044,10 @@ ul { list-style: none; }
     .footer-column ul li a,
     .footer-column p {
         font-size: 0.85em;
+    }
+    .social-links {
+        justify-content: center;
+        margin-bottom: 15px;
     }
 }
 
