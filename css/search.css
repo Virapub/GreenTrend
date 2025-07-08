@@ -85,3 +85,35 @@
     font-size: 0.9rem;
   }
 }
+/* search.css */
+.search-results {
+  display: none; /* Add this line to hide it initially */
+  position: absolute;
+  top: 100%; /* Search bar ke theek neeche */
+  left: 0;
+  width: 100%;
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 100; /* Ensure it's above other content */
+  max-height: 200px; /* Limit height and make it scrollable */
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.search-results a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--light-grey);
+}
+
+.search-results a:last-child {
+    border-bottom: none;
+}
+
+.search-results a:hover {
+    background-color: var(--light-grey);
+}
