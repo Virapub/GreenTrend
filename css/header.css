@@ -25,17 +25,18 @@ header {
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 1rem 0; /* Default padding */
+  padding: 0.5rem 0; /* Header ki overall padding kam ki */
 }
 
 .nav-container {
   display: flex;
-  justify-content: space-between; /* Logo left, Menu/Toggle right */
+  justify-content: space-between;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem; /* Default padding */
-  position: relative; /* Nav toggle ke absolute positioning ke liye */
+  position: relative;
+  min-height: 50px; /* Nav bar ko fixed height de sakte hain */
 }
 
 /* Logo and Site Name Container */
@@ -53,16 +54,16 @@ header {
 }
 
 .site-logo {
-  height: 50px;
+  height: 40px; /* Logo height desktop par thodi kam ki */
   width: auto;
-  max-width: 180px;
+  max-width: 150px;
   vertical-align: middle;
   display: block;
 }
 
 .site-name {
   font-family: var(--font-heading);
-  font-size: 1.8rem;
+  font-size: 1.6rem; /* Text size desktop par thoda kam kiya */
   font-weight: 700;
   color: var(--primary-dark);
   white-space: nowrap;
@@ -70,7 +71,7 @@ header {
 }
 
 nav {
-  display: flex; /* Desktop: Flex row */
+  display: flex;
   gap: 1.5rem;
 }
 
@@ -100,72 +101,30 @@ nav a.active::after {
 }
 
 .nav-toggle {
-  display: none; /* Hide on desktop */
+  display: none; /* Desktop par hidden */
   background: none;
   border: none;
   font-size: 2rem;
   cursor: pointer;
   color: var(--primary-dark);
-  z-index: 1001; /* Ensure it's above other elements if needed */
+  z-index: 1001;
 }
 
-/* Responsive adjustments for header */
+/* --- Responsive adjustments for Mobile --- */
 @media (max-width: 768px) {
   header {
-    padding: 0.8rem 0;
+    padding: 0; /* Mobile par header padding bilkul hata di */
   }
 
   .nav-container {
-    /* flex-wrap removed from here, as we'll position nav absolutely */
-    justify-content: space-between; /* Logo left, toggle right */
-    padding: 0 1rem;
-    align-items: flex-start; /* For better alignment with toggle if toggle is taller */
+    justify-content: space-between;
+    padding: 0 1rem; /* Mobile header ki horizontal padding */
+    align-items: center; /* Logo aur toggle ko center align karein */
+    min-height: 50px; /* Height for the top bar */
+    border-bottom: 1px solid var(--border); /* Optional: Separator line */
   }
 
-  nav {
-    display: none; /* Hide by default on mobile */
-    flex-direction: column;
-    position: absolute; /* Position nav absolutely */
-    top: 100%; /* Header ke theek neeche se shuru hoga */
-    right: 0; /* Right aligned */
-    width: 100%; /* Full width for the dropdown menu */
-    max-width: 250px; /* Max width for the dropdown menu, adjust as needed */
-    background-color: var(--white); /* Background for the dropdown menu */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Shadow for dropdown */
-    border-top: 1px solid var(--border); /* Optional: Separator from header */
-    padding: 0.5rem 0; /* Padding for the dropdown */
-    gap: 0;
-    text-align: left; /* Text align left within dropdown */
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Smooth transition */
-    transform: translateY(-10px); /* Initially slightly off */
-    opacity: 0;
-    pointer-events: none; /* Prevent clicks when hidden */
-  }
-
-  nav.active {
-    display: flex; /* Show when active */
-    transform: translateY(0); /* Slide into view */
-    opacity: 1;
-    pointer-events: auto; /* Allow clicks when active */
-  }
-
-  nav a {
-    padding: 0.8rem 1.5rem; /* Padding for menu items in dropdown */
-    border-bottom: 1px solid var(--border);
-  }
-  nav a:last-child {
-    border-bottom: none;
-  }
-  .nav-toggle {
-    display: block; /* Show toggle button on mobile */
-    /* Position of the toggle button */
-    /* Agar toggle button nav-container ke andar hi theek se align nahi ho raha */
-    /* toh aap ise absolute position de sakte hain nav-container ke relative */
-    /* top: 50%; */
-    /* right: 1rem; */
-    /* transform: translateY(-50%); */
-  }
-
+  /* Logo mobile adjustment */
   .site-logo {
     height: 35px;
     max-width: 130px;
@@ -173,12 +132,48 @@ nav a.active::after {
   .site-name {
     font-size: 1.2rem;
   }
+
+  nav {
+    display: none; /* Hide by default on mobile */
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* Nav-container ke theek neeche */
+    right: 0;
+    width: 100%; /* Full width dropdown for mobile if menu opens */
+    max-width: 250px; /* Max width for the dropdown menu */
+    background-color: var(--white);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-top: 1px solid var(--border);
+    padding: 0.5rem 0;
+    gap: 0;
+    text-align: left;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999; /* Search bar se neeche rakha */
+  }
+
+  nav.active {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  nav a {
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  nav a:last-child {
+    border-bottom: none;
+  }
+  .nav-toggle {
+    display: block; /* Show toggle button on mobile */
+  }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 0.5rem 0;
-    }
     .nav-container {
         padding: 0 0.8rem;
     }
@@ -189,7 +184,7 @@ nav a.active::after {
         font-size: 1.1rem;
     }
     nav {
-        max-width: 200px; /* Smaller dropdown for very small screens */
+        max-width: 180px; /* Smaller dropdown for very small screens */
     }
     nav a {
         padding: 0.6rem 1rem;
