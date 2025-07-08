@@ -19,7 +19,6 @@
     padding: 0 20px;
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
-
 /* css/header.css */
 
 /* ... (existing styles) ... */
@@ -31,11 +30,31 @@
     color: #333; /* Default text color for logo */
 }
 
+.logo-image {
+    height: 45px; /* Adjust height for your logo image */
+    width: auto;
+    margin-right: 10px; /* Space between logo image and text */
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
 
 .logo-text {
     display: flex;
     flex-direction: column; /* Stack name and tagline vertically */
     line-height: 1.2; /* Adjust line height for better spacing */
+}
+
+.logo-text .main-name {
+    font-size: 1.7rem; /* Size for "GreenTrend" */
+    font-weight: bold;
+    color: #333; /* Darker color for main name */
+    white-space: nowrap; /* Prevent "GreenTrend" from wrapping */
+}
+
+.logo-text .tagline {
+    font-size: 0.85rem; /* Smaller size for "Smart Kitchen Gadgets" */
+    color: #555; /* Slightly lighter color for tagline */
+    white-space: nowrap; /* Prevent tagline from wrapping */
+    margin-top: 2px; /* Small space between name and tagline */
 }
 
 /* Adjustments for mobile view of the logo */
@@ -51,7 +70,6 @@
         font-size: 0.75rem; /* Smaller tagline on mobile */
     }
 }
-
 
 /* Search Bar (Desktop) */
 .search-bar-desktop {
