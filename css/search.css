@@ -132,4 +132,103 @@
     font-size: 1.8rem;
   }
 }
+/* search.css */
+
+/* Naya section jahan background image chahiye */
+.main-hero-section {
+  background: url('../images/smart-kitchen-background.jpg') no-repeat center center / cover; /* Apni image ka path daalein */
+  position: relative;
+  width: 100%;
+  padding: 4rem 1.5rem; /* Padding adjust karein zaroorat ke hisaab se */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px; /* Minimum height for visibility */
+  margin-bottom: 2rem; /* Search bar ke upar space */
+}
+
+/* Background overlay */
+.main-hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for readability */
+  z-index: 1;
+}
+
+.main-hero-section h2 {
+  font-size: 2.8rem; /* Heading size badhaya */
+  color: var(--white);
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.8); /* Stronger text shadow */
+  z-index: 2; /* Overlay ke upar */
+  position: relative; /* Z-index apply karne ke liye */
+  margin-bottom: 0; /* No margin below heading if search bar is separate */
+}
+
+/* Ab search-container ke styles, jahan background nahi chahiye */
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0; /* Purana padding wapas */
+  /* background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(233,196,106,0.04)); */ /* Yeh line hata do */
+  margin: 0 auto 2rem;
+  width: 100%;
+}
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  z-index: 2; /* Z-index for search bar */
+}
+.search-input {
+  width: 100%;
+  padding: 0.85rem 3rem 0.85rem 1.5rem;
+  border: 2px solid var(--border);
+  border-radius: 2rem;
+  font-size: 1rem;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
+}
+.search-button {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: var(--transition);
+}
+.search-button:hover {
+  color: var(--primary-dark);
+}
+
+/* Responsive adjustments for the new hero section */
+@media (max-width: 768px) {
+  .main-hero-section {
+    padding: 3rem 1rem;
+    min-height: 200px;
+  }
+  .main-hero-section h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+    .main-hero-section h2 {
+        font-size: 1.7rem;
+    }
+}
 
