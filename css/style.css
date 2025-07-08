@@ -1,9 +1,10 @@
-/* General Body Styles */
+/* css/style.css */
+
 body {
-    font-family: Arial, sans-serif; /* Common web font */
-    color: #333;
-    background-color: #f9f9f9; /* Light background */
+    font-family: 'Roboto', sans-serif; /* A clean, modern font */
     line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f7; /* Light grey background, similar to Meesho */
 }
 
 .container {
@@ -14,30 +15,55 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background-color: #ffeef2; /* Light pink background */
+    background: url('../images/hero-bg.jpg') no-repeat center center/cover; /* Make sure hero-bg.jpg exists in images folder */
+    color: white;
     text-align: center;
-    padding: 60px 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
+    padding: 80px 20px;
+    margin-top: 20px; /* Space below header */
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden; /* Ensure content stays within bounds */
 }
+
+/* Overlay for better text readability */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero-section * {
+    position: relative; /* Bring content above overlay */
+    z-index: 2;
+}
+
 
 .hero-section h1 {
     font-size: 2.8rem;
-    color: #f43397;
     margin-bottom: 15px;
+    line-height: 1.2;
+    font-weight: 700;
 }
 
 .hero-section p {
     font-size: 1.3rem;
-    color: #666;
     margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cta-button {
     display: inline-block;
-    background-color: #f43397;
+    background-color: #f43397; /* Meesho pink */
     color: white;
-    padding: 12px 30px;
+    padding: 15px 30px;
+    text-decoration: none;
     border-radius: 5px;
     font-size: 1.1rem;
     font-weight: bold;
@@ -49,176 +75,193 @@ body {
     transform: translateY(-2px);
 }
 
-/* Category Section */
-.category-section {
-    margin-bottom: 40px;
-}
-
-.category-section h2 {
-    text-align: center;
+/* Section Headings */
+section h2 {
     font-size: 2rem;
-    margin-bottom: 25px;
     color: #333;
+    text-align: center;
+    margin: 60px 0 30px;
+    position: relative;
 }
 
+section h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #f43397;
+    border-radius: 2px;
+}
+
+
+/* Category Section */
 .categories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+    margin-bottom: 50px;
 }
 
 .category-card {
     background-color: #fff;
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-decoration: none;
+    color: #333;
     text-align: center;
-    padding-bottom: 15px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .category-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
 }
 
 .category-card img {
-    width: 100%;
-    height: 120px; /* Fixed height for category images */
-    object-fit: cover;
-    margin-bottom: 10px;
+    width: 100px; /* Fixed size for category icons/images */
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 50%; /* Make them circular */
+    border: 1px solid #eee;
 }
 
 .category-card span {
-    font-weight: 600;
-    color: #333;
     font-size: 1.1rem;
+    font-weight: 600;
 }
 
-
-/* Product Section & Grid */
-.products-section {
-    margin-bottom: 40px;
-}
-
-.products-section h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 25px;
-    color: #333;
-}
-
+/* Products Section */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
+    margin-bottom: 50px;
 }
 
 .product-card {
     background-color: #fff;
     border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    text-decoration: none; /* For the whole card if it becomes a link */
+    color: #333;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .product-card img {
     width: 100%;
     height: 200px; /* Fixed height for product images */
-    object-fit: cover;
+    object-fit: cover; /* Cover the area, cropping if necessary */
     border-bottom: 1px solid #eee;
 }
 
 .product-details {
     padding: 15px;
-    flex-grow: 1; /* Allows details to take available space */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Push button to bottom */
+    flex-grow: 1; /* Allows details section to grow */
 }
 
 .product-details h3 {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-    color: #333;
-    line-height: 1.3;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    min-height: 40px; /* Ensure consistent height for titles */
 }
 
 .product-details .price {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #f43397; /* Meesho pink */
+    margin-top: auto; /* Push price and button to bottom */
     margin-bottom: 15px;
 }
 
-.buy-btn {
-    display: block; /* Make button full width */
-    background-color: #f43397;
+.product-details .buy-btn {
+    display: block;
+    background-color: #007bff; /* Blue for 'View Details' button */
     color: white;
     padding: 10px 15px;
     text-align: center;
+    text-decoration: none;
     border-radius: 5px;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.95rem;
     transition: background-color 0.3s ease;
 }
 
-.buy-btn:hover {
-    background-color: #d12c82;
+.product-details .buy-btn:hover {
+    background-color: #0056b3;
 }
 
 .view-all-btn-container {
     text-align: center;
     margin-top: 30px;
+    margin-bottom: 60px;
 }
 
 .view-all-button {
     display: inline-block;
-    background-color: #007bff; /* A standard blue for contrast */
+    background-color: #28a745; /* Green button */
     color: white;
-    padding: 12px 30px;
+    padding: 12px 25px;
+    text-decoration: none;
     border-radius: 5px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .view-all-button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
+    transform: translateY(-2px);
 }
 
-/* Footer Styles */
+/* Footer */
 .main-footer {
-    background-color: #212121; /* Dark background for footer */
-    color: #f0f0f0;
+    background-color: #333;
+    color: #f8f8f8;
     padding: 40px 0 20px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .footer-content {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    flex-wrap: wrap; /* Allows columns to wrap on smaller screens */
     gap: 30px;
     margin-bottom: 30px;
 }
 
 .footer-column {
     flex: 1;
-    min-width: 200px; /* Minimum width for footer columns */
+    min-width: 200px;
 }
 
 .footer-column h3 {
-    color: #fff;
+    color: #f43397; /* Meesho pink */
     font-size: 1.2rem;
     margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.footer-column p {
+    margin-bottom: 10px;
+    color: #ccc;
 }
 
 .footer-column ul {
@@ -231,6 +274,7 @@ body {
 }
 
 .footer-column ul li a {
+    text-decoration: none;
     color: #ccc;
     transition: color 0.3s ease;
 }
@@ -242,12 +286,12 @@ body {
 .social-links {
     display: flex;
     gap: 15px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .social-links a {
-    color: #fff;
-    font-size: 1.5rem;
+    color: #ccc;
+    font-size: 1.3rem;
     transition: color 0.3s ease;
 }
 
@@ -257,7 +301,81 @@ body {
 
 .footer-bottom {
     text-align: center;
-    border-top: 1px solid #333;
+    border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 20px;
+    margin-top: 20px;
     color: #aaa;
+}
+
+/* General styles for product.html All Products Page */
+.all-products-heading {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+/* If you have About Us / Contact sections */
+.text-section {
+    padding: 40px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+.text-section h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.text-section p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+/* Contact Form Specifics (if you have one) */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.contact-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px;
+}
+
+.contact-form button {
+    background-color: #f43397;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #d12c82;
 }
