@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get("id");
-  const product = products.find(p => p.id === productId); // 'products' array comes from data.js
-  const container = document.getElementById("product-details");
+  const product = products.find(p => p.id === productId);
+  const container = document.getElementById("product-detail-content");
 
   if (!container) {
     console.error("Product details container not found.");
@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!product) {
     container.innerHTML = "<p class='product-not-found'>Sorry, the product you are looking for was not found.</p>";
-    container.style.textAlign = "center";
-    container.style.padding = "2rem";
     return;
   }
 
@@ -22,19 +20,23 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <div class="product-info">
       <h2>${product.name}</h2>
-      <p class="price">
-        <span class="price-inr">₹${product.priceINR.toLocaleString()}</span> /
-        <span class="price-usd">$${product.priceUSD.toFixed(2)}</span>
-      </p>
+      <div class="price-details">
+        <span class="price" id="product-detail-price" data-inr-price="${product.priceINR}">₹${product.priceINR.toLocaleString()}</span>
+      </div>
+      <div class="rating">
+        ${"★".repeat(Math.floor(product.rating))}${product.rating % 1 ? "½" : ""}
+        <span>(${product.rating.toFixed(1)}/5)</span>
+      </div>
       <p class="description">${product.description}</p>
-      <div class="features">
+      <div class="product-features">
         <h4>Key Features:</h4>
         <ul>
           ${product.features.map(f => `<li>✔ ${f}</li>`).join("")}
         </ul>
       </div>
-      <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-btn">Buy Now</a>
-      <p class="rating">Rating: ${"★".repeat(Math.floor(product.rating))}${product.rating % 1 ? "½" : ""} (${product.rating.toFixed(1)}/5)</p>
+      <div class="action-buttons">
+        <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now on Amazon</a>
+      </div>
       <p class="category">Category: <span>${product.category}</span></p>
     </div>
   `;
