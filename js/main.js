@@ -2,64 +2,66 @@
 
 // --- Global Variables ---
 let currentCurrency = 'INR'; // Default currency when page loads
-const USD_EXCHANGE_RATE = 83.5; // CURRENT EXCHANGE RATE: 1 USD = 83.5 INR (Please update this value as needed!)
+const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (e.g., 1 USD = 83.5 INR)
 
 // --- Helper Functions ---
 
 // Function to format price based on the current currency
-// It takes the price in INR as input
+// It takes the raw INR price as input
 function formatPrice(priceInINR) {
     if (currentCurrency === 'INR') {
-        // Format for Indian Rupees (e.g., ₹1,499)
         return `₹${priceInINR.toLocaleString('en-IN')}`;
     } else {
-        // Calculate USD price and format (e.g., $18.50)
-        const priceInUSD = (priceInINR / USD_EXCHANGE_RATE).toFixed(2); // .toFixed(2) ensures 2 decimal places
+        const priceInUSD = (priceInINR / USD_EXCHANGE_RATE).toFixed(2);
         return `$${priceInUSD}`;
     }
 }
 
 // Function to update all displayed prices on the current page
-// This function is called when the currency toggle button is clicked, or on page load.
 function updateDisplayedPrices() {
     // 1. Update prices in all product cards (on Home/Products page)
-    // We find all elements with class 'product-card' and then their child with class 'price'
     document.querySelectorAll('.product-card .price').forEach(priceElement => {
-        // Get the original INR price from the data-inr-price attribute
+        // Ensure data-inr-price exists and is a number
         const productPriceInINR = parseFloat(priceElement.dataset.inrPrice);
-        if (!isNaN(productPriceInINR)) { // Check if it's a valid number
-            // Update the text content of the span that displays the current price
-            priceElement.querySelector('.current-price').textContent = formatPrice(productPriceInINR);
+        if (!isNaN(productPriceInINR)) {
+            // Find the span inside .price that holds the actual price text
+            let currentPriceSpan = priceElement.querySelector('.current-price');
+            if (!currentPriceSpan) {
+                // If .current-price span doesn't exist, create it (for robustness)
+                currentPriceSpan = document.createElement('span');
+                currentPriceSpan.className = 'current-price';
+                priceElement.appendChild(currentPriceSpan);
+            }
+            currentPriceSpan.textContent = formatPrice(productPriceInINR);
         }
     });
 
     // 2. Update price on the single product detail page (product-detail.html)
     const detailPriceElement = document.getElementById('product-detail-price');
-    if (detailPriceElement) { // Check if this element exists on the current page
-        // Get the original INR price from the data-inr-price attribute on the detail page price span
+    if (detailPriceElement) {
         const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
-        if (!isNaN(priceInINR)) { // Check if it's a valid number
-            // Update the text content of the detail page price span
+        if (!isNaN(priceInINR)) {
             detailPriceElement.textContent = formatPrice(priceInINR);
         }
     }
 }
 
-// --- Render Functions (These functions create the HTML for products and categories) ---
+// --- Render Functions ---
 
-// Function to render product cards (used on index.html and products.html)
 function renderProducts(productList, containerId) {
     const container = document.getElementById(containerId);
-    if (!container) return; // Exit if the container element is not found
+    if (!container) return;
 
-    container.innerHTML = ''; // Clear any existing content in the container
+    container.innerHTML = ''; // Clear existing content
+
+    if (!productList || productList.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #777; margin-top: 30px;">No products found.</p>';
+        return;
+    }
 
     productList.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-        // HTML structure for each product card
-        // Note: The 'price' div has a 'data-inr-price' attribute to store the original INR value.
-        // The actual displayed price is in a 'span' with class 'current-price'.
         productCard.innerHTML = `
             <a href="product-detail.html?id=${product.id}">
                 <img src="${product.image}" alt="${product.name}">
@@ -75,16 +77,20 @@ function renderProducts(productList, containerId) {
         container.appendChild(productCard);
     });
 
-    // After rendering all products, update their prices based on the current currency setting
-    updateDisplayedPrices();
+    updateDisplayedPrices(); // Update prices after rendering
 }
 
-// Function to render categories (no currency-related changes needed here)
 function renderCategories(categoryList, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    container.innerHTML = '';
+    container.innerHTML = ''; // Clear existing content
+
+    if (!categoryList || categoryList.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #777; margin-top: 30px;">No categories found.</p>';
+        return;
+    }
+
     categoryList.forEach(category => {
         const categoryCard = document.createElement('a');
         categoryCard.href = `products.html?category=${category.slug}`;
@@ -97,26 +103,35 @@ function renderCategories(categoryList, containerId) {
     });
 }
 
-// Function to render a single product's detail page (product-detail.html)
+// Async function to render product detail as it might fetch data (though here we use local data)
 async function renderProductDetail(productId) {
-    // Find the product data from your 'products' array (assumed to be in data.js)
-    const product = products.find(p => p.id === productId);
     const contentDiv = document.getElementById('product-detail-content');
+    if (!contentDiv) return; // Exit if the container is not found
+
+    // Show loading state
+    contentDiv.innerHTML = '<div class="loading">Loading product details...</div>';
+    contentDiv.classList.add('loading');
+    contentDiv.classList.remove('error'); // Remove error class if present
+
+    const product = products.find(p => p.id === productId);
 
     if (!product) {
-        contentDiv.innerHTML = '<div class="error">Product not found.</div>';
+        contentDiv.innerHTML = '<div class="error">Product not found. Please check the URL.</div>';
         contentDiv.classList.add('error');
+        contentDiv.classList.remove('loading');
         return;
     }
 
-    contentDiv.classList.remove('loading', 'error'); // Remove loading/error states
+    contentDiv.classList.remove('loading', 'error'); // Remove loading/error classes
 
-    document.title = `${product.name} - GreenTrend`; // Update the browser tab title
+    document.title = `${product.name} - GreenTrend`; // Update page title
 
-    // Create HTML for product features list
-    const featuresHtml = product.features.map(feature => `<li>${feature}</li>`).join('');
+    // Create features list HTML
+    const featuresHtml = product.features && product.features.length > 0
+        ? product.features.map(feature => `<li>${feature}</li>`).join('')
+        : '';
 
-    // Populate the product detail content
+    // Render product details
     contentDiv.innerHTML = `
         <div class="product-image-gallery">
             <img src="${product.image}" alt="${product.name}" class="product-main-image">
@@ -132,7 +147,7 @@ async function renderProductDetail(productId) {
                 <span>(4.5/5)</span>
             </div>
             <p>${product.description}</p>
-            ${product.features && product.features.length > 0 ? `
+            ${featuresHtml ? `
             <div class="product-features">
                 <h3>Key Features:</h3>
                 <ul>${featuresHtml}</ul>
@@ -144,20 +159,19 @@ async function renderProductDetail(productId) {
         </div>
     `;
 
-    // Ensure price is updated immediately after rendering detail page (important for correct initial display)
-    updateDisplayedPrices();
+    updateDisplayedPrices(); // Update prices after rendering detail page
 }
 
-// --- Search Functionality (Assuming this is already present or needed) ---
+// --- Search Functionality ---
 function setupSearch() {
     const searchBoxDesktop = document.getElementById('searchBox');
-    const searchBoxMobile = document.getElementById('searchBoxMobile');
+    const searchBoxMobile = document.getElementById('searchBoxMobile'); // Mobile search input
     const searchResultsDiv = document.getElementById('searchResults');
 
-    const performSearch = (query) => {
-        searchResultsDiv.innerHTML = '';
+    const performSearch = (query, resultsContainer) => {
+        resultsContainer.innerHTML = '';
         if (query.length < 2) {
-            searchResultsDiv.style.display = 'none';
+            resultsContainer.style.display = 'none';
             return;
         }
 
@@ -173,99 +187,174 @@ function setupSearch() {
                 resultItem.href = `product-detail.html?id=${product.id}`;
                 resultItem.className = 'search-result-item';
                 resultItem.textContent = product.name;
-                searchResultsDiv.appendChild(resultItem);
+                resultsContainer.appendChild(resultItem);
             });
-            searchResultsDiv.style.display = 'block';
+            resultsContainer.style.display = 'block';
         } else {
-            searchResultsDiv.innerHTML = '<div class="no-results-msg">No results found.</div>';
-            searchResultsDiv.style.display = 'block';
+            resultsContainer.innerHTML = '<div class="no-results-msg">No results found.</div>';
+            resultsContainer.style.display = 'block';
         }
     };
 
-    if (searchBoxDesktop) {
+    // Event listener for desktop search box
+    if (searchBoxDesktop && searchResultsDiv) {
         searchBoxDesktop.addEventListener('input', (e) => {
-            performSearch(e.target.value);
+            performSearch(e.target.value, searchResultsDiv);
         });
         searchBoxDesktop.addEventListener('focus', (e) => {
             if (e.target.value.length >= 2) {
-                performSearch(e.target.value);
+                performSearch(e.target.value, searchResultsDiv);
             }
         });
         searchBoxDesktop.addEventListener('blur', () => {
+            // Delay hiding results to allow click on a result link
             setTimeout(() => {
                 searchResultsDiv.style.display = 'none';
-            }, 200); // Small delay to allow click on results
+            }, 200);
         });
     }
 
-    // Mobile search box logic (you might want a different approach for mobile search results)
+    // Event listener for mobile search box (if you want real-time search on mobile too)
+    // For mobile, we generally don't show a dropdown like desktop due to space constraints.
+    // You might want to redirect to a search results page or implement a full-screen overlay for results.
+    // For now, it won't show a dropdown search result like desktop on mobile.
     if (searchBoxMobile) {
-        // You can add an event listener here if you want to handle mobile search differently.
-        // For simplicity, it might just trigger a search on a separate page or overlay.
+        // You can add an event listener here if you want to trigger something on mobile search
+        searchBoxMobile.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = e.target.value.trim();
+                if (query.length > 0) {
+                    window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+                }
+            }
+        });
     }
 }
 
-// --- DOM Content Loaded Event Listener (Runs when the entire HTML document is loaded) ---
+
+// --- DOM Content Loaded Event Listener ---
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Adjust hero-section margin for sticky header (if you have one)
-    const headerHeight = document.querySelector('.main-header').offsetHeight;
-    document.querySelector('.hero-section').style.marginTop = `${headerHeight}px`;
-
-    // 2. Render initial content for Home page (Categories and Featured Products)
-    if (document.getElementById('category-list') && document.getElementById('featured-product-list')) {
-        renderCategories(categories, 'category-list');
-        renderProducts(featuredProducts, 'featured-product-list');
+    // 1. Adjust hero-section margin for sticky header (only on index.html)
+    const header = document.querySelector('.main-header');
+    const heroSection = document.querySelector('.hero-section');
+    if (header && heroSection) {
+        const headerHeight = header.offsetHeight;
+        heroSection.style.marginTop = `${headerHeight}px`;
     }
 
-    // 3. Setup Currency Toggle Button functionality
+    // 2. Setup Currency Toggle Button functionality
     const currencyToggleButton = document.getElementById('currency-toggle-button');
     if (currencyToggleButton) {
-        currencyToggleButton.textContent = currentCurrency; // Set initial button text (e.g., "INR")
+        currencyToggleButton.textContent = currentCurrency; // Set initial text
         currencyToggleButton.addEventListener('click', () => {
-            // Toggle currency: if INR, change to USD; if USD, change to INR
             currentCurrency = currentCurrency === 'INR' ? 'USD' : 'INR';
-            currencyToggleButton.textContent = currentCurrency; // Update button text to reflect new currency
-            updateDisplayedPrices(); // Call function to update all prices on the page
+            currencyToggleButton.textContent = currentCurrency; // Update button text
+            updateDisplayedPrices(); // Recalculate and display all prices
         });
     }
 
-    // 4. Check if on product detail page and render specific product
-    // (This requires the <body> tag of product-detail.html to have the class 'product-detail-page')
-    if (document.body.classList.contains('product-detail-page')) {
+    // 3. Render initial content based on the current page
+    if (document.body.classList.contains('index-page') || document.URL.endsWith('index.html') || document.URL.endsWith('/')) {
+        // Only render categories and featured products on the home page
+        if (typeof categories !== 'undefined') { // Check if categories data is loaded
+            renderCategories(categories, 'category-list');
+        }
+        if (typeof featuredProducts !== 'undefined') { // Check if featuredProducts data is loaded
+            renderProducts(featuredProducts, 'featured-product-list');
+        }
+    } else if (document.body.classList.contains('products-page')) {
         const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id'); // Get product ID from URL query parameter
+        const categorySlug = urlParams.get('category');
+        const searchQuery = urlParams.get('search');
+        const productsPageHeading = document.getElementById('all-products-heading');
+
+        let productsToRender = [];
+        let headingText = "All Products";
+
+        if (searchQuery) {
+            productsToRender = products.filter(p =>
+                p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                p.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            headingText = `Search Results for "${searchQuery}"`;
+        } else if (categorySlug) {
+            const selectedCategory = categories.find(cat => cat.slug === categorySlug);
+            if (selectedCategory) {
+                productsToRender = products.filter(p => p.category === selectedCategory.slug);
+                headingText = selectedCategory.name + ' Products';
+            } else {
+                productsToRender = products; // Fallback to all if category not found
+                headingText = "All Products (Category Not Found)";
+            }
+        } else {
+            productsToRender = products; // Default: show all products
+        }
+
+        if (productsPageHeading) {
+            productsPageHeading.textContent = headingText;
+        }
+        if (typeof products !== 'undefined') { // Check if products data is loaded
+            renderProducts(productsToRender, 'product-grid');
+        }
+
+    } else if (document.body.classList.contains('product-detail-page')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
         if (productId) {
-            renderProductDetail(productId); // Render the specific product details
+            if (typeof products !== 'undefined') { // Check if products data is loaded
+                renderProductDetail(productId);
+            } else {
+                console.error("Products data not loaded. Cannot render product detail.");
+                document.getElementById('product-detail-content').innerHTML = '<div class="error">Error: Product data not available.</div>';
+            }
+        } else {
+            document.getElementById('product-detail-content').innerHTML = '<div class="error">Product ID is missing in the URL.</div>';
         }
     }
 
-    // 5. Initialize Search Functionality
+    // 4. Initialize Search Functionality
     setupSearch();
 
-    // 6. Automatically update current year in footer (if you have a span with id 'current-year')
+    // 5. Automatically update current year in footer
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // 7. Mobile Navigation Toggle functionality
+    // 6. Mobile Navigation Toggle
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
 
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active'); // Toggle 'active' class to show/hide menu
-            // Optional: Close search results dropdown if nav menu opens
+            navMenu.classList.toggle('active');
+            // Close search results if nav opens (for desktop search results dropdown)
             const searchResults = document.getElementById('searchResults');
             if (searchResults) searchResults.style.display = 'none';
         });
 
-        // Close nav menu when a link inside it is clicked (good for single-page style navigation)
+        // Close nav menu when a link is clicked
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
             });
         });
     }
+
+    // Close mobile menu if window is resized to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+        }
+    });
+
+    // Close search results dropdown on outside click
+    document.addEventListener('click', (event) => {
+        const searchBox = document.getElementById('searchBox');
+        const searchResults = document.getElementById('searchResults');
+        if (searchResults && !searchBox.contains(event.target) && !searchResults.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
 });
