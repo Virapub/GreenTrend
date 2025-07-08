@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Green Trend - Discover smart kitchen gadgets and deals. Your ultimate source for innovative kitchen tech and affiliate products." />
   <title>Green Trend - Smart Kitchen Deals</title>
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+  <link rel="icon" href="images/favicon.ico" sizes="any" type="image/x-icon">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png"> <link rel="preload" href="css/reset.css" as="style">
+  <link rel="preload" href="css/header.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
+
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/search.css">
@@ -13,125 +19,39 @@
   <link rel="stylesheet" href="css/product-card.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/responsive.css">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  document.addEventListener("DOMContentLoaded", () => {
-  const productListDiv = document.getElementById("product-list");
-  const searchBox = document.getElementById("searchBox");
-  const navToggleBtn = document.getElementById("navToggle");
-  const navMenu = document.getElementById("navMenu");
-  const searchResultsDiv = document.getElementById("searchResults"); // Get the search results div
 
-  // Function to display products
-  function displayProducts(productsToShow) {
-    if (!productListDiv) {
-      return;
-    }
+  </head>
+<body>
 
-    productListDiv.innerHTML = ""; // Clear existing products
+  <header>
+      <nav id="mainNav">
+          <button id="navToggle" aria-label="Toggle navigation">☰</button>
+          <ul id="navMenu">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Products</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+          </ul>
+      </nav>
+      <div class="search-container">
+          <input type="text" id="searchBox" placeholder="Search for products...">
+          <button class="search-button"><i class="fas fa-search"></i></button>
+          <div id="searchResults" class="search-results"></div>
+      </div>
+  </header>
 
-    if (productsToShow.length === 0) {
-      productListDiv.innerHTML = "<p>No products found matching your search.</p>";
-      return;
-    }
+  <main>
+      <section id="product-list" class="product-grid">
+          </section>
+  </main>
 
-    productsToShow.forEach(product => {
-      const card = document.createElement("div");
-      card.className = "product-card";
+  <footer>
+      <p>&copy; 2023 Green Trend. All rights reserved.</p>
+  </footer>
 
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        <div class="product-details">
-          <h3>${product.name}</h3>
-          <p class="price">₹${product.priceINR.toLocaleString()}</p>
-          <a href="product.html?id=${product.id}" class="buy-btn" aria-label="View details for ${product.name}">View Details</a>
-        </div>
-      `;
-      productListDiv.appendChild(card);
-    });
-  }
+  <script src="js/main.js"></script>
 
-  // Initial Display of products on products.html and index.html
-  if (productListDiv) {
-      if (window.location.pathname.includes("products.html")) {
-          displayProducts(products); // Assuming 'products' is available globally from data.js
-      } else if (window.location.pathname.includes("index.html")) {
-          displayProducts(products.slice(0, 6)); // Display top 6 products on homepage
-      }
-  }
-
-  // --- Search Functionality ---
-  if (searchBox && searchResultsDiv) { // Ensure search elements exist
-    const performSearch = () => {
-        const query = searchBox.value.toLowerCase().trim();
-        const filteredProducts = products.filter(product =>
-            product.name.toLowerCase().includes(query) ||
-            product.description.toLowerCase().includes(query) ||
-            product.category.toLowerCase().includes(query)
-        );
-
-        if (query === "") {
-            searchResultsDiv.innerHTML = "";
-            searchResultsDiv.style.display = "none";
-        } else if (filteredProducts.length > 0) {
-            // Display filtered products as links in the search results div
-            searchResultsDiv.innerHTML = filteredProducts.map(product =>
-                `<a href="product.html?id=${product.id}">${product.name}</a>`
-            ).join("");
-            searchResultsDiv.style.display = "block";
-        } else {
-            searchResultsDiv.innerHTML = "<p>No matches found.</p>";
-            searchResultsDiv.style.display = "block";
-        }
-
-        // On products.html, update the main product list
-        if (window.location.pathname.includes("products.html")) {
-            displayProducts(filteredProducts);
-        }
-    };
-
-    searchBox.addEventListener("input", performSearch); // Live search as user types
-
-    // If you also have a search button and want it to trigger search
-    const searchButton = document.querySelector('.search-button');
-    if (searchButton) {
-        searchButton.addEventListener("click", performSearch);
-    }
-
-    // Hide search results when clicking outside
-    document.addEventListener('click', (event) => {
-        if (!searchBox.contains(event.target) && !searchResultsDiv.contains(event.target) && (!searchButton || !searchButton.contains(event.target))) {
-            searchResultsDiv.style.display = 'none';
-        }
-    });
-
-    // Handle pressing Enter key
-    searchBox.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            performSearch();
-            searchBox.blur(); // Hide keyboard on mobile after pressing Enter
-        }
-    });
-
-  } else {
-      console.warn("Search elements (searchBox or searchResults) not found. This is expected if the current page doesn't have them.");
-  }
-
-  // --- Responsive nav toggle ---
-  if (navToggleBtn && navMenu) {
-    navToggleBtn.addEventListener("click", () => {
-      navMenu.classList.toggle("active"); // Changed from "show" to "active"
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (event) => {
-        // Check if the click was outside the nav menu and not on the toggle button
-        if (!navMenu.contains(event.target) && !navToggleBtn.contains(event.target)) {
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-            }
-        }
-    });
-  } else {
-      console.warn("Navigation elements (navToggleBtn or navMenu) not found. This is expected if the current page doesn't have them.");
-  }
-});
+</body>
+</html>
