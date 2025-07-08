@@ -1,192 +1,160 @@
-/* header.css */
-
-:root {
-  --primary: #2a9d8f; /* Greenish teal */
-  --primary-dark: #264653; /* Dark blue/green */
-  --secondary: #e9c46a; /* Goldenrod */
-  --accent: #f4a261; /* Orange */
-  --danger: #e76f51; /* Red-orange */
-  --text: #333;
-  --light-text: #666;
-  --white: #fff;
-  --light-grey: #f8f8f8;
-  --border: #ddd;
-  --shadow: rgba(0, 0, 0, 0.08);
-  --transition: all 0.3s ease;
-  --font-heading: 'Poppins', sans-serif; /* Example font */
-  --font-body: 'Open Sans', sans-serif; /* Example font */
+/* Header specific styles */
+.main-header {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure header stays on top */
 }
 
-header {
-  background-color: var(--white);
-  box-shadow: 0 2px 8px var(--shadow);
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 0.5rem 0; /* Header ki overall padding kam ki */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem; /* Default padding */
-  position: relative;
-  min-height: 50px; /* Nav bar ko fixed height de sakte hain */
+.logo img {
+    height: 40px; /* Adjust logo size */
 }
 
-/* Logo and Site Name Container */
-.logo {
-  display: flex;
-  align-items: center;
+/* Desktop Search Bar */
+.search-bar-desktop {
+    flex-grow: 1;
+    margin: 0 20px;
+    display: flex;
+    position: relative; /* For search results positioning */
 }
 
-.logo-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: var(--text);
+.search-bar-desktop input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+    outline: none;
 }
 
-.site-logo {
-  height: 40px; /* Logo height desktop par thodi kam ki */
-  width: auto;
-  max-width: 150px;
-  vertical-align: middle;
-  display: block;
+.search-bar-desktop .search-button {
+    background-color: #f43397; /* Meesho pink */
+    color: white;
+    border: 1px solid #f43397;
+    padding: 10px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.site-name {
-  font-family: var(--font-heading);
-  font-size: 1.6rem; /* Text size desktop par thoda kam kiya */
-  font-weight: 700;
-  color: var(--primary-dark);
-  white-space: nowrap;
-  line-height: 1;
+.search-bar-desktop .search-button:hover {
+    background-color: #d12c82;
 }
 
-nav {
-  display: flex;
-  gap: 1.5rem;
+/* Mobile Search Bar - hidden by default, shown in responsive.css */
+.search-bar-mobile {
+    display: none;
+    margin-top: 10px;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding is included in width */
 }
 
-nav a {
-  color: var(--text);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  position: relative;
-  transition: var(--transition);
+.search-bar-mobile input[type="text"] {
+    width: calc(100% - 40px); /* Adjust for button */
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+    outline: none;
+    display: inline-block; /* Aligns with button */
+    vertical-align: middle;
 }
 
-nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: var(--transition);
+.search-bar-mobile .search-button {
+    background-color: #f43397;
+    color: white;
+    border: 1px solid #f43397;
+    padding: 10px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Aligns with input */
+    vertical-align: middle;
+    height: 42px; /* Match input height */
 }
 
-nav a:hover::after,
-nav a.active::after {
-  width: 100%;
+/* Navigation Menu */
+.main-nav {
+    display: flex;
+    align-items: center;
 }
 
 .nav-toggle {
-  display: none; /* Desktop par hidden */
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: var(--primary-dark);
-  z-index: 1001;
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
 }
 
-/* --- Responsive adjustments for Mobile --- */
-@media (max-width: 768px) {
-  header {
-    padding: 0; /* Mobile par header padding bilkul hata di */
-  }
-
-  .nav-container {
-    justify-content: space-between;
-    padding: 0 1rem; /* Mobile header ki horizontal padding */
-    align-items: center; /* Logo aur toggle ko center align karein */
-    min-height: 50px; /* Height for the top bar */
-    border-bottom: 1px solid var(--border); /* Optional: Separator line */
-  }
-
-  /* Logo mobile adjustment */
-  .site-logo {
-    height: 35px;
-    max-width: 130px;
-  }
-  .site-name {
-    font-size: 1.2rem;
-  }
-
-  nav {
-    display: none; /* Hide by default on mobile */
-    flex-direction: column;
-    position: absolute;
-    top: 100%; /* Nav-container ke theek neeche */
-    right: 0;
-    width: 100%; /* Full width dropdown for mobile if menu opens */
-    max-width: 250px; /* Max width for the dropdown menu */
-    background-color: var(--white);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border-top: 1px solid var(--border);
-    padding: 0.5rem 0;
-    gap: 0;
-    text-align: left;
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    transform: translateY(-10px);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 999; /* Search bar se neeche rakha */
-  }
-
-  nav.active {
+.nav-menu {
     display: flex;
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  nav a {
-    padding: 0.8rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  nav a:last-child {
-    border-bottom: none;
-  }
-  .nav-toggle {
-    display: block; /* Show toggle button on mobile */
-  }
+    gap: 25px; /* Spacing between nav items */
 }
 
-@media (max-width: 480px) {
-    .nav-container {
-        padding: 0 0.8rem;
-    }
-    .site-logo {
-        height: 30px;
-    }
-    .site-name {
-        font-size: 1.1rem;
-    }
-    nav {
-        max-width: 180px; /* Smaller dropdown for very small screens */
-    }
-    nav a {
-        padding: 0.6rem 1rem;
-    }
+.nav-menu li a {
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: flex; /* For icon and text alignment */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.nav-menu li a:hover {
+    color: #f43397; /* Meesho pink */
+}
+
+/* Search Results Dropdown */
+.search-results {
+    position: absolute;
+    top: 100%; /* Position below search bar */
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+    display: none; /* Hidden by default */
+}
+
+.search-results a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #eee;
+}
+
+.search-results a:last-child {
+    border-bottom: none;
+}
+
+.search-results a:hover {
+    background-color: #f5f5f5;
+    color: #f43397;
+}
+
+.search-results p.no-results-msg {
+    padding: 10px 15px;
+    color: #666;
+    font-style: italic;
 }
