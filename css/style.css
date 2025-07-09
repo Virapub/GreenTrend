@@ -53,8 +53,7 @@ img {
     max-width: 100%;
     height: auto;
     padding: 10px;
-    object-fit: cover;
-    display: block; /* Remove extra space below image */
+    object-fit: cover; /* Remove extra space below image */
 }
 
 .btn {
