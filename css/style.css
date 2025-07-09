@@ -1,6 +1,8 @@
 /* --- style.css for GreenTrend - Reverting to Image 1 Layout --- */
 
 /* IMPORTS & ROOT VARIABLES */
+/* Ensure you have Lato and Open Sans imported in your HTML head: */
+/* <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"> */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap');
 
 :root {
@@ -153,17 +155,50 @@ ul { list-style: none; }
     font-weight: 700;
     color: var(--primary-color);
     white-space: nowrap;
+    /* Adjust positioning for mobile center, desktop can be left aligned by default if not a flex item with space-between */
+    flex-grow: 1; /* Allows it to take space for centering */
+    justify-content: center; /* Centers the logo within its flex space */
 }
 .logo img {
     height: 30px; /* Smaller logo image */
     margin-right: 8px;
 }
-/* Removed .logo-text-small as it's not in Image 1 style */
 
 /* Desktop Navigation Menu - hidden in Image 1 style header (only for mobile if present) */
 .nav-menu {
     display: none; /* Desktop menu is not visible in Image 1 header, assuming it's replaced by hamburger/mobile menu concept */
+    /* If you plan to have a hidden mobile menu that slides out, you'd add styles for that here */
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--background-card);
+    position: absolute;
+    top: 100%; /* Position below header */
+    left: 0;
+    box-shadow: var(--shadow-medium);
+    padding: 15px 0;
+    border-top: 1px solid var(--border-color);
+    z-index: 990;
 }
+.nav-menu.active {
+    display: flex; /* Activated by JS */
+}
+.nav-menu li {
+    margin: 8px 0;
+    text-align: center;
+    width: 100%;
+}
+.nav-menu a {
+    padding: 10px 0;
+    display: block;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+.nav-menu a::after {
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+}
+
 
 .currency-toggle-button {
     background-color: var(--primary-color);
@@ -177,7 +212,8 @@ ul { list-style: none; }
     font-weight: 600;
     text-transform: uppercase;
     box-shadow: var(--shadow-light);
-    margin-left: auto; /* Push to the right */
+    /* margin-left: auto; */ /* This was for pushing it right when logo was left */
+    order: 3; /* Ensure it's the last in the flex order */
 }
 .currency-toggle-button:hover {
     background-color: var(--primary-hover-color);
@@ -189,7 +225,8 @@ ul { list-style: none; }
     font-size: 1.5em; /* Compact size */
     cursor: pointer;
     color: var(--text-color-dark);
-    margin-right: 15px; /* Space from logo */
+    /* margin-right: 15px; */ /* Removed as flex order will handle spacing */
+    order: 1; /* Ensure it's the first in the flex order */
 }
 
 /* --- Search Bar (Image 1 Style - below top row) --- */
@@ -223,7 +260,7 @@ ul { list-style: none; }
     top: 50%;
     transform: translateY(-50%);
     width: 40px; /* Compact width */
-    height: 100%; /* Match input height */
+    height: calc(100% - 2px); /* Match input height, accounting for input border */
     background-color: var(--primary-color);
     color: var(--text-color-light);
     border: none;
@@ -317,7 +354,10 @@ ul { list-style: none; }
 
 
 /* --- Section Titles (e.g., "All Products", "Top Categories") --- */
-.section-title {
+.section-title,
+.categories-section h2, /* Ensure h2 directly inside categories-section follows this */
+.featured-products-section h2 /* Ensure h2 directly inside featured-products-section follows this */
+{
     text-align: center;
     margin-bottom: 35px;
     font-size: 2.5em;
@@ -326,7 +366,9 @@ ul { list-style: none; }
     padding-bottom: 10px;
     font-weight: 700;
 }
-.section-title::after {
+.section-title::after,
+.categories-section h2::after,
+.featured-products-section h2::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -343,7 +385,7 @@ ul { list-style: none; }
     padding: var(--padding-section-desktop);
     background-color: transparent; /* Changed to transparent for background-light behind it */
 }
-.category-list {
+.category-list { /* Updated to match your HTML's id="category-list" */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
@@ -392,10 +434,8 @@ ul { list-style: none; }
 }
 
 /* --- Product Grid (Homepage Featured & Products Page) --- */
-/* These styles will only apply if you keep the HTML for these sections. */
-/* If you remove the HTML for sections 6 & 7 as guided, these won't be used. */
 .featured-products-section,
-.products-page .products-section {
+.products-page .products-section { /* Kept these styles as your HTML has featured-products-section */
     padding: var(--padding-section-desktop);
     background-color: var(--background-light);
 }
@@ -508,6 +548,29 @@ ul { list-style: none; }
     background-color: var(--primary-hover-color);
     transform: translateY(-1px);
 }
+
+.view-all-btn-container { /* Style for the container of "View All Products" button */
+    text-align: center;
+    margin-top: 40px;
+}
+.view-all-button { /* You should change this to .btn .btn-primary in your HTML */
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-light);
+}
+.view-all-button:hover {
+    background-color: var(--primary-hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
 
 /* --- Product Detail Page --- */
 .product-detail-section {
@@ -779,8 +842,6 @@ ul { list-style: none; }
 
     .logo {
         font-size: 1.3em;
-        margin-left: auto; /* Center logo on smaller screens (if only 3 elements) */
-        margin-right: auto;
     }
     .logo img {
         height: 28px;
@@ -822,7 +883,7 @@ ul { list-style: none; }
     .hero-section p {
         font-size: 1em;
     }
-    .section-title {
+    .section-title, .categories-section h2, .featured-products-section h2 {
         font-size: 2em;
     }
     .categories-section,
@@ -930,7 +991,7 @@ ul { list-style: none; }
     .hero-section p {
         font-size: 0.9em;
     }
-    .section-title {
+    .section-title, .categories-section h2, .featured-products-section h2 {
         font-size: 1.8em;
         margin-bottom: 25px;
     }
