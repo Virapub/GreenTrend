@@ -1,12 +1,12 @@
-// js/main.js - Updated for GreenTrend (Further Refinements)
+// js/main.js - Functional and Robust Version for GreenTrend
 
 // --- Global Variables & Constants ---
-let currentCurrency = 'INR'; // Default currency
-const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (July 2025: Approx 83.5 INR for 1 USD)
+let currentCurrency = 'INR'; // Default currency when page loads
+const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (e.g., 1 USD = 83.5 INR)
 const DEBOUNCE_DELAY = 300; // Delay for search input debouncing in milliseconds
 
-// Assume products and categories data are globally available from data.js
-// Make sure data.js is loaded BEFORE main.js in your HTML:
+// Assume 'products', 'categories', and 'featuredProducts' data are globally available from data.js.
+// Ensure data.js is loaded BEFORE main.js in your HTML:
 // <script src="js/data.js"></script>
 // <script src="js/main.js"></script>
 
@@ -14,40 +14,43 @@ const DEBOUNCE_DELAY = 300; // Delay for search input debouncing in milliseconds
 
 /**
  * Formats a price from INR to the current selected currency (INR or USD).
+ * Handles invalid price inputs gracefully.
  * @param {number} priceInINR - The price in Indian Rupees.
- * @returns {string} The formatted price string (e.g., "₹1,234" or "$14.80").
+ * @returns {string} The formatted price string (e.g., "₹1,234" or "$14.80" or "N/A").
  */
 function formatPrice(priceInINR) {
     if (typeof priceInINR !== 'number' || isNaN(priceInINR)) {
-        // console.warn('Invalid price provided to formatPrice:', priceInINR);
-        return 'N/A';
+        console.warn('Invalid price provided to formatPrice:', priceInINR);
+        return 'N/A'; // Return N/A for invalid numbers
     }
 
     if (currentCurrency === 'INR') {
+        // Correctly format for Indian Rupees
         return `₹${priceInINR.toLocaleString('en-IN')}`;
     } else {
+        // Convert to USD and format to 2 decimal places
         const priceInUSD = (priceInINR / USD_EXCHANGE_RATE).toFixed(2);
         return `$${priceInUSD}`;
     }
 }
 
 /**
- * Updates all price displays across the current page based on `currentCurrency`.
- * It looks for elements with `data-priceinr` or `data-originalpriceinr` attributes.
+ * Updates all displayed prices on the current page.
+ * It iterates through product cards and product detail elements to apply the current currency format.
  */
 function updateDisplayedPrices() {
-    // Update prices in all product cards
+    // Update prices in all product cards (on home/products pages)
     document.querySelectorAll('.product-card').forEach(productCard => {
         const priceElement = productCard.querySelector('.current-price');
         const originalPriceElement = productCard.querySelector('.original-price');
 
-        // Get original INR price from dataset attribute
+        // Get original INR price from dataset (e.g., data-priceinr="1299")
         const dataPriceINR = parseFloat(productCard.dataset.priceinr);
         if (priceElement && !isNaN(dataPriceINR)) {
             priceElement.textContent = formatPrice(dataPriceINR);
         }
 
-        // Update original price if it exists
+        // If there's an original price, update that too
         const dataOriginalPriceINR = parseFloat(productCard.dataset.originalpriceinr);
         if (originalPriceElement && !isNaN(dataOriginalPriceINR)) {
             originalPriceElement.textContent = formatPrice(dataOriginalPriceINR);
@@ -59,14 +62,15 @@ function updateDisplayedPrices() {
     const detailOriginalPriceElement = document.getElementById('product-detail-original-price');
 
     if (detailPriceElement) {
-        const priceINR = parseFloat(detailPriceElement.dataset.inrprice || detailPriceElement.dataset.priceinr);
+        // Get original INR price from its data attribute (e.g., data-inr-price="1299")
+        const priceINR = parseFloat(detailPriceElement.dataset.inrprice);
         if (!isNaN(priceINR)) {
             detailPriceElement.textContent = formatPrice(priceINR);
         }
     }
 
     if (detailOriginalPriceElement) {
-        const originalPriceINR = parseFloat(detailOriginalPriceElement.dataset.inrprice || detailOriginalPriceElement.dataset.originalpriceinr);
+        const originalPriceINR = parseFloat(detailOriginalPriceElement.dataset.inrprice);
         if (!isNaN(originalPriceINR)) {
             detailOriginalPriceElement.textContent = formatPrice(originalPriceINR);
         }
@@ -74,9 +78,10 @@ function updateDisplayedPrices() {
 }
 
 /**
- * Creates and returns HTML for Font Awesome star ratings.
- * @param {number} rating - The numerical rating (e.g., 4.5).
- * @returns {string} HTML string with Font Awesome star icons.
+ * Generates the HTML string for star ratings based on a numerical rating.
+ * Uses Font Awesome icons for full, half, and empty stars.
+ * @param {number} rating - The numerical rating (e.g., 3.5, 5).
+ * @returns {string} HTML string representing the star rating.
  */
 function getStarRatingHTML(rating) {
     if (typeof rating !== 'number' || isNaN(rating)) return '';
@@ -84,46 +89,49 @@ function getStarRatingHTML(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
 
+    // Add full stars
     for (let i = 0; i < fullStars; i++) {
         starsHtml += '<i class="fas fa-star"></i>';
     }
+    // Add half star if applicable
     if (hasHalfStar) {
         starsHtml += '<i class="fas fa-star-half-alt"></i>';
     }
+    // Add empty stars to make up to 5 stars
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
-        starsHtml += '<i class="far fa-star"></i>';
+        starsHtml += '<i class="far fa-star"></i>'; // Use 'far' for empty star outlines
     }
-
     return starsHtml;
 }
-
 
 // --- DOM Rendering Functions ---
 
 /**
- * Renders a list of products into a specified container.
- * @param {Array<Object>} productsToRender - An array of product objects.
- * @param {string} containerId - The ID of the HTML element where products should be rendered.
+ * Renders a list of products into a specified container on the page.
+ * Uses DocumentFragment for efficient DOM manipulation.
+ * @param {Array<Object>} productsToRender - An array of product objects to display.
+ * @param {string} containerId - The ID of the HTML element where products should be appended.
  */
 function renderProducts(productsToRender, containerId) {
     const container = document.getElementById(containerId);
     if (!container) {
-        console.error(`Container with ID "${containerId}" not found for rendering products.`);
+        console.error(`Error: Product container with ID "${containerId}" not found.`);
         return;
     }
 
-    container.innerHTML = ''; // Clear existing content
+    container.innerHTML = ''; // Clear existing content before rendering
 
     if (!productsToRender || productsToRender.length === 0) {
-        container.innerHTML = '<p class="empty-state-message">No products found matching your criteria.</p>';
+        container.innerHTML = '<p class="empty-state-message">No products found. Please try a different search or category.</p>';
         return;
     }
 
-    const fragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment(); // Use fragment for better performance
     productsToRender.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
+        // Store original INR prices as data attributes for currency conversion
         productCard.dataset.priceinr = product.priceINR;
         if (product.originalPriceINR) {
             productCard.dataset.originalpriceinr = product.originalPriceINR;
@@ -151,7 +159,7 @@ function renderProducts(productsToRender, containerId) {
         fragment.appendChild(productCard);
     });
 
-    container.appendChild(fragment);
+    container.appendChild(fragment); // Append all cards at once
     updateDisplayedPrices(); // Update prices after rendering products
 }
 
@@ -163,7 +171,7 @@ function renderProducts(productsToRender, containerId) {
 function renderCategories(categoriesToRender, containerId) {
     const container = document.getElementById(containerId);
     if (!container) {
-        console.error(`Container with ID "${containerId}" not found for rendering categories.`);
+        console.error(`Error: Category container with ID "${containerId}" not found.`);
         return;
     }
 
@@ -177,7 +185,7 @@ function renderCategories(categoriesToRender, containerId) {
     const fragment = document.createDocumentFragment();
     categoriesToRender.forEach(category => {
         const categoryCard = document.createElement('a');
-        categoryCard.href = `products.html?category=${category.slug}`;
+        categoryCard.href = `products.html?category=${category.slug}`; // Link to products page with category filter
         categoryCard.className = 'category-card';
         categoryCard.setAttribute('aria-label', `Explore ${category.name} category`);
         categoryCard.innerHTML = `
@@ -190,19 +198,22 @@ function renderCategories(categoriesToRender, containerId) {
 }
 
 /**
- * Renders the detail page for a single product.
+ * Renders the detail page for a single product based on its ID.
+ * Displays loading, error, or product details.
  * @param {string} productId - The ID of the product to render.
  */
 async function renderProductDetail(productId) {
     const contentDiv = document.getElementById('product-detail-content');
     if (!contentDiv) {
-        console.error('Product detail content container not found.');
+        console.error('Error: Product detail content container not found (ID: product-detail-content).');
         return;
     }
 
+    // Display loading state
     contentDiv.innerHTML = `<div class="loading-state">Loading product details...</div>`;
-    contentDiv.classList.remove('error-state');
+    contentDiv.classList.remove('error-state'); // Remove any previous error state
 
+    // Simulate fetching product data (assuming 'products' array is loaded from data.js)
     const product = (typeof products !== 'undefined') ? products.find(p => p.id === productId) : null;
 
     if (product) {
@@ -236,40 +247,46 @@ async function renderProductDetail(productId) {
             </div>
         `;
         contentDiv.classList.remove('loading-state');
-        updateDisplayedPrices();
-        document.title = `${product.name} - GreenTrend`; // Update page title
+        updateDisplayedPrices(); // Update prices after rendering detail page
+        document.title = `${product.name} - GreenTrend Smart Kitchen`; // Dynamically update page title
     } else {
         contentDiv.innerHTML = '<div class="error-state">Product not found. Please check the URL or try again.</div>';
         contentDiv.classList.remove('loading-state');
         contentDiv.classList.add('error-state');
-        document.title = 'Product Not Found - GreenTrend'; // Update page title
+        document.title = 'Product Not Found - GreenTrend'; // Update page title for error
     }
 }
 
-
 // --- Search Functionality ---
+
 /**
- * Sets up the search input and results display.
- * Includes debouncing for better performance on keyup.
+ * Sets up search input and displays real-time search results.
+ * Implements debouncing to optimize performance.
  */
 function setupSearch() {
     const searchBox = document.getElementById('searchBox');
     const searchResults = document.getElementById('searchResults');
-    const searchButton = document.getElementById('searchButton');
+    const searchButton = document.getElementById('searchButton'); // Assuming one search box for both desktop/mobile
 
-    let searchTimeout;
+    let searchTimeout; // For debouncing
 
     const performSearch = (query) => {
-        if (!searchResults || !products) { // Ensure searchResults and products data exist
-            if (!products) console.warn("Products data not loaded for search functionality.");
+        if (!searchResults) {
+            console.error('Search results container (ID: searchResults) not found.');
+            return;
+        }
+        // Ensure products data is available before attempting search
+        if (typeof products === 'undefined' || !products.length) {
+            console.warn("Products data not available for search. Please ensure data.js is loaded.");
+            searchResults.style.display = 'none'; // Hide results if no data
             return;
         }
 
-        if (query.length > 2) {
+        if (query.length > 2) { // Only search if query is long enough
             const filteredProducts = products.filter(product =>
                 product.name.toLowerCase().includes(query.toLowerCase()) ||
                 (product.description && product.description.toLowerCase().includes(query.toLowerCase())) ||
-                (product.category && product.category.toLowerCase().includes(query.toLowerCase())) // Check for category property
+                (product.category && product.category.toLowerCase().includes(query.toLowerCase())) // Ensure category field exists
             );
 
             if (filteredProducts.length > 0) {
@@ -281,23 +298,23 @@ function setupSearch() {
                 `).join('');
                 searchResults.style.display = 'block';
             } else {
-                searchResults.innerHTML = '<div class="no-results-msg">No products found.</div>';
+                searchResults.innerHTML = '<div class="no-results-msg">No products found matching your search.</div>';
                 searchResults.style.display = 'block';
             }
         } else {
-            searchResults.style.display = 'none';
+            searchResults.style.display = 'none'; // Hide if query is too short or empty
         }
     };
 
     if (searchBox) {
         searchBox.addEventListener('keyup', (e) => {
-            clearTimeout(searchTimeout);
+            clearTimeout(searchTimeout); // Clear previous timeout
             const query = e.target.value.trim();
             searchTimeout = setTimeout(() => performSearch(query), DEBOUNCE_DELAY);
         });
 
         searchBox.addEventListener('focus', (e) => {
-             // Re-show results if focus returns and query exists
+            // Re-show results if focus returns and query exists and is long enough
             if (e.target.value.trim().length > 2) {
                 performSearch(e.target.value.trim());
             }
@@ -322,29 +339,31 @@ function setupSearch() {
     });
 }
 
-// --- Event Listeners & Page Initialization ---
-
+// --- DOM Content Loaded Listener ---
+// This runs when the HTML is fully loaded and parsed.
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Setup Currency Toggle Button functionality
     const currencyToggleButton = document.getElementById('currency-toggle-button');
     if (currencyToggleButton) {
-        currencyToggleButton.textContent = currentCurrency;
+        currencyToggleButton.textContent = currentCurrency; // Set initial button text
         currencyToggleButton.addEventListener('click', () => {
             currentCurrency = (currentCurrency === 'INR') ? 'USD' : 'INR';
-            currencyToggleButton.textContent = currentCurrency;
-            updateDisplayedPrices();
+            currencyToggleButton.textContent = currentCurrency; // Update button text
+            updateDisplayedPrices(); // Recalculate and display all prices
         });
+    } else {
+        console.warn("Currency toggle button (ID: currency-toggle-button) not found.");
     }
 
     // 2. Mobile Navigation Toggle functionality
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu'); // This needs to be present in HTML
+    const navToggle = document.getElementById('navToggle'); // Hamburger icon
+    const navMenu = document.getElementById('navMenu');     // Main navigation UL (or container)
 
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active'));
+            navMenu.classList.toggle('active'); // Toggles the 'active' class (for CSS styling)
+            navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active')); // ARIA for accessibility
             // Close search results dropdown when mobile menu is opened/closed
             const searchResults = document.getElementById('searchResults');
             if (searchResults) {
@@ -352,95 +371,71 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Close nav menu when a link inside it is clicked
         navMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
+                navMenu.classList.remove('active'); // Hide menu after clicking a link
                 navToggle.setAttribute('aria-expanded', false);
             });
         });
 
+        // Close mobile menu if window is resized to desktop width
         window.addEventListener('resize', () => {
+            // Adjust breakpoint (992px) if your CSS uses a different one for mobile nav
             if (window.innerWidth > 992 && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
                 navToggle.setAttribute('aria-expanded', false);
             }
         });
     } else {
-        if(navToggle) navToggle.style.display = 'none'; // Hide if no menu to toggle
-        console.warn("Mobile navigation menu (id='navMenu') or toggle button (id='navToggle') not found. Mobile navigation features might not work.");
+        // If navMenu or navToggle are missing, hide the toggle to prevent a non-functional button
+        if (navToggle) navToggle.style.display = 'none';
+        console.warn("Mobile navigation setup incomplete: ensure elements with ID 'navToggle' and 'navMenu' exist in HTML.");
     }
 
 
     // 3. Render initial content based on current page
-    // Ensure 'products' and 'categories' data is available from data.js
-    const path = window.location.pathname;
+    const currentPath = window.location.pathname;
 
-    if (path.includes('index.html') || path === '/') {
-        if (typeof categories !== 'undefined' && categories.length > 0) {
+    // Check if 'products' and 'categories' data are loaded from data.js
+    const productsLoaded = typeof products !== 'undefined' && products.length > 0;
+    const categoriesLoaded = typeof categories !== 'undefined' && categories.length > 0;
+    const featuredProductsLoaded = typeof featuredProducts !== 'undefined' && featuredProducts.length > 0;
+
+
+    if (currentPath.includes('index.html') || currentPath === '/') {
+        // Home page specific rendering
+        if (categoriesLoaded) {
             renderCategories(categories, 'category-list');
         } else {
-            console.warn("Categories data not found or is empty for home page.");
+            console.warn("Categories data not available or empty for home page. Categories section might be empty.");
         }
 
-        if (typeof featuredProducts !== 'undefined' && featuredProducts.length > 0) {
+        if (featuredProductsLoaded) {
             renderProducts(featuredProducts, 'featured-product-list');
         } else {
-            console.warn("Featured products data not found or is empty for home page.");
+            console.warn("Featured products data not available or empty for home page. Featured products section might be empty.");
         }
-    } else if (path.includes('products.html')) {
+    } else if (currentPath.includes('products.html')) {
+        // Products page specific rendering with filtering
         const urlParams = new URLSearchParams(window.location.search);
         const categorySlug = urlParams.get('category');
         const searchQuery = urlParams.get('search');
-        let productsToDisplay = (typeof products !== 'undefined') ? products : [];
+        let productsToDisplay = productsLoaded ? products : []; // Default to all products if loaded
 
         const productsPageHeading = document.getElementById('products-page-heading');
         let headingText = "All Smart Kitchen Products";
 
         if (categorySlug) {
+            // Filter by category slug
             productsToDisplay = productsToDisplay.filter(product => product.categorySlug === categorySlug);
-            const category = (typeof categories !== 'undefined') ? categories.find(cat => cat.slug === categorySlug) : null;
+            const category = categoriesLoaded ? categories.find(cat => cat.slug === categorySlug) : null;
             if (category) {
-                headingText = `Products in ${category.name}`;
+                headingText = `Products in "${category.name}"`;
             } else {
-                headingText = `Category "${categorySlug}" Not Found`;
+                headingText = `Category Not Found for "${categorySlug}"`;
             }
         } else if (searchQuery) {
+            // Filter by search query across name, description, category
             productsToDisplay = productsToDisplay.filter(product =>
-                product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (product.category && product.category.toLowerCase().includes(searchQuery.toLowerCase()))
-            );
-            headingText = `Search Results for "${searchQuery}"`;
-        }
-
-        if (productsPageHeading) {
-            productsPageHeading.textContent = headingText;
-        } else {
-            console.warn("Element with ID 'products-page-heading' not found on products.html.");
-        }
-
-        renderProducts(productsToDisplay, 'product-grid-container');
-    } else if (path.includes('product-detail.html')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        if (productId) {
-            renderProductDetail(productId);
-        } else {
-            const contentDiv = document.getElementById('product-detail-content');
-            if (contentDiv) {
-                contentDiv.innerHTML = '<div class="error-state">Product ID missing in URL.</div>';
-                contentDiv.classList.add('error-state');
-            }
-            document.title = 'Error - GreenTrend';
-        }
-    }
-
-    // 4. Initialize Search Functionality
-    setupSearch();
-
-    // 5. Automatically update current year in footer
-    const currentYearSpan = document.getElementById('current-year');
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
-});
+                product.name.toLowerCase().includes(sear
