@@ -158,7 +158,7 @@ const products = [
     priceUSD: 10.98,
     category: "Smart Gadgets",
     link: "https://amzn.to/4nwJpml",
-    image: "https://m.media-amazon.com/images/I/61U0jM57PQL._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/51jF1fXjjzL._SL1000_.jpg", // Example: Use correct image URL if different
     rating: 4.2,
     features: [
       "Portable design",
