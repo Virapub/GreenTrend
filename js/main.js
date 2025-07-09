@@ -1,3 +1,5 @@
+// js/main.js
+
 // Global Variables
 let currentCurrency = "INR"; // Default currency when page loads
 const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (e.g. 1 USD = 83.5 INR)
@@ -26,7 +28,7 @@ function updateDisplayedPrices() {
                 currentPriceSpan = document.createElement('span');
                 currentPriceSpan.className = 'current-price';
                 // Prepend to ensure it's the first child for consistent display
-                priceElement.prepend(currentPriceSpan); 
+                priceElement.prepend(currentPriceSpan);
             }
             currentPriceSpan.textContent = formatPrice(priceInINR);
         }
@@ -35,7 +37,7 @@ function updateDisplayedPrices() {
     // Update price on the single product detail page (product-detail.html)
     const detailPriceElement = document.getElementById('product-detail-price');
     if (detailPriceElement) {
-        const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
+        const priceInINR = parseFloat(detailPriceElement.dataset.inr-price);
         if (!isNaN(priceInINR)) {
             detailPriceElement.textContent = formatPrice(priceInINR);
         }
@@ -195,7 +197,7 @@ function renderProducts(productList, containerId) {
         productCard.href = `product-detail.html?id=${product.id}`;
         productCard.className = 'product-card';
         // Add a class for specific pages if needed, e.g., 'featured-product-card'
-        // productCard.classList.add('featured-product-card'); 
+        // productCard.classList.add('featured-product-card');
 
         // Use data-inr-price to store the base price for currency conversion
         productCard.innerHTML = `
@@ -364,31 +366,47 @@ document.addEventListener('DOMContentLoaded', () => {
         const categorySlug = urlParams.get('category');
         const searchQuery = urlParams.get('search');
         let productsToRender = []; // Initialize as empty array
-        let headingText = "All Products";
 
         // Ensure 'products' data is available from data.js
         if (typeof products !== 'undefined' && Array.isArray(products)) {
             productsToRender = products; // Default to all products
-            
+
             if (categorySlug) {
                 productsToRender = products.filter(product => product.categorySlug === categorySlug);
                 const categoryName = categories.find(cat => cat.slug === categorySlug)?.name;
-                headingText = categoryName ? `${categoryName} Products` : "Products";
+                // Update the heading on the products page
+                const productsHeading = document.getElementById('products-heading');
+                if (productsHeading) {
+                    productsHeading.textContent = categoryName ? `${categoryName} Products` : "Products";
+                }
                 console.log(`Filtering by category: ${categorySlug}. Found ${productsToRender.length} products.`);
             } else if (searchQuery) {
                 productsToRender = products.filter(product =>
                     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                    (product.category && product.category.toLowerCase().includes(query.toLowerCase())) // query should be searchQuery here
+                    (product.category && product.category.toLowerCase().includes(searchQuery.toLowerCase()))
                 );
-                headingText = `Search Results for "${searchQuery}"`;
+                 // Update the heading on the products page
+                const productsHeading = document.getElementById('products-heading');
+                if (productsHeading) {
+                     productsHeading.textContent = `Search Results for "${searchQuery}"`;
+                }
                 console.log(`Filtering by search query: "${searchQuery}". Found ${productsToRender.length} products.`);
+            } else {
+                 // Default heading for all products
+                 const productsHeading = document.getElementById('products-heading');
+                if (productsHeading) {
+                     productsHeading.textContent = "All Products";
+                }
             }
         } else {
             console.error('Products data not available for products page. Make sure data.js is loaded correctly.');
-            headingText = "Error: Product data missing";
+            const productsHeading = document.getElementById('products-heading');
+            if (productsHeading) {
+                productsHeading.textContent = "Error: Product data missing";
+            }
         }
-        
+
         // Render the filtered/all products
         if (productsToRender.length > 0) {
             renderProducts(productsToRender, 'product-grid');
@@ -400,14 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 console.warn('Product grid container (#product-grid) not found on products page.');
             }
-        }
-
-        // Update the heading on the products page
-        const productsHeading = document.getElementById('products-heading');
-        if (productsHeading) {
-            productsHeading.textContent = headingText;
-        } else {
-            console.warn('Products heading (#products-heading) not found on products page.');
         }
     }
 
@@ -440,6 +450,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplayedPrices();
     console.log('GreenTrend initialization complete.');
 });
-
-// IMPORTANT: Ensure your data.js file is loaded before this main.js file in your HTML.
-// data.js should define 'products', 'categories', and 'featuredProducts' arrays.
