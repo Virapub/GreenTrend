@@ -315,7 +315,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100%; /* Adjust as needed */
+    min-height: 400px; /* Adjust as needed */
     margin-top: 0; /* Will be set by JS */
     transition: margin-top 0.3s ease; /* Smooth transition for margin */
 }
@@ -343,9 +343,10 @@ img {
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents the image from repeating */
     width: 100%; /* Ensures the hero background takes full width */
-    height: 100vh; /* Takes full viewport height. Adjust as needed if it's not a full-screen hero. */
+    height: auto; /* Takes full viewport height. Adjust as needed if it's not a full-screen hero. */
     /* Add other styles for content within your hero section as needed */
     display: flex; /* Example: if you want to center content vertically/horizontally */
+    padding: 10px;
     justify-content: center;
     align-items: center;
     color: white; /* Example: for text on the hero image */
