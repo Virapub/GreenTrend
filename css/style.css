@@ -125,7 +125,7 @@ ul { list-style: none; }
     box-shadow: var(--shadow-medium);
 }
 
-/* --- Header & Navigation (Image 1 Style) --- */
+/* --- Header & Navigation --- */
 .main-header {
     background-color: var(--background-card);
     padding: 12px 0; /* Slightly more compact */
@@ -138,12 +138,23 @@ ul { list-style: none; }
     border-bottom: 1px solid var(--border-color);
 }
 
+.main-header .container { /* Added .container here to apply flex to its direct children */
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px; /* Spacing between top-level header items */
+    padding: 0 20px; /* Horizontal padding for the content inside header */
+}
+
+/* This .navbar holds logo, currency, and toggle */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px; /* Increased gap */
-    padding: 0 20px;
+    width: 100%; /* Important: takes full width within .main-header .container */
+    /* This ensures logo, currency, toggle are on one line on mobile */
+    gap: 10px; /* Gap between items within the top row */
 }
 
 .logo {
@@ -154,12 +165,14 @@ ul { list-style: none; }
     font-weight: 700;
     color: var(--primary-color);
     white-space: nowrap;
-    flex-grow: 1;
-    justify-content: center;
+    /* On mobile, we might want this to be in the center, or just allow flex-grow */
+    flex-grow: 1; /* Allows logo to take available space */
+    justify-content: center; /* Center content of logo for visual balance */
 }
 .logo img {
-    height: 100px; /* Slightly larger logo image */
-    margin-right: 10px; /* Increased margin */
+    height: 40px; /* Adjusted logo image size for better mobile fit */
+    margin-right: 8px; /* Standardized margin */
+    object-fit: contain; /* Ensures logo fits without distortion */
 }
 
 .currency-toggle-button {
@@ -174,7 +187,7 @@ ul { list-style: none; }
     font-weight: 600;
     text-transform: uppercase;
     box-shadow: var(--shadow-light);
-    order: 3;
+    /* order: 3; - Remove this from here, handle in media query */
 }
 .currency-toggle-button:hover {
     background-color: var(--primary-hover-color);
@@ -182,26 +195,31 @@ ul { list-style: none; }
 }
 
 .nav-toggle {
-    display: block;
+    display: block; /* Always display for mobile-first approach */
     font-size: 1.6em; /* Slightly larger hamburger icon */
     cursor: pointer;
     color: var(--text-color-dark);
-    order: 1;
+    background: none;
+    border: none;
+    padding: 5px; /* Add padding for easier tap target */
+    /* order: 1; - Remove this from here, handle in media query */
 }
 
-/* --- Search Bar (Below Top Row) --- */
+/* --- Search Bar --- */
 .search-container {
     margin-top: 15px; /* Increased space from top row */
-    padding: 0 20px;
-    position: relative;
+    padding: 0 20px; /* Ensure this matches .main-header .container padding */
+    position: relative; /* Crucial for positioning search results */
     max-width: 100%;
     display: flex;
     align-items: center;
+    width: 100%; /* Takes full width within its flex parent (.main-header .container) */
+    order: 4; /* Ensures it's below the navbar on mobile */
 }
 
 .search-input {
     flex-grow: 1;
-    padding: 10px 50px 10px 20px; /* Increased padding */
+    padding: 10px 50px 10px 20px; /* Increased padding to make space for button */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-sm);
     font-size: 0.95em; /* Slightly larger font */
@@ -216,15 +234,15 @@ ul { list-style: none; }
 
 .search-button {
     position: absolute;
-    right: 20px; /* Align with container padding */
+    right: 20px; /* Aligned with .search-container padding */
     top: 50%;
     transform: translateY(-50%);
     width: 45px; /* Slightly wider */
-    height: calc(100% - 2px);
+    height: calc(100% - 2px); /* Match height of input */
     background-color: var(--primary-color);
     color: var(--text-color-light);
     border: none;
-    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; /* Only right corners */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,25 +257,101 @@ ul { list-style: none; }
 }
 
 .search-results {
+    position: absolute; /* Relative to .search-container */
     top: calc(100% + 8px); /* More space from input */
-    left: 20px;
-    width: calc(100% - 40px);
-    max-height: 280px; /* Increased max height */
-    border-radius: var(--border-radius-md);
+    left: 20px; /* Aligned with .search-container padding */
+    width: calc(100% - 40px); /* Match width of search input area */
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-top: none; /* No top border, blends with input border */
+    border-radius: 0 0 var(--border-radius-md) var(--border-radius-md); /* Only bottom corners */
     box-shadow: var(--shadow-medium);
+    max-height: 280px; /* Increased max height */
+    overflow-y: auto;
+    display: none; /* Hidden by default, shown by JS */
+    z-index: 990; /* Below header, above other content */
     padding: 8px 0; /* Increased padding */
 }
 .search-results a {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Gap between image and text */
     padding: 10px 20px; /* Increased padding */
     font-size: 0.95em;
+    color: var(--text-color-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color-light);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.search-results a:last-child {
+    border-bottom: none;
+}
+.search-results a:hover {
+    background-color: var(--background-light);
+    color: var(--primary-color);
 }
 .search-results a img {
     width: 35px; /* Slightly larger image */
     height: 35px;
-    margin-right: 12px;
+    object-fit: cover;
+    border-radius: var(--border-radius-sm);
 }
 .search-results .no-results-msg {
     padding: 12px 20px;
+    text-align: center;
+    color: var(--secondary-color);
+}
+
+
+/* --- Mobile Navigation Menu (.nav-menu) --- */
+/* This is initially hidden and toggled by JS */
+.nav-menu {
+    display: none; /* Hidden by default, shown when .active */
+    position: fixed; /* Fixed position to cover content */
+    top: 0; /* Start from top of viewport */
+    left: 0;
+    width: 100%;
+    height: 100%; /* Full height to cover entire screen */
+    background-color: rgba(255, 255, 255, 0.98); /* Semi-transparent white overlay */
+    box-shadow: var(--shadow-medium);
+    z-index: 999; /* Higher than search results, lower than sticky header */
+    overflow-y: auto; /* Enable scrolling for long menus */
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%); /* Start off-screen to the left */
+    padding-top: 80px; /* Space for fixed header content */
+}
+
+.nav-menu.active {
+    transform: translateX(0); /* Slide into view */
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    padding: 20px; /* Internal padding for the menu list */
+}
+
+.nav-menu ul li a {
+    display: block; /* Make the whole list item clickable */
+    padding: 15px 0; /* More vertical padding for each link */
+    color: var(--text-color-dark);
+    font-size: 1.15em; /* Slightly larger font */
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color-light); /* Separator between links */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-menu ul li:last-child a {
+    border-bottom: none; /* No border for the last item */
+}
+
+.nav-menu ul li a:hover {
+    background-color: var(--background-light);
+    color: var(--primary-color);
 }
 
 
@@ -306,8 +400,13 @@ ul { list-style: none; }
 .section-title::after,
 .categories-section h2::after,
 .featured-products-section h2::after {
+    content: '';
+    display: block;
     width: 100px; /* Longer underline */
     height: 5px; /* Thicker underline */
+    background-color: var(--primary-color);
+    margin: 10px auto 0 auto; /* Center the underline */
+    border-radius: 5px;
 }
 
 /* --- Category List (Homepage) --- */
@@ -315,15 +414,19 @@ ul { list-style: none; }
     padding: var(--padding-section-desktop);
 }
 .category-list {
+    display: grid; /* Add display grid for these */
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Slightly larger min-width */
     gap: 30px; /* Increased gap */
 }
 .category-card {
+    background-color: var(--background-card); /* Ensure background color */
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-light); /* Initial shadow */
     border: none; /* No initial border, let shadow define separation */
     padding: 20px; /* Increased padding */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center; /* Center content */
+    color: var(--secondary-color); /* Ensure text color */
 }
 .category-card:hover {
     transform: translateY(-5px); /* More pronounced lift */
@@ -332,9 +435,11 @@ ul { list-style: none; }
 .category-card img {
     width: 90px; /* Larger image */
     height: 90px;
-    margin-bottom: 12px;
+    margin: 0 auto 12px auto; /* Center image and add bottom margin */
+    object-fit: contain;
 }
 .category-card span {
+    display: block; /* Ensure span takes full width */
     font-weight: 700; /* Bolder text */
     font-size: 1.05em; /* Slightly larger font */
 }
@@ -346,20 +451,28 @@ ul { list-style: none; }
     background-color: var(--background-light); /* Light background for section */
 }
 .product-grid {
+    display: grid; /* Add display grid for these */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Larger min-width for cards */
     gap: 30px; /* Increased gap */
 }
 .product-card {
+    background-color: var(--background-card); /* Ensure background color */
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-light);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none; /* Remove underline from card link */
+    color: inherit; /* Inherit text color from body */
 }
 .product-card:hover {
     transform: translateY(-5px); /* More pronounced lift */
     box-shadow: var(--shadow-medium);
 }
 .product-card img {
+    width: 100%;
     height: 200px; /* Taller images */
+    object-fit: cover;
+    border-top-left-radius: var(--border-radius-md);
+    border-top-right-radius: var(--border-radius-md);
 }
 .product-card .product-details {
     padding: 20px; /* Increased padding */
@@ -369,28 +482,50 @@ ul { list-style: none; }
     font-weight: 700;
     margin-bottom: 10px;
     min-height: 50px; /* Consistent height for titles */
+    overflow: hidden; /* For ellipsis */
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .product-card .price {
     font-size: 1.4em; /* Larger price */
     margin-bottom: 10px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 .product-card .price .current-price {
     margin-right: 10px;
 }
 .product-card .price .original-price {
     font-size: 0.9em;
+    color: var(--secondary-color); /* Lighter color for original price */
+    text-decoration: line-through;
+    font-weight: normal;
 }
 .product-card .rating {
     font-size: 1em;
     margin-bottom: 15px;
+    color: gold; /* Or a variable for star color */
+}
+.product-card .rating i {
+    color: gold; /* Ensure star icons are gold */
+}
+.product-card .rating .rating-text {
+    color: var(--secondary-color);
+    font-size: 0.9em;
+    margin-left: 5px;
 }
 .product-card .buy-btn {
     padding: 12px 15px; /* More padding for button */
     font-size: 1em; /* Slightly larger font */
     font-weight: 700;
+    width: 100%; /* Make button full width */
 }
 
 .view-all-btn-container {
+    text-align: center;
     margin-top: 50px; /* More space above button */
 }
 /* .view-all-button styles are now handled by .btn .btn-primary */
@@ -401,59 +536,114 @@ ul { list-style: none; }
     padding: var(--padding-section-desktop);
 }
 .product-detail-content {
+    display: flex;
+    flex-direction: column; /* Default to column for mobile */
     gap: 40px; /* Increased gap */
     padding: 40px; /* Increased padding */
+    background-color: var(--background-card);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-medium);
     max-width: 1100px; /* Slightly wider */
+    margin: 0 auto; /* Center the content */
+}
+@media (min-width: 768px) { /* Switch to row layout on larger screens */
+    .product-detail-content {
+        flex-direction: row;
+    }
 }
 .product-image-gallery {
-    min-width: 400px; /* Larger minimum width */
+    flex: 1; /* Takes available space */
+    min-width: 300px; /* Larger minimum width */
     max-height: 500px; /* Larger max height */
     padding: 25px; /* Increased padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.product-image-gallery .product-main-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-light);
+}
+
+.product-info {
+    flex: 1.5; /* Takes more space than image gallery */
+    padding-left: 20px;
 }
 .product-info h1 {
     font-size: 2.8em; /* Larger title */
     margin-bottom: 10px;
 }
 .product-info .price-details {
-    margin-bottom: 25px;
+    display: flex;
+    align-items: baseline;
     gap: 15px;
+    margin-bottom: 25px;
 }
 .product-info #product-detail-price {
     font-size: 3em; /* Larger price */
+    font-weight: bold;
+    color: var(--primary-color);
 }
 .product-info .original-price {
     font-size: 1.2em;
+    color: var(--secondary-color);
+    text-decoration: line-through;
 }
 .product-info .discount-percent {
+    background-color: var(--accent-color);
+    color: var(--text-color-light);
     padding: 6px 10px; /* More padding */
+    border-radius: var(--border-radius-sm);
     font-size: 1.1em;
+    font-weight: bold;
 }
 .product-info .rating {
     font-size: 1.15em;
     margin-bottom: 25px;
+    color: gold;
 }
-.product-info p.description-text {
+.product-info .rating i {
+    color: gold;
+}
+.product-info p.description { /* Renamed from description-text in JS */
     font-size: 1.05em;
     margin-bottom: 30px;
+    color: var(--secondary-color);
 }
 .product-features h3 {
     font-size: 1.3em;
     margin-top: 25px;
     margin-bottom: 12px;
 }
+.product-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 .product-features ul li {
     font-size: 1em;
     margin-bottom: 10px;
     padding-left: 30px;
+    position: relative;
+    color: var(--secondary-color);
 }
 .product-features ul li::before {
+    content: '\f00c'; /* Font Awesome checkmark icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-color);
     font-size: 1.2em;
-    top: 3px;
 }
 .action-buttons {
     margin-top: 40px;
+    display: flex;
+    justify-content: center;
     gap: 25px;
 }
 .buy-now-btn {
@@ -478,19 +668,23 @@ ul { list-style: none; }
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-medium); /* Stronger shadow */
     line-height: 1.9; /* More spacious line height */
+    background-color: var(--background-card); /* Ensure background */
 }
 .content-block p,
 .content-block ul {
     margin-bottom: 20px;
     font-size: 1.05em;
+    color: var(--secondary-color);
 }
 .contact-info li {
     margin-bottom: 15px;
     font-size: 1.1em;
+    color: var(--secondary-color);
 }
 .contact-info li i {
     margin-right: 12px;
     font-size: 1.3em;
+    color: var(--primary-color); /* Color for icons */
 }
 
 
@@ -502,13 +696,19 @@ ul { list-style: none; }
     font-size: 0.95em;
 }
 .footer-content {
+    display: flex; /* Make it a flex container */
+    flex-wrap: wrap; /* Allow columns to wrap */
+    justify-content: space-around; /* Distribute space */
     gap: 30px; /* Increased gap */
     margin-bottom: 30px;
     padding: 0 20px;
+    text-align: center; /* Default for mobile, will change for desktop */
 }
 .footer-column {
+    flex: 1 1 250px; /* Allow columns to grow/shrink, with base width */
     min-width: 200px;
     max-width: 300px;
+    text-align: left; /* Default text align */
 }
 .footer-column h3 {
     color: var(--primary-color);
@@ -520,29 +720,43 @@ ul { list-style: none; }
     color: rgba(255, 255, 255, 0.85); /* Brighter text */
     margin-bottom: 12px;
 }
+.footer-column ul {
+    padding: 0;
+    margin: 0;
+}
 .footer-column ul li {
     margin-bottom: 10px;
 }
 .footer-column ul li a {
     color: rgba(255, 255, 255, 0.85);
     font-size: 1em;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block; /* Allows transform */
 }
 .footer-column ul li a:hover {
     color: var(--accent-color);
     transform: translateX(3px); /* Subtle slide effect */
 }
 .social-links {
+    display: flex; /* Make it flex */
     gap: 15px;
     margin-top: 20px;
+    justify-content: flex-start; /* Align icons to the start */
 }
 .social-links a {
     font-size: 1.6em; /* Larger icons */
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+.social-links a:hover {
+    color: var(--accent-color);
 }
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     padding-top: 25px;
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9em;
+    text-align: center;
 }
 
 
@@ -561,37 +775,54 @@ ul { list-style: none; }
     .main-header {
         padding: 10px 0;
     }
-    .navbar {
-        padding: 0 15px;
+    .main-header .container {
+        flex-direction: column; /* Stack header elements vertically */
+        align-items: flex-start; /* Align to left */
+        gap: 10px; /* Reduce gap */
     }
+
+    .navbar {
+        width: 100%;
+        justify-content: space-between; /* Spread items in top row */
+        padding: 0 15px; /* Adjust padding for top row */
+    }
+
     .logo {
         font-size: 1.4em;
+        order: 2; /* Logo in the middle */
+        flex-grow: 0; /* Don't force logo to grow excessively */
+        justify-content: center; /* Center logo on its line */
     }
     .logo img {
         height: 30px;
     }
+
+    .nav-toggle {
+        font-size: 1.5em;
+        order: 1; /* Hamburger first */
+    }
     .currency-toggle-button {
         padding: 7px 10px;
         font-size: 0.8em;
-    }
-    .nav-toggle {
-        font-size: 1.5em;
+        order: 3; /* Currency toggle last */
+        margin-left: auto; /* Push to right edge */
     }
 
     .search-container {
         margin-top: 12px;
-        padding: 0 15px;
+        padding: 0 15px; /* Adjust padding */
+        order: 4; /* Search bar below the top row */
     }
     .search-input {
         padding: 9px 45px 9px 15px;
         font-size: 0.9em;
     }
     .search-button {
-        right: 15px;
+        right: 15px; /* Align with container padding */
         width: 40px;
     }
     .search-results {
-        left: 15px;
+        left: 15px; /* Align with container padding */
         width: calc(100% - 30px);
     }
     .search-results a {
@@ -690,7 +921,7 @@ ul { list-style: none; }
     .product-info #product-detail-price {
         font-size: 2.6em;
     }
-    .product-info .description-text {
+    .product-info .description { /* Make sure this matches your JS */
         font-size: 1em;
     }
     .action-buttons {
@@ -718,17 +949,20 @@ ul { list-style: none; }
     }
 
     .footer-content {
+        flex-direction: column; /* Stack footer columns vertically */
+        align-items: center; /* Center align columns */
         gap: 25px;
         padding: 0 15px;
     }
     .footer-column {
-        max-width: 80%;
+        max-width: 90%; /* Take more width on mobile */
+        text-align: center; /* Center text in columns */
     }
     .footer-column h3 {
         font-size: 1.15em;
     }
     .social-links {
-        justify-content: center;
+        justify-content: center; /* Center social icons */
     }
 }
 
@@ -775,50 +1009,54 @@ ul { list-style: none; }
     }
     .search-input {
         padding: 8px 40px 8px 15px;
-        font-size: 0.85em;
+        font-size: 0.9em;
     }
     .search-button {
-        right: 10px;
-        width: 35px;
+        right: 10px; /* Align with container padding */
+        width: 35px; /* Smaller button */
+        height: calc(100% - 2px);
     }
     .search-results {
         left: 10px;
-        width: calc(100% - 20px);
+        width: calc(100% - 20px); /* Adjust width */
+        max-height: 200px; /* Smaller max height */
     }
     .search-results a {
-        padding: 8px 12px;
+        padding: 8px 10px;
         font-size: 0.85em;
     }
     .search-results a img {
-        width: 25px;
-        height: 25px;
+        width: 28px;
+        height: 28px;
     }
 
     .hero-section {
-        padding: 35px 15px;
-        min-height: 280px;
-        margin: 15px auto;
+        padding: 30px 15px; /* Reduced padding for smaller screens */
+        min-height: 300px;
     }
     .hero-section h1 {
         font-size: 2.5em;
     }
     .hero-section p {
         font-size: 1em;
-        margin-bottom: 30px;
     }
     .section-title, .categories-section h2, .featured-products-section h2 {
         font-size: 2em;
         margin-bottom: 30px;
+    }
+    .section-title::after, .categories-section h2::after, .featured-products-section h2::after {
+        width: 60px;
+        height: 3px;
     }
     .categories-section,
     .featured-products-section,
     .products-page .products-section,
     .product-detail-section,
     .content-section {
-        padding: var(--padding-section-mobile);
+        padding: 30px 0; /* Reduced padding for sections */
     }
     .category-list {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 20px;
     }
     .category-card {
@@ -833,12 +1071,8 @@ ul { list-style: none; }
     }
 
     .product-grid {
-        grid-template-columns: 1fr; /* Single column on small mobiles */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 20px;
-    }
-    .product-card {
-        max-width: 350px; /* Constrain width for single column */
-        margin: 0 auto;
     }
     .product-card img {
         height: 160px;
@@ -857,28 +1091,27 @@ ul { list-style: none; }
         font-size: 0.9em;
     }
     .product-card .buy-btn {
-        padding: 9px 12px;
-        font-size: 0.9em;
+        padding: 8px 12px;
+        font-size: 0.85em;
     }
     .view-all-btn-container {
         margin-top: 30px;
     }
 
     .product-detail-content {
-        padding: 20px;
         gap: 20px;
+        padding: 20px;
     }
     .product-image-gallery {
-        max-height: 300px;
         padding: 15px;
     }
     .product-info h1 {
         font-size: 2em;
     }
     .product-info .price-details {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
+        font-size: 1.6em;
+        gap: 10px;
+        margin-bottom: 15px;
     }
     .product-info #product-detail-price {
         font-size: 2.2em;
@@ -887,35 +1120,37 @@ ul { list-style: none; }
         font-size: 1em;
     }
     .product-info .discount-percent {
-        font-size: 0.95em;
+        padding: 4px 6px;
+        font-size: 0.9em;
     }
     .product-info .rating {
         font-size: 1em;
+        margin-bottom: 20px;
     }
-    .product-info p.description-text {
+    .product-info p.description {
         font-size: 0.95em;
         margin-bottom: 20px;
     }
     .product-features h3 {
         font-size: 1.2em;
-        margin-top: 20px;
+        margin-bottom: 10px;
     }
     .product-features ul li {
-        font-size: 0.9em;
+        font-size: 0.95em;
         padding-left: 25px;
     }
     .product-features ul li::before {
-        font-size: 1.1em;
+        font-size: 1em;
     }
     .action-buttons {
-        flex-direction: column;
-        gap: 15px;
         margin-top: 25px;
+        gap: 15px;
+        flex-direction: column; /* Stack buttons vertically on very small screens */
     }
     .buy-now-btn {
         font-size: 1em;
         padding: 12px 20px;
-        min-width: 100%;
+        width: 100%; /* Full width for button on mobile */
     }
 
     .content-section h1, .content-section h2 {
@@ -924,10 +1159,11 @@ ul { list-style: none; }
     }
     .content-block {
         padding: 20px 25px;
-        line-height: 1.6;
+        margin: 0 auto 30px auto;
     }
     .content-block p, .content-block ul {
-        font-size: 0.95em;
+        font-size: 1em;
+        margin-bottom: 15px;
     }
     .contact-info li {
         font-size: 0.95em;
@@ -936,30 +1172,108 @@ ul { list-style: none; }
         font-size: 1.1em;
     }
 
+    .main-footer {
+        padding: 30px 0;
+    }
     .footer-content {
+        gap: 20px;
         padding: 0 10px;
-        text-align: center;
-        flex-direction: column;
-        align-items: center;
     }
     .footer-column {
-        max-width: 95%;
-        min-width: unset;
-    }
-    .footer-column h3 {
-        font-size: 1.1em;
-    }
-    .footer-column ul {
-        padding: 0;
-    }
-    .footer-column ul li a {
-        font-size: 0.9em;
+        max-width: 100%;
+        text-align: center;
     }
     .social-links {
         justify-content: center;
-        margin-top: 15px;
     }
-    .social-links a {
-        font-size: 1.4em;
+    .footer-bottom {
+        padding-top: 20px;
+        font-size: 0.85em;
+    }
+}
+
+/* Desktop and larger screens (min-width 993px) */
+@media (min-width: 993px) {
+    .main-header .container {
+        flex-direction: row; /* Horizontal layout */
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px; /* More space on desktop */
+    }
+
+    .navbar {
+        width: auto; /* Allow navbar to take natural width */
+        flex-grow: 0; /* Don't force growth */
+        order: unset; /* Remove order from mobile */
+        justify-content: flex-start; /* Align logo, currency, toggle to start */
+    }
+
+    .logo {
+        flex-grow: 0;
+        justify-content: flex-start; /* Align logo left */
+    }
+
+    .nav-toggle {
+        display: none; /* Hide hamburger menu on desktop */
+    }
+
+    /* Desktop Navigation Menu */
+    .nav-menu {
+        position: static; /* Remove fixed positioning */
+        display: block; /* Always show on desktop */
+        width: auto; /* Take natural width */
+        height: auto; /* Remove height constraint */
+        background-color: transparent; /* No background */
+        box-shadow: none; /* No shadow */
+        transform: none; /* Remove transform */
+        z-index: auto; /* Reset z-index */
+        padding-top: 0; /* Remove top padding */
+        margin-left: auto; /* Push nav to the right of header */
+    }
+
+    .nav-menu ul {
+        flex-direction: row; /* Horizontal layout for links */
+        gap: 30px; /* Space between desktop nav items */
+        padding: 0;
+    }
+
+    .nav-menu ul li a {
+        padding: 0; /* Remove vertical padding */
+        border-bottom: none; /* No separator on desktop */
+        font-size: 1em; /* Standard font size */
+    }
+
+    .search-container {
+        width: 380px; /* Specific width for desktop search */
+        order: unset; /* Remove order property */
+        margin-top: 0; /* No top margin */
+        padding: 0; /* Remove padding, handled by .main-header .container */
+        flex-grow: 0;
+        margin-left: auto; /* Push search bar to the right */
+    }
+
+    .search-input {
+        padding: 10px 50px 10px 20px; /* Consistent padding */
+    }
+    .search-button {
+        right: 0; /* Align with the edge of search-container */
+        border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    }
+    .search-results {
+        left: 0; /* Align with search-container's left edge */
+        width: 100%; /* Take full width of search-container */
+    }
+
+    .footer-content {
+        flex-direction: row; /* Horizontal layout for desktop footer */
+        justify-content: space-between;
+        text-align: left; /* Align text left for desktop columns */
+    }
+    .footer-column {
+        flex: 1; /* Distribute space evenly */
+        max-width: unset; /* Remove max-width constraint */
+    }
+    .social-links {
+        justify-content: flex-start; /* Align icons to the start */
     }
 }
