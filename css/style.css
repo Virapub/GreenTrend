@@ -158,7 +158,7 @@ ul { list-style: none; }
     justify-content: center;
 }
 .logo img {
-    height: 35px; /* Slightly larger logo image */
+    height: 100px; /* Slightly larger logo image */
     margin-right: 10px; /* Increased margin */
 }
 
