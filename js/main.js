@@ -1,8 +1,10 @@
-// Global Variables - (आपके कोड से)
+// Global Variables
 let currentCurrency = "INR"; // Default currency when page loads
 const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (e.g. 1 USD = 83.5 INR)
 
-// Helper Functions - (आपके कोड से)
+// --- Helper Functions ---
+
+// Function to format price based on current currency
 function formatPrice(priceInINR) {
     if (currentCurrency === "INR") {
         return `₹${priceInINR.toLocaleString('en-IN')}`;
@@ -14,15 +16,17 @@ function formatPrice(priceInINR) {
 
 // Function to update all displayed prices on the current page
 function updateDisplayedPrices() {
-    document.querySelectorAll('[data-inr-price]').forEach(priceElement => {
+    // Update prices on product cards (e.g., home page, products page)
+    document.querySelectorAll('.product-card .price[data-inr-price]').forEach(priceElement => {
         const priceInINR = parseFloat(priceElement.dataset.inrPrice);
         if (!isNaN(priceInINR)) {
-            // For product cards (on home/products page)
+            // Find or create the span for current price
             let currentPriceSpan = priceElement.querySelector('.current-price');
             if (!currentPriceSpan) {
                 currentPriceSpan = document.createElement('span');
                 currentPriceSpan.className = 'current-price';
-                priceElement.prepend(currentPriceSpan);
+                // Prepend to ensure it's the first child for consistent display
+                priceElement.prepend(currentPriceSpan); 
             }
             currentPriceSpan.textContent = formatPrice(priceInINR);
         }
@@ -40,23 +44,27 @@ function updateDisplayedPrices() {
 
 // --- Search Functionality ---
 function setupSearch() {
-    const searchBoxDesktop = document.getElementById('searchBox'); // Mobile search box
-    const searchBoxMobile = document.getElementById('searchBoxMobile'); // Assuming you might have a separate one, but current CSS uses 'searchBox' only
-    const searchResults = document.getElementById('searchResults');
+    const searchInput = document.getElementById('searchBox');
+    const searchResultsContainer = document.getElementById('searchResults');
     const searchButton = document.getElementById('searchButton');
 
-    // Use a single searchBox reference if both desktop and mobile use the same input ID
-    const searchInput = searchBoxDesktop || searchBoxMobile; 
-
-    if (!searchInput || !searchResults || !searchButton) {
-        console.warn('Search elements not found. Search functionality may not work.');
+    if (!searchInput || !searchResultsContainer || !searchButton) {
+        console.warn('Search elements (searchBox, searchResults, or searchButton) not found. Search functionality may not work.');
         return;
     }
 
-    const performSearch = (query, resultsContainer) => {
-        resultsContainer.innerHTML = '';
+    const performLiveSearch = (query) => {
+        searchResultsContainer.innerHTML = ''; // Clear previous results
         if (query.length < 2) { // Show results only if query is at least 2 chars
-            resultsContainer.style.display = 'none';
+            searchResultsContainer.style.display = 'none';
+            return;
+        }
+
+        // Ensure 'products' array is available from data.js
+        if (typeof products === 'undefined' || !Array.isArray(products)) {
+            console.error('Products data not available for search. Make sure data.js is loaded correctly.');
+            searchResultsContainer.innerHTML = '<div class="no-results-msg">Error: Product data missing.</div>';
+            searchResultsContainer.style.display = 'block';
             return;
         }
 
@@ -74,24 +82,23 @@ function setupSearch() {
                     <img src="${product.image}" alt="${product.name}">
                     <span>${product.name} - ${formatPrice(product.priceINR)}</span>
                 `;
-                resultsContainer.appendChild(searchResultLink);
+                searchResultsContainer.appendChild(searchResultLink);
             });
-            resultsContainer.style.display = 'block';
+            searchResultsContainer.style.display = 'block';
         } else {
-            resultsContainer.innerHTML = '<div class="no-results-msg">No results found</div>';
-            resultsContainer.style.display = 'block';
+            searchResultsContainer.innerHTML = '<div class="no-results-msg">No results found</div>';
+            searchResultsContainer.style.display = 'block';
         }
     };
 
     // Event listener for search input (live search)
     searchInput.addEventListener('input', (e) => {
-        performSearch(e.target.value.trim(), searchResults);
+        performLiveSearch(e.target.value.trim());
     });
 
-    // Event listener for search button click
-    searchButton.addEventListener('click', () => {
-        // You might want to redirect to a search results page here,
-        // or simply trigger the live search if that's the only functionality.
+    // Event listener for search button click (redirect to products page with search query)
+    searchButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent form submission if it's part of a form
         const query = searchInput.value.trim();
         if (query.length > 0) {
             window.location.href = `products.html?search=${encodeURIComponent(query)}`;
@@ -100,44 +107,65 @@ function setupSearch() {
 
     // Close search results dropdown on outside click
     document.addEventListener('click', (event) => {
-        if (!searchInput.contains(event.target) && !searchResults.contains(event.target) && !searchButton.contains(event.target)) {
-            searchResults.style.display = 'none';
+        // Check if the click is outside the search input, search button, and search results container
+        if (!searchInput.contains(event.target) && !searchResultsContainer.contains(event.target) && !searchButton.contains(event.target)) {
+            searchResultsContainer.style.display = 'none';
+        }
+    });
+
+    // Optionally close search results on Escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            searchResultsContainer.style.display = 'none';
+            searchInput.blur(); // Remove focus from search input
         }
     });
 }
 
-// 3. Mobile Navigation Toggle functionality
+// --- Mobile Navigation Toggle functionality ---
 function setupMobileNav() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
     const searchResults = document.getElementById('searchResults'); // To close search results if menu opens
 
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            // Close search results if the navigation menu is opened
-            if (searchResults) {
-                searchResults.style.display = 'none';
-            }
-        });
-
-        // Close nav menu when a link is clicked
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-            });
-        });
-
-        // Close nav menu when window is resized to desktop
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 992 && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-            }
-        });
+    if (!navToggle) {
+        console.warn('Navigation toggle button (#navToggle) not found.');
+        return;
     }
+    if (!navMenu) {
+        console.warn('Navigation menu (#navMenu) not found.');
+        return;
+    }
+
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        // Close search results if the navigation menu is opened
+        if (searchResults && searchResults.style.display !== 'none') {
+            searchResults.style.display = 'none';
+        }
+        // Toggle body scroll lock to prevent scrolling when menu is open
+        document.body.classList.toggle('no-scroll');
+    });
+
+    // Close nav menu when a link is clicked (for single page applications or smooth scroll)
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        });
+    });
+
+    // Close nav menu when window is resized to desktop (e.g., from portrait mobile to landscape tablet/desktop)
+    window.addEventListener('resize', () => {
+        // 992px is typically where desktop styles kick in (adjust as per your CSS media query)
+        if (window.innerWidth > 992 && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
+    });
 }
 
-// 4. Initialize Current Year in Footer (आपके कोड से)
+// --- Initialize Current Year in Footer ---
 function setupFooterYear() {
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) {
@@ -145,106 +173,15 @@ function setupFooterYear() {
     }
 }
 
-// DOM Content Loaded Listener
-document.addEventListener('DOMContentLoaded', () => {
-    // Adjust hero-section margin for sticky header (only on index.html)
-    const headerHeight = document.querySelector('.main-header').offsetHeight;
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection) {
-        heroSection.style.marginTop = `${headerHeight + 25}px`; // Add some extra space
-    }
+// --- Product and Category Rendering Functions ---
 
-    // Initialize currency toggle button functionality
-    const currencyToggleButton = document.getElementById('currency-toggle-button');
-    if (currencyToggleButton) {
-        currencyToggleButton.textContent = currentCurrency;
-        currencyToggleButton.addEventListener('click', () => {
-            currentCurrency = (currentCurrency === "INR" ? "USD" : "INR");
-            currencyToggleButton.textContent = currentCurrency;
-            updateDisplayedPrices(); // Recalculate and display all prices
-        });
-    }
-
-    // Render initial content based on the current page
-    // (only renders categories and featured products on the home page)
-    if (document.body.classList.contains('homepage')) {
-        if (typeof renderCategories !== 'undefined' && categories.length > 0) {
-            renderCategories(categories, 'category-list');
-        }
-        if (typeof renderProducts !== 'undefined' && featuredProducts.length > 0) {
-            renderProducts(featuredProducts, 'product-grid');
-        }
-    }
-
-    // Handle product listing on products.html
-    if (document.body.classList.contains('products-page')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const categorySlug = urlParams.get('category');
-        const searchQuery = urlParams.get('search');
-        let productsToRender = products;
-        let headingText = "All Products";
-
-        if (categorySlug) {
-            productsToRender = products.filter(product => product.categorySlug === categorySlug);
-            const categoryName = categories.find(cat => cat.slug === categorySlug)?.name;
-            headingText = categoryName ? `${categoryName} Products` : "Products";
-        } else if (searchQuery) {
-            productsToRender = products.filter(product =>
-                product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                (product.category && product.category.toLowerCase().includes(searchQuery.toLowerCase()))
-            );
-            headingText = `Search Results for "${searchQuery}"`;
-        }
-
-        if (typeof renderProducts !== 'undefined') {
-            renderProducts(productsToRender, 'product-grid');
-        }
-        const productsHeading = document.getElementById('products-heading');
-        if (productsHeading) {
-            productsHeading.textContent = headingText;
-        }
-    }
-
-    // Handle product detail page
-    if (document.body.classList.contains('product-detail-page')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        if (productId) {
-            if (typeof renderProductDetail !== 'undefined') {
-                renderProductDetail(productId);
-            }
-        } else {
-            const productDetailContent = document.getElementById('product-detail-content');
-            if (productDetailContent) {
-                productDetailContent.innerHTML = '<div class="error">Product not found. Please check the URL.</div>';
-            }
-        }
-    }
-
-    // Initialize Search functionality
-    setupSearch();
-
-    // Initialize Mobile Navigation Toggle
-    setupMobileNav();
-
-    // Initialize Footer Year
-    setupFooterYear();
-
-    // Initial price update after DOM content is loaded
-    updateDisplayedPrices();
-});
-
-// Assuming products and categories are loaded from data.js
-// You need to ensure data.js is loaded BEFORE main.js in your HTML
-// Example:
-// <script src="js/data.js"></script>
-// <script src="js/main.js"></script>
-
-// Functions to render products and categories (assuming these are in your main.js or separate rendering file)
+// Renders a list of products into a specified container
 function renderProducts(productList, containerId) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {
+        console.error(`Error: Product container with ID "${containerId}" not found.`);
+        return;
+    }
 
     container.innerHTML = ''; // Clear existing content
 
@@ -257,17 +194,22 @@ function renderProducts(productList, containerId) {
         const productCard = document.createElement('a');
         productCard.href = `product-detail.html?id=${product.id}`;
         productCard.className = 'product-card';
+        // Add a class for specific pages if needed, e.g., 'featured-product-card'
+        // productCard.classList.add('featured-product-card'); 
+
+        // Use data-inr-price to store the base price for currency conversion
         productCard.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <div class="product-details">
                 <h3>${product.name}</h3>
                 <div class="price" data-inr-price="${product.priceINR}">
                     <span class="current-price">${formatPrice(product.priceINR)}</span>
-                    ${product.priceUSD ? `<span class="original-price">${formatPrice(product.priceUSD)}</span>` : ''}
+                    ${product.originalPriceINR ? `<span class="original-price">₹${product.originalPriceINR.toLocaleString('en-IN')}</span>` : ''}
                 </div>
                 <div class="rating">
                     ${'⭐'.repeat(Math.floor(product.rating))}
-                    ${product.rating % 1 !== 0 ? ' half-star-icon' : ''} <span class="rating-text">(${product.rating}/5)</span>
+                    ${product.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                    <span class="rating-text">(${product.rating}/5)</span>
                 </div>
                 <button class="btn btn-primary buy-btn">View Details</button>
             </div>
@@ -278,9 +220,13 @@ function renderProducts(productList, containerId) {
     updateDisplayedPrices(); // Update prices after rendering
 }
 
+// Renders a list of categories into a specified container
 function renderCategories(categoryList, containerId) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {
+        console.error(`Error: Category container with ID "${containerId}" not found.`);
+        return;
+    }
 
     container.innerHTML = ''; // Clear existing content
 
@@ -291,7 +237,7 @@ function renderCategories(categoryList, containerId) {
 
     categoryList.forEach(category => {
         const categoryCard = document.createElement('a');
-        categoryCard.href = `products.html?category=${category.slug}`;
+        categoryCard.href = `products.html?category=${category.slug}`; // Link to products page with category filter
         categoryCard.className = 'category-card';
         categoryCard.innerHTML = `
             <img src="${category.image}" alt="${category.name} Category">
@@ -301,18 +247,25 @@ function renderCategories(categoryList, containerId) {
     });
 }
 
-
-// Async function to render product detail as it might fetch data (though here we use local data)
+// Renders a single product's detailed information on the product detail page
 async function renderProductDetail(productId) {
     const contentDiv = document.getElementById('product-detail-content');
     if (!contentDiv) {
-        console.error('Product detail content container not found');
+        console.error('Product detail content container (#product-detail-content) not found.');
         return;
     }
 
     // Show loading state
     contentDiv.innerHTML = '<div class="loading">Loading product details...</div>';
     contentDiv.classList.add('loading');
+
+    // Ensure 'products' array is available from data.js
+    if (typeof products === 'undefined' || !Array.isArray(products)) {
+        console.error('Products data not available for product detail. Make sure data.js is loaded correctly.');
+        contentDiv.innerHTML = '<div class="error">Error: Product data missing.</div>';
+        contentDiv.classList.remove('loading');
+        return;
+    }
 
     // Find the product from your `products` data array
     const product = products.find(p => p.id === productId);
@@ -327,12 +280,13 @@ async function renderProductDetail(productId) {
                 <h1>${product.name}</h1>
                 <div class="price-details">
                     <span id="product-detail-price" data-inr-price="${product.priceINR}">${formatPrice(product.priceINR)}</span>
-                    ${product.priceUSD ? `<span class="original-price">${formatPrice(product.priceUSD)}</span>` : ''}
+                    ${product.originalPriceINR ? `<span class="original-price">₹${product.originalPriceINR.toLocaleString('en-IN')}</span>` : ''}
                     ${product.discountPercent ? `<span class="discount-percent">${product.discountPercent}% Off</span>` : ''}
                 </div>
                 <div class="rating">
                     ${'⭐'.repeat(Math.floor(product.rating))}
-                    ${product.rating % 1 !== 0 ? ' half-star-icon' : ''} <span class="rating-text">(${product.rating}/5)</span>
+                    ${product.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                    <span class="rating-text">(${product.rating}/5)</span>
                 </div>
                 <p class="description">${product.description}</p>
                 ${product.features && product.features.length > 0 ? `
@@ -353,3 +307,139 @@ async function renderProductDetail(productId) {
         contentDiv.classList.remove('loading');
     }
 }
+
+
+// --- DOM Content Loaded Listener (Main Initialization) ---
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded. Initializing GreenTrend...');
+
+    // Adjust hero-section margin for sticky header (only on index.html)
+    const mainHeader = document.querySelector('.main-header');
+    const heroSection = document.querySelector('.hero-section');
+    if (mainHeader && heroSection) {
+        const headerHeight = mainHeader.offsetHeight;
+        heroSection.style.marginTop = `${headerHeight + 25}px`; // Add some extra space for better separation
+        console.log(`Header height: ${headerHeight}px. Hero section margin top set.`);
+    } else {
+        console.log('Main header or hero section not found for margin adjustment.');
+    }
+
+
+    // Initialize currency toggle button functionality
+    const currencyToggleButton = document.getElementById('currency-toggle-button');
+    if (currencyToggleButton) {
+        currencyToggleButton.textContent = currentCurrency; // Set initial text
+        currencyToggleButton.addEventListener('click', () => {
+            currentCurrency = (currentCurrency === "INR" ? "USD" : "INR");
+            currencyToggleButton.textContent = currentCurrency;
+            updateDisplayedPrices(); // Recalculate and display all prices
+            console.log(`Currency toggled to: ${currentCurrency}`);
+        });
+    } else {
+        console.warn('Currency toggle button (#currency-toggle-button) not found.');
+    }
+
+    // --- Page-specific rendering logic ---
+
+    // Render content for the homepage (index.html)
+    if (document.body.classList.contains('homepage')) {
+        console.log('Homepage detected. Rendering categories and featured products.');
+        // Ensure 'categories' and 'featuredProducts' are available from data.js
+        if (typeof categories !== 'undefined' && Array.isArray(categories) && categories.length > 0) {
+            renderCategories(categories, 'category-list');
+        } else {
+            console.warn('Categories data not available or empty for homepage. Check data.js.');
+        }
+        if (typeof featuredProducts !== 'undefined' && Array.isArray(featuredProducts) && featuredProducts.length > 0) {
+            renderProducts(featuredProducts, 'product-grid');
+        } else {
+            console.warn('Featured Products data not available or empty for homepage. Check data.js or ensure featuredProducts is defined.');
+        }
+    }
+
+    // Handle product listing on products.html
+    if (document.body.classList.contains('products-page')) {
+        console.log('Products page detected. Rendering products based on URL params.');
+        const urlParams = new URLSearchParams(window.location.search);
+        const categorySlug = urlParams.get('category');
+        const searchQuery = urlParams.get('search');
+        let productsToRender = []; // Initialize as empty array
+        let headingText = "All Products";
+
+        // Ensure 'products' data is available from data.js
+        if (typeof products !== 'undefined' && Array.isArray(products)) {
+            productsToRender = products; // Default to all products
+            
+            if (categorySlug) {
+                productsToRender = products.filter(product => product.categorySlug === categorySlug);
+                const categoryName = categories.find(cat => cat.slug === categorySlug)?.name;
+                headingText = categoryName ? `${categoryName} Products` : "Products";
+                console.log(`Filtering by category: ${categorySlug}. Found ${productsToRender.length} products.`);
+            } else if (searchQuery) {
+                productsToRender = products.filter(product =>
+                    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                    (product.category && product.category.toLowerCase().includes(query.toLowerCase())) // query should be searchQuery here
+                );
+                headingText = `Search Results for "${searchQuery}"`;
+                console.log(`Filtering by search query: "${searchQuery}". Found ${productsToRender.length} products.`);
+            }
+        } else {
+            console.error('Products data not available for products page. Make sure data.js is loaded correctly.');
+            headingText = "Error: Product data missing";
+        }
+        
+        // Render the filtered/all products
+        if (productsToRender.length > 0) {
+            renderProducts(productsToRender, 'product-grid');
+        } else {
+            const container = document.getElementById('product-grid');
+            if (container) {
+                container.innerHTML = '<p style="text-align: center; color: var(--secondary-color); margin-top: 20px;">No products found in this category/search.</p>';
+                console.log('No products to render. Displaying "No products found" message.');
+            } else {
+                console.warn('Product grid container (#product-grid) not found on products page.');
+            }
+        }
+
+        // Update the heading on the products page
+        const productsHeading = document.getElementById('products-heading');
+        if (productsHeading) {
+            productsHeading.textContent = headingText;
+        } else {
+            console.warn('Products heading (#products-heading) not found on products page.');
+        }
+    }
+
+    // Handle product detail page
+    if (document.body.classList.contains('product-detail-page')) {
+        console.log('Product detail page detected. Rendering product details.');
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+        if (productId) {
+            if (typeof renderProductDetail !== 'undefined') {
+                renderProductDetail(productId);
+            } else {
+                console.error('renderProductDetail function not defined.');
+            }
+        } else {
+            const productDetailContent = document.getElementById('product-detail-content');
+            if (productDetailContent) {
+                productDetailContent.innerHTML = '<div class="error">Error: Product ID missing in URL.</div>';
+            }
+            console.warn('Product ID missing in URL for product detail page.');
+        }
+    }
+
+    // Initialize core functionalities
+    setupSearch();
+    setupMobileNav();
+    setupFooterYear();
+
+    // Initial price update for any elements not covered by rendering functions (e.g., if hardcoded)
+    updateDisplayedPrices();
+    console.log('GreenTrend initialization complete.');
+});
+
+// IMPORTANT: Ensure your data.js file is loaded before this main.js file in your HTML.
+// data.js should define 'products', 'categories', and 'featuredProducts' arrays.
