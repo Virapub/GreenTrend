@@ -6,13 +6,13 @@ const categories = [
         id: 'cat-appliances',
         name: 'Appliances',
         slug: 'appliances',
-        image: 'images/appliances.jpg'
+        image: 'images/appliances.jpeg'
     },
     {
         id: 'cat-smart-gadgets',
         name: 'Smart Gadgets',
         slug: 'smart-gadgets',
-        image: 'images/smart gadgets.jpg'
+        image: 'images/smart gadgets.jpeg'
     },
     {
         id: 'cat-storagees/cleaning.jpg' // Ensure this image exists
@@ -21,25 +21,25 @@ const categories = [
         id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
         name: 'Accessories',
         slug: 'accessories',
-        image: 'images/accessories.jpg' // Ensure this image exists
+        image: 'images/accessories.jpeg' // Ensure this image exists
     },
     {
         id: 'cat-prep-tools', // New category for "Cutting Board", "Digital Measuring Spoon", "Magnetic Measuring Spoons", "Electric Garlic Chopper"
         name: 'Prep Tools',
         slug: 'prep-tools',
-        image: 'images/categories/prep-tools.jpg' // Ensure this image exists
+        image: 'images/prep-tools.jpeg' // Ensure this image exists
     },
     {
         id: 'cat-cooking', // New category for "Automatic Pan Stirrer", "INKBIRD Thermometer"
         name: 'Cooking',
         slug: 'cooking',
-        image: 'images/categories/cooking.jpg' // Ensure this image exists
+        image: 'images/cooking.jpeg' // Ensure this image exists
     },
     {
         id: 'cat-safety', // New category for "BBQ Grill Gloves"
         name: 'Safety',
         slug: 'safety',
-        image: 'images/categories/safety.jpg' // Ensure this image exists
+        image: 'images/safety.jpeg' // Ensure this image exists
     }
 ];
 
