@@ -339,10 +339,10 @@ img {
 
 .hero-bg {
     background-image: url('images/hero-bg.jpg'); /* Replace with your actual image path */
-    background-size: fill; /* Ensures the image covers the entire area */
+    background-size: scale-down; /* Ensures the image covers the entire area */
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents the image from repeating */
-    width: 100px; /* Ensures the hero background takes full width */
+    width: 100%; /* Ensures the hero background takes full width */
     height: auto; /* Takes full viewport height. Adjust as needed if it's not a full-screen hero. */
     /* Add other styles for content within your hero section as needed */
     display: flex; /* Example: if you want to center content vertically/horizontally */
@@ -354,7 +354,7 @@ img {
 }
 @media(min-width: 768px)
     .hero-bg-image {width: 100%;
-                   height: 400px;
+                   height: auto;
                    object-fit: scale-down;
                    object-position: left;}
 
