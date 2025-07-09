@@ -340,6 +340,11 @@ img {
 .hero-bg {
     background-image: url('images/hero-bg.jpg'); /* Replace with your actual image path */
     background-size: fill; /* Ensures the image covers the entire area */
+    @media(min-width: 768px)
+    .hero-bg-image {width: 100%;
+                   height: 400px;
+                   object-fit: fill;
+                   object-position: left;}
     background-position: center; /* Centers the image */
     background-repeat: no-repeat; /* Prevents the image from repeating */
     width: 100px; /* Ensures the hero background takes full width */
