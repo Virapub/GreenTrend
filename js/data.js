@@ -106,7 +106,7 @@ const products = [
     priceUSD: 9.93,
     category: "Smart Gadgets",
     link: "https://amzn.to/3Iffdfu",
-    image: "images/image2.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/313SCZswZZL._SY445_SX342_QL70_FMwebp_.jpg", // Example: Use correct image URL if different
     rating: 4.7,
     features: ["Tare function for zeroing containers", "Multiple unit conversion (g, oz, ml, lb)", "Clear LCD display", "Sleek, slim design for easy storage", "Weight Capacity: 5kg"],
     details: "Achieve culinary precision with this high-precision digital kitchen scale. Its accurate sensors ensure perfect measurements for baking, cooking, and portion control. The tare function allows you to weigh ingredients directly in your bowl, and the multiple unit conversion makes it versatile for all recipes. Slim design for easy storage and a clear LCD for easy reading."
