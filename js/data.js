@@ -67,7 +67,7 @@ const products = [
     priceUSD: 16.21,
     category: "Smart Gadgets",
     link: "https://amzn.to/46sLIRc",
-    image: "https://m.media-amazon.com/images/I/61mNn+4mF3L._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/5173SHrfbyL._SL1024_.jpg", // Example: Use correct image URL if different
     rating: 4.2,
     features: ["Touchless operation for germ-free use", "Adjustable soap volume (3 levels)", "Battery-powered (AA batteries)", "Sleek and modern design", "Capacity: 300ml (approx)"],
     details: "Enhance hygiene in your kitchen or bathroom with this automatic soap dispenser. Its infrared motion sensor ensures a touch-free experience, reducing germ spread. You can easily adjust the dispensed soap volume to your preference. The modern design seamlessly integrates with any decor. Perfect for homes, offices, and public restrooms."
