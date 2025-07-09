@@ -6,43 +6,40 @@
     <title>GreenTrend - Smart Kitchen Gadgets</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="main-header">
-    <div class="container">
-        <div class="navbar">
-            <button id="navToggle" class="nav-toggle"><i class="fas fa-bars"></i></button>
-            <div class="logo">
-                <img src="images/logo.png" alt="GreenTrend Logo">
-                <span>GreenTrend Smart Kitchen</span>
+        <div class="container">
+            <div class="navbar">
+                <button id="navToggle" class="nav-toggle"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <img src="images/logo.png" alt="GreenTrend Logo">
+                    <span>GreenTrend Smart Kitchen</span>
+                </div>
+                <button id="currency-toggle-button" class="currency-toggle-button">INR</button>
             </div>
-            <button id="currency-toggle-button" class="currency-toggle-button">INR</button>
+            <div class="search-container">
+                <input type="text" id="searchBox" class="search-input" placeholder="Search for products, categories, brands...">
+                <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
+                <div id="searchResults" class="search-results"></div>
+            </div>
         </div>
-        <div class="search-container">
-            <input type="text" id="searchBox" class="search-input" placeholder="Search for products, categories, brands...">
-            <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
-            <div id="searchResults" class="search-results"></div>
-        </div>
-    </div>
     </header>
     
-    <div class="container header-container">
-    
-
     <main>
         <section class="hero-section">
             <div class="container">
                 <h1>Smart Kitchen, Smarter Life</h1>
                 <p>Discover the latest and most innovative kitchen gadgets to simplify your cooking and elevate your culinary experience.</p>
-                <a href="products.html" class="cta-button">Explore Products</a>
+                <a href="products.html" class="btn btn-primary">Explore Products</a>
             </div>
         </section>
 
         <section class="categories-section">
             <div class="container">
                 <h2>Top Categories</h2>
-                <div class="categories-grid" id="category-list">
+                <div class="category-list" id="category-list">
                     </div>
             </div>
         </section>
@@ -53,7 +50,7 @@
                 <div class="product-grid" id="featured-product-list">
                     </div>
                 <div class="view-all-btn-container">
-                    <a href="products.html" class="view-all-button">View All Products</a>
+                    <a href="products.html" class="btn btn-primary">View All Products</a>
                 </div>
             </div>
         </section>
@@ -91,6 +88,7 @@
         </div>
     </footer>
 
-    <script src="js/data.js"></script> <script src="js/main.js"></script>
-</body>
+    <script src="js/data.js"></script> 
+    <script src="js/main.js"></script>
+    </body>
 </html>
