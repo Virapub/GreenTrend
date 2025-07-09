@@ -424,6 +424,7 @@ img {
     flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     color: var(--text-color-dark);
+    object-fit: cover;
 }
 
 .product-card:hover {
