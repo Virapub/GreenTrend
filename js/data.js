@@ -179,7 +179,7 @@ const products = [
     priceUSD: 42.75,
     category: "Appliances",
     link: "https://amzn.to/45ZhPIm",
-    image: "https://m.media-amazon.com/images/I/71u9B4+YQ6L._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/618cVgk6ELL._SX679_.jpg", // Example: Use correct image URL if different
     rating: 4.3,
     features: [
       "Preset Blend Modes",
