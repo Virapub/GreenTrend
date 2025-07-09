@@ -119,7 +119,7 @@ const products = [
     priceUSD: 85.48,
     category: "Appliances",
     link: "https://amzn.to/3Go8aR6",
-    image: "https://m.media-amazon.com/images/I/71K2-3l3rBL._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/41LNYLNU28L._SX300_SY300_QL70_FMwebp_.jpg", // Example: Use correct image URL if different
     rating: 4.6,
     features: [
       "Automatic Keep Warm Setting",
