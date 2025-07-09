@@ -80,7 +80,7 @@ const products = [
     priceUSD: 14.00,
     category: "Storage",
     link: "https://amzn.to/44rEZEO",
-    image: "https://m.media-amazon.com/images/I/71Y-oR7W7jL._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/81aAamdevaL._SL1500_.jpg", // Example: Use correct image URL if different
     rating: 4.3,
     features: ["Strong magnetic back for secure hold", "Multi-tier design for various items", "Durable carbon steel construction", "Easy to install and reposition", "Space-saving solution"],
     details: "Maximize your kitchen space with this magnetic fridge shelf rack. Its powerful magnets provide a secure hold on your refrigerator, eliminating the need for drilling. The multi-tiered design is perfect for spices, condiments, paper towels, or small kitchen tools, keeping your countertops clutter-free and organized. Made of durable carbon steel for long-lasting use."
