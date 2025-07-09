@@ -401,8 +401,9 @@ img {
 
 .category-card img {
     width: 100px;
-    height: 100px;
-    object-fit: contain;
+    height: auto;
+    object-fit: fill;
+    padding: 10px;
     margin-bottom: 15px;
 }
 
