@@ -194,9 +194,9 @@ async function renderProductDetail(productId) {
                 <h3>Key Features:</h3>
                 <ul>${featuresHtml}</ul>
             </div>` : ''}
-            <p>${longDescription}</p>
+            <h3>${longDescription}</h3>
             <div class="action-buttons">
-                <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now on Amazon</a>
+                <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now</a>
             </div>
         </div>
     `;
