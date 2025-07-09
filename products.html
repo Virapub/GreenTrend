@@ -11,35 +11,21 @@
 <body class="products-page">
     <header class="main-header">
         <div class="container header-container">
-            <a href="index.html" class="logo">
-                <img src="images/LOGO.png" alt="Green Trend Logo" class="logo-image">
-                <div class="logo-text">
-                    <span class="main-name">GreenTrend</span>
-                    <span class="tagline">Smart Kitchen Gadgets</span>
+    <header class="main-header">
+        <div class="container">
+            <div class="navbar">
+                <button id="navToggle" class="nav-toggle"><i class="fas fa-bars"></i></button>
+                <div class="logo">
+                    <img src="images/logo.png" alt="GreenTrend Logo">
+                    <span>GreenTrend Smart Kitchen</span>
                 </div>
-            </a>
-            <div class="search-bar-desktop">
-                <input type="text" id="searchBox" placeholder="Search for products, categories, brands..." aria-label="Search products, categories, brands">
-                <button class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                <button id="currency-toggle-button" class="currency-toggle-button">INR</button>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchBox" class="search-input" placeholder="Search for products, categories, brands...">
+                <button class="search-button" id="searchButton"><i class="fas fa-search"></i></button>
                 <div id="searchResults" class="search-results"></div>
             </div>
-            <nav class="main-nav">
-                <button id="currency-toggle-button" class="currency-toggle-button" aria-label="Toggle currency between INR and USD">INR</button>
-                <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul id="navMenu" class="nav-menu">
-                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="products.html" class="active"><i class="fas fa-box"></i> Products</a></li>
-                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="disclosure.html"><i class="fas fa-file-alt"></i> Disclosure</a></li>
-                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="search-bar-mobile">
-            <input type="text" id="searchBoxMobile" placeholder="Search for products, categories, brands..." aria-label="Search products, categories, brands">
-            <button class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
         </div>
     </header>
 
