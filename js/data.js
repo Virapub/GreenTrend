@@ -6,13 +6,13 @@ const categories = [
         id: 'cat-appliances',
         name: 'Appliances',
         slug: 'appliances',
-        image: 'images/categories/kitchen-appliances.jpg'
+        image: 'images/appliances.jpg'
     },
     {
         id: 'cat-smart-gadgets',
         name: 'Smart Gadgets',
         slug: 'smart-gadgets',
-        image: 'images/categories/smart-gadgets.jpg'
+        image: 'images/smart gadgets.jpg'
     },
     {
         id: 'cat-storagees/cleaning.jpg' // Ensure this image exists
@@ -21,7 +21,7 @@ const categories = [
         id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
         name: 'Accessories',
         slug: 'accessories',
-        image: 'images/categories/accessories.jpg' // Ensure this image exists
+        image: 'images/accessories.jpg' // Ensure this image exists
     },
     {
         id: 'cat-prep-tools', // New category for "Cutting Board", "Digital Measuring Spoon", "Magnetic Measuring Spoons", "Electric Garlic Chopper"
