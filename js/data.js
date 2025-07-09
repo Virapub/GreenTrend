@@ -249,6 +249,257 @@ const products = [
     description: "Automatic opening trash can with touch-free operation",
     priceINR: 2999,
     priceUSD: 35.03,
+// js/data.js - New products added to the existing array, following the specified format.
+
+// --- Categories Data (Existing categories, add new ones if product categories change) ---
+const categories = [
+    {
+        id: 'cat-appliances',
+        name: 'Appliances',
+        slug: 'appliances',
+        image: 'images/categories/kitchen-appliances.jpg'
+    },
+    {
+        id: 'cat-smart-gadgets',
+        name: 'Smart Gadgets',
+        slug: 'smart-gadgets',
+        image: 'images/categories/smart-gadgets.jpg'
+    },
+    {
+        id: 'cat-storage',
+        name: 'Storage',
+        slug: 'storage',
+        image: 'images/categories/food-storage.jpg'
+    },
+    {
+        id: 'cat-helpers', // New category for "Electric Jar Opener"
+        name: 'Helpers',
+        slug: 'helpers',
+        image: 'images/categories/helpers.jpg' // Ensure this image exists
+    },
+    {
+        id: 'cat-cleaning', // New category for "Microwave Cleaner"
+        name: 'Cleaning',
+        slug: 'cleaning',
+        image: 'images/categories/cleaning.jpg' // Ensure this image exists
+    },
+    {
+        id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
+        name: 'Accessories',
+        slug: 'accessories',
+        image: 'images/categories/accessories.jpg' // Ensure this image exists
+    },
+    {
+        id: 'cat-prep-tools', // New category for "Cutting Board", "Digital Measuring Spoon", "Magnetic Measuring Spoons", "Electric Garlic Chopper"
+        name: 'Prep Tools',
+        slug: 'prep-tools',
+        image: 'images/categories/prep-tools.jpg' // Ensure this image exists
+    },
+    {
+        id: 'cat-cooking', // New category for "Automatic Pan Stirrer", "INKBIRD Thermometer"
+        name: 'Cooking',
+        slug: 'cooking',
+        image: 'images/categories/cooking.jpg' // Ensure this image exists
+    },
+    {
+        id: 'cat-safety', // New category for "BBQ Grill Gloves"
+        name: 'Safety',
+        slug: 'safety',
+        image: 'images/categories/safety.jpg' // Ensure this image exists
+    }
+];
+
+
+// --- Products Data (Includes previously discussed products + your new list) ---
+const products = [
+  {
+    id: "collapsible-electric-kettle",
+    name: "Collapsible Electric Kettle",
+    description: "Space-saving collapsible kettle with auto shut-off and boil-dry protection, perfect for travel or small kitchens.",
+    priceINR: 1499,
+    priceUSD: 17.51,
+    category: "Appliances",
+    link: "https://amzn.to/3Ig7oGl",
+    image: "https://m.media-amazon.com/images/I/512mRNNNbkL._SL1500_.jpg", // Amazon direct link
+    rating: 4.5,
+    features: ["Collapsible design for portability", "800W rapid boil power", "BPA-free food-grade silicone", "Auto shut-off & boil-dry protection", "Capacity: 0.6 Liters (approx)"],
+    details: "This innovative collapsible electric kettle is designed for convenience and portability. Its compact size makes it ideal for travel, camping, or small apartments. Made with food-grade silicone, it's safe and durable. Features include fast boiling, automatic shut-off when water boils, and boil-dry protection for safety. A must-have for modern kitchens and travelers alike!"
+  },
+  {
+    id: "automatic-soap-dispenser",
+    name: "Automatic Soap Dispenser",
+    description: "Touchless soap dispenser with infrared sensor for hygienic, hands-free operation. Ideal for kitchen or bathroom.",
+    priceINR: 1388,
+    priceUSD: 16.21,
+    category: "Smart Gadgets",
+    link: "https://amzn.to/46sLIRc",
+    image: "https://m.media-amazon.com/images/I/61mNn+4mF3L._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.2,
+    features: ["Touchless operation for germ-free use", "Adjustable soap volume (3 levels)", "Battery-powered (AA batteries)", "Sleek and modern design", "Capacity: 300ml (approx)"],
+    details: "Enhance hygiene in your kitchen or bathroom with this automatic soap dispenser. Its infrared motion sensor ensures a touch-free experience, reducing germ spread. You can easily adjust the dispensed soap volume to your preference. The modern design seamlessly integrates with any decor. Perfect for homes, offices, and public restrooms."
+  },
+  {
+    id: "magnetic-fridge-shelf",
+    name: "Magnetic Fridge Shelf Rack",
+    description: "Multi-purpose magnetic storage organizer that attaches easily to your refrigerator, saving counter space.",
+    priceINR: 1199,
+    priceUSD: 14.00,
+    category: "Storage",
+    link: "https://amzn.to/44rEZEO",
+    image: "https://m.media-amazon.com/images/I/71Y-oR7W7jL._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.3,
+    features: ["Strong magnetic back for secure hold", "Multi-tier design for various items", "Durable carbon steel construction", "Easy to install and reposition", "Space-saving solution"],
+    details: "Maximize your kitchen space with this magnetic fridge shelf rack. Its powerful magnets provide a secure hold on your refrigerator, eliminating the need for drilling. The multi-tiered design is perfect for spices, condiments, paper towels, or small kitchen tools, keeping your countertops clutter-free and organized. Made of durable carbon steel for long-lasting use."
+  },
+  {
+    id: "mini-food-chopper",
+    name: "Mini Electric Food Chopper",
+    description: "Compact and powerful wireless food chopper for garlic, ginger, chilies, and small quantities of vegetables.",
+    priceINR: 999,
+    priceUSD: 11.67,
+    category: "Appliances",
+    link: "https://amzn.to/44k5wVJ",
+    image: "https://m.media-amazon.com/images/I/71P7uD9M72L._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.6,
+    features: ["USB rechargeable for cordless convenience", "One-button operation for ease of use", "Easy to clean components", "Portable design for small kitchens or travel", "Capacity: 250ml (approx)"],
+    details: "This mini electric food chopper is your perfect companion for quick meal prep. Its cordless, USB rechargeable design offers ultimate convenience. Ideal for chopping garlic, onions, ginger, chilies, and even small amounts of baby food. The powerful motor ensures efficient chopping with a single button press. A compact solution for all your chopping needs."
+  },
+  {
+    id: "digital-kitchen-scale",
+    name: "Digital Kitchen Scale",
+    description: "High-precision digital scale for accurate measurements of ingredients, perfect for baking and cooking.",
+    priceINR: 850,
+    priceUSD: 9.93,
+    category: "Smart Gadgets",
+    link: "https://amzn.to/3Iffdfu",
+    image: "https://m.media-amazon.com/images/I/71U2cQxXm2L._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.7,
+    features: ["Tare function for zeroing containers", "Multiple unit conversion (g, oz, ml, lb)", "Clear LCD display", "Sleek, slim design for easy storage", "Weight Capacity: 5kg"],
+    details: "Achieve culinary precision with this high-precision digital kitchen scale. Its accurate sensors ensure perfect measurements for baking, cooking, and portion control. The tare function allows you to weigh ingredients directly in your bowl, and the multiple unit conversion makes it versatile for all recipes. Slim design for easy storage and a clear LCD for easy reading."
+  },
+  {
+    id: "instant-pot-duo-7-in-1-electric-pressure-cooker",
+    name: "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
+    description: "7-in-1 functionality: pressure cooker, slow cooker, rice cooker, steamer, sauté pan, yogurt maker and warmer. A versatile kitchen essential.",
+    priceINR: 6999,
+    priceUSD: 85.48,
+    category: "Appliances",
+    link: "https://amzn.to/3Go8aR6",
+    image: "https://m.media-amazon.com/images/I/71K2-3l3rBL._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.6,
+    features: [
+      "Automatic Keep Warm Setting",
+      "Push-button Control Method",
+      "Automatic Operation Mode",
+      "Voltage: 230 Volts (ideal for India)",
+      "Stainless Steel Inner Pot",
+      "Capacity: 6 Liters (Most common for Duo 7-in-1)"
+    ],
+    details: "The Instant Pot Duo is a revolutionary kitchen appliance combining 7 functions in one. It acts as a pressure cooker, slow cooker, rice cooker, steamer, sauté pan, yogurt maker, and food warmer. With smart programs and a user-friendly interface, cooking healthy and delicious meals has never been easier. Its 6-liter capacity is perfect for families, making meal prep a breeze."
+   },
+  {
+    id: "ninja-foodi-8-in-1-digital-air-fryer",
+    name: "Ninja Foodi 8-in-1 Digital Air Fryer",
+    description: "8-in-1 functionality: Air Fry, Air Roast, Bake, Reheat, Dehydrate, Air Broil, Bagel and Toast. Cook healthier meals with less oil.",
+    priceINR: 12999,
+    priceUSD: 158.82,
+    category: "Appliances",
+    link: "https://amzn.to/3Tpn64r",
+    image: "https://m.media-amazon.com/images/I/71tQ0Y4R8LL._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.6,
+    features: [
+      "Automatic Shut-Off for safety",
+      "Powerful 1500 Watts Output",
+      "Voltage: 120 Volts (NOTE: Indian users need a 230V compatible version or a step-down converter)",
+      "Touch Panel Control Method",
+      "Wide Temperature Range: 75°C to 232°C (167°F to 450°F)"
+    ],
+    details: "Experience healthier cooking with the Ninja Foodi 8-in-1 Digital Air Fryer. This versatile appliance allows you to air fry, roast, bake, reheat, dehydrate, air broil, and even prepare bagels and toast. Its powerful circulation technology ensures crispy results with little to no oil. The digital controls offer precise temperature and time settings for perfect cooking every time, making healthy meals accessible."
+  },
+  {
+    id: "ibell-smart-digital-kitchen-scale",
+    name: "iBell Smart Digital Kitchen Scale",
+    description: "Precision digital kitchen scale with LCD display, measures up to 5kg with 1g accuracy.",
+    priceINR: 899,
+    priceUSD: 10.98,
+    category: "Smart Gadgets",
+    link: "https://amzn.to/4nwJpml",
+    image: "https://m.media-amazon.com/images/I/61U0jM57PQL._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.2,
+    features: [
+      "Portable design",
+      "LCD display",
+      "Weight Capacity: 5 Kilograms",
+      "Form Factor: Mini",
+      "High Readout Accuracy: 1g",
+      "Type: Counter Scale",
+      "Measurement Type: Weight"
+    ],
+    details: "The iBell Smart Digital Kitchen Scale provides accurate and consistent measurements for all your cooking and baking needs. Featuring a clear LCD display, it's easy to read. Its compact and portable design makes it convenient for any kitchen size, and the 1g accuracy ensures precision for even the most delicate recipes. Max capacity 5kg, ideal for precise measurements."
+  },
+  {
+    id: "wonderchef-nutri-blend-400w-mixer-grinder",
+    name: "Wonderchef Nutri-Blend 400W Mixer Grinder",
+    description: "High performance mixer grinder with 400W motor, 3 stainless steel jars and 2 years warranty.",
+    priceINR: 3499,
+    priceUSD: 42.75,
+    category: "Appliances",
+    link: "https://amzn.to/45ZhPIm",
+    image: "https://m.media-amazon.com/images/I/71u9B4+YQ6L._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.3,
+    features: [
+      "Preset Blend Modes",
+      "6-leaf laser-cut stainless steel blades",
+      "Unbreakable jars",
+      "Power Source Type: Electric",
+      "Wattage: 400 Watts",
+      "Number Of Jars: 3",
+      "Voltage: 220 Volts",
+      "Controls Type: Push Button",
+      "Warranty: 2 years"
+    ],
+    details: "The Wonderchef Nutri-Blend is a powerful 400W mixer grinder designed for efficient blending and grinding. It comes with three durable stainless steel jars for various tasks. The laser-cut blades ensure fine grinding and smooth blending. Its compact design is perfect for modern kitchens, and the 2-year warranty provides peace of mind for long-term use."
+  },
+  {
+    id: "morphy-richards-400-watt-hand-blender",
+    name: "Morphy Richards 400-Watt Hand Blender",
+    description: "400W powerful motor with 2 speed control, stainless steel blades and whisk attachment.",
+    priceINR: 1999,
+    priceUSD: 24.42,
+    category: "Appliances",
+    link: "https://amzn.to/4eC6HTT",
+    image: "https://m.media-amazon.com/images/I/61kYgYk-43L._SL1500_.jpg", // Example: Use correct image URL if different
+    rating: 4.1,
+    features: [
+      "Power Source Type: Corded Electric",
+      "Wattage: 400 Watts",
+      "2-speed control",
+      "Stainless steel blades",
+      "Whisk attachment",
+      "Dishwasher Safe Parts: No (often the case for motor units)"
+    ],
+    details: "The Morphy Richards 400-Watt Hand Blender offers powerful and convenient blending for your everyday cooking needs. With two-speed control, you can easily blend soups, smoothies, and sauces. It comes with durable stainless steel blades and a whisk attachment for versatile use in the kitchen. Its ergonomic design ensures comfortable handling, making it a valuable kitchen tool."
+  },
+  // --- Your NEW Products start here ---
+  {
+    id: "fridge-organizer-bins",
+    name: "Fridge Organizer Bins (Clear, Stackable)",
+    description: "Set of clear plastic bins for better fridge organization",
+    priceINR: 2395,
+    priceUSD: 27.97,
+    category: "Storage",
+    link: "https://amzn.to/3I98vaY",
+    image: "https://m.media-amazon.com/images/I/71S+IrhvQPL._SL1500_.jpg",
+    rating: 4.6,
+    features: ["Stackable design", "See-through material", "Easy-grip handles"],
+    details: "Organize your refrigerator effortlessly with this set of clear, stackable bins. Made from durable plastic, these bins allow you to easily see contents, reducing food waste and clutter. The easy-grip handles make them convenient to pull out and transport. Perfect for fruits, vegetables, drinks, and pantry items, transforming your fridge into a neat and tidy space."
+  },
+  {
+    id: "smart-trash-can",
+    name: "Smart Trash Can with Motion Sensor",
+    description: "Automatic opening trash can with touch-free operation",
+    priceINR: 2999,
+    priceUSD: 35.03,
     category: "Smart Gadgets",
     link: "https://amzn.to/4euARZe",
     image: "https://m.media-amazon.com/images/I/615kYHdRG0L._SL1500_.jpg",
