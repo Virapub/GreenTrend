@@ -1,15 +1,15 @@
 /* General Styles & Variables */
 :root {
-    --primary-color: #4CAF50; /* Green */
-    --secondary-color: #333; /* Dark Grey */
-    --accent-color: #FFC107; /* Amber/Yellow */
-    --text-color-light: #f4f4f4;
-    --text-color-dark: #333;
-    --background-light: #ffffff;
-    --background-dark: #f0f0f0;
-    --border-color: #ddd;
-    --shadow-light: 0 2px 5px rgba(0,0,0,0.1);
-    --shadow-medium: 0 4px 10px rgba(0,0,0,0.15);
+    --primary-color: #F43397; /* Meesho's dominant Pink/Magenta */
+    --secondary-color: #282828; /* Dark Grey/Almost Black for headings/main text */
+    --accent-color: #FFA500; /* Orange for highlights/specific call-to-action (like "Buy Now") */
+    --text-color-light: #ffffff; /* White for text on dark backgrounds */
+    --text-color-dark: #282828; /* Dark grey for text on light backgrounds */
+    --background-light: #ffffff; /* White backgrounds */
+    --background-dark: #f8f8f8; /* Very light grey for alternate sections */
+    --border-color: #e0e0e0; /* Lighter borders */
+    --shadow-light: 0 2px 8px rgba(0,0,0,0.08); /* Lighter, subtle shadow */
+    --shadow-medium: 0 5px 15px rgba(0,0,0,0.12); /* Slightly more prominent shadow */
     --font-family: 'Poppins', sans-serif;
 }
 
@@ -72,7 +72,7 @@ img {
 }
 
 .btn-primary:hover {
-    background-color: #45a049; /* Slightly darker green */
+    background-color: #DC2E86; /* Darker shade of Meesho pink */
 }
 
 .btn-accent {
@@ -81,7 +81,7 @@ img {
 }
 
 .btn-accent:hover {
-    background-color: #ffda6a; /* Lighter amber */
+    background-color: #E69500; /* Darker shade of orange */
 }
 
 .section-title {
@@ -239,14 +239,6 @@ img {
 
 .search-results a:hover {
     background-color: var(--background-dark);
-}
-
-.search-results img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 3px;
 }
 
 .search-results .no-results-msg {
