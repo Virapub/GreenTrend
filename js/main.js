@@ -104,7 +104,7 @@ function renderProducts(productList, containerId) {
             <a href="product-detail.html?id=${product.id}">
                 <img src="${product.image}" alt="${product.name}">
                 <div class="product-details">
-                    <h3>${product.name}</h3>
+                    <h4>${product.name}</h4>
                     <div class="price">
                         <span class="current-price">${formatPrice(product)}</span>
                     </div>
@@ -194,7 +194,7 @@ async function renderProductDetail(productId) {
                 <h3>Key Features:</h3>
                 <ul>${featuresHtml}</ul>
             </div>` : ''}
-            <h3>${longDescription}</h3>
+            <h4>${longDescription}</h4>
             <div class="action-buttons">
                 <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="buy-now-btn">Buy Now</a>
             </div>
