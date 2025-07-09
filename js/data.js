@@ -202,7 +202,7 @@ const products = [
     priceUSD: 24.42,
     category: "Appliances",
     link: "https://amzn.to/4eC6HTT",
-    image: "https://m.media-amazon.com/images/I/61kYgYk-43L._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/61LRXlumFTL._SL1200_.jpg", // Example: Use correct image URL if different
     rating: 4.1,
     features: [
       "Power Source Type: Corded Electric",
