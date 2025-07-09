@@ -1,4 +1,4 @@
-/* --- style.css for GreenTrend - Inspired by Meesho Design (Image 2 Layout) --- */
+/* --- style.css for GreenTrend - Reverting to Image 1 Layout --- */
 
 /* IMPORTS & ROOT VARIABLES */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap');
@@ -124,10 +124,10 @@ ul { list-style: none; }
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* --- Header & Navigation --- */
+/* --- Header & Navigation (Image 1 Style) --- */
 .main-header {
     background-color: var(--background-card);
-    padding: 12px 0;
+    padding: 10px 0; /* Compact padding */
     box-shadow: var(--shadow-light);
     position: sticky;
     top: 0;
@@ -137,115 +137,77 @@ ul { list-style: none; }
     border-bottom: 1px solid var(--border-color);
 }
 
-.navbar {
+.navbar { /* Top row of the header */
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
+    padding: 0 15px; /* Aligns with container padding */
 }
 
 .logo {
     display: flex;
     align-items: center;
     font-family: var(--heading-font);
-    font-size: 1.6em;
+    font-size: 1.4em; /* Smaller logo text */
     font-weight: 700;
     color: var(--primary-color);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap; /* Prevent logo text from wrapping */
-}
-.logo img {
-    height: 35px;
-    margin-right: 8px;
-}
-.logo-text-small { /* For "Smart Kitchen Gadgets" tagline */
-    font-size: 0.6em; /* Adjust as needed */
-    color: var(--secondary-color);
-    margin-left: -48px; /* Adjust to position below GreenTrend */
-    margin-top: 25px; /* Adjust as needed */
-    position: absolute; /* Allows precise positioning */
-    width: 120px; /* Adjust width as needed */
-    white-space: normal; /* Allow text to wrap if necessary */
-    line-height: 1.2;
-}
-
-/* Desktop Navigation Menu */
-.nav-menu {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.nav-menu li {
-    margin-left: 25px;
-}
-.nav-menu a {
-    color: var(--text-color-dark);
-    font-weight: 600;
-    font-size: 0.95em;
-    padding: 8px 0;
-    position: relative;
-    text-transform: uppercase;
     white-space: nowrap;
 }
-.nav-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
+.logo img {
+    height: 30px; /* Smaller logo image */
+    margin-right: 8px;
 }
-.nav-menu a:hover::after,
-.nav-menu a.active::after {
-    width: 100%;
+/* Removed .logo-text-small as it's not in Image 1 style */
+
+/* Desktop Navigation Menu - hidden in Image 1 style header (only for mobile if present) */
+.nav-menu {
+    display: none; /* Desktop menu is not visible in Image 1 header, assuming it's replaced by hamburger/mobile menu concept */
 }
 
 .currency-toggle-button {
-    background-color: var(--primary-color); /* Button background */
-    color: var(--text-color-light); /* Text color */
-    border: none; /* No border */
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
     border-radius: var(--border-radius-sm);
-    padding: 8px 12px; /* Slightly more padding */
-    font-size: 0.85em;
+    padding: 6px 10px; /* More compact padding */
+    font-size: 0.8em;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-left: 15px;
     font-weight: 600;
     text-transform: uppercase;
-    box-shadow: var(--shadow-light); /* Add a subtle shadow */
+    box-shadow: var(--shadow-light);
+    margin-left: auto; /* Push to the right */
 }
 .currency-toggle-button:hover {
     background-color: var(--primary-hover-color);
     transform: translateY(-1px);
 }
 
-.nav-toggle { /* Hamburger icon, hidden on desktop */
-    display: none;
-    font-size: 1.8em;
+.nav-toggle { /* Hamburger icon, always visible in Image 1 header (mobile-first approach) */
+    display: block; /* Always show hamburger for this layout */
+    font-size: 1.5em; /* Compact size */
     cursor: pointer;
     color: var(--text-color-dark);
+    margin-right: 15px; /* Space from logo */
 }
 
-/* --- Search Bar --- */
+/* --- Search Bar (Image 1 Style - below top row) --- */
 .search-container {
-    flex-grow: 1;
+    margin-top: 10px; /* Space from the top row */
+    padding: 0 15px; /* Aligns with container padding */
     position: relative;
-    max-width: 450px; /* Limit desktop search bar width */
-    margin: 0 20px;
-    display: flex; /* Make it a flex container */
+    max-width: 100%; /* Take full width within container */
+    display: flex; /* For input and button side-by-side */
+    align-items: center;
 }
 
 .search-input {
-    flex-grow: 1; /* Allow input to take available space */
-    padding: 10px 50px 10px 18px; /* Room for icon */
+    flex-grow: 1; /* Input takes all available space */
+    padding: 8px 45px 8px 15px; /* Adjusted padding for icon */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-sm);
-    font-size: 0.95em;
+    font-size: 0.9em;
     color: var(--text-color-dark);
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -256,31 +218,34 @@ ul { list-style: none; }
 }
 
 .search-button {
-    flex-shrink: 0; /* Prevent button from shrinking */
-    width: 50px; /* Fixed width for button */
-    background-color: var(--primary-color); /* Search button color */
-    color: var(--text-color-light); /* Icon color */
+    position: absolute; /* Position relative to .search-container */
+    right: 15px; /* Align with container padding */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px; /* Compact width */
+    height: 100%; /* Match input height */
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
     border: none;
-    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; /* Only right corners rounded */
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; /* Only right side rounded */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: -1px; /* Overlap border with input */
 }
 .search-button:hover {
     background-color: var(--primary-hover-color);
 }
 .search-button i {
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 .search-results { /* For dynamic search dropdown */
     position: absolute;
     top: calc(100% + 5px);
-    left: 0;
-    width: 100%;
+    left: 15px; /* Align with input */
+    width: calc(100% - 30px); /* Adjust width considering padding */
     max-height: 250px;
     overflow-y: auto;
     background-color: var(--background-card);
@@ -319,7 +284,7 @@ ul { list-style: none; }
 
 /* --- Hero Section (Homepage Only) --- */
 .hero-section {
-    background-color: #888; /* Grey background as per image 2 */
+    background-color: #888; /* Grey background as per previous image 2, if Image 1 implies this */
     color: var(--text-color-light);
     text-align: center;
     padding: var(--padding-section-desktop);
@@ -329,7 +294,7 @@ ul { list-style: none; }
     justify-content: center;
     flex-direction: column;
     margin-top: 0; /* No margin-top needed if header is sticky on top */
-    border-radius: var(--border-radius-md); /* Rounded corners as in image 2 */
+    border-radius: var(--border-radius-md); /* Rounded corners as in previous image 2 */
     margin: 20px auto; /* Add margin around hero section */
     max-width: calc(var(--container-max-width) - 30px); /* Adjust to fit container width */
     box-shadow: var(--shadow-medium); /* Add shadow */
@@ -427,6 +392,8 @@ ul { list-style: none; }
 }
 
 /* --- Product Grid (Homepage Featured & Products Page) --- */
+/* These styles will only apply if you keep the HTML for these sections. */
+/* If you remove the HTML for sections 6 & 7 as guided, these won't be used. */
 .featured-products-section,
 .products-page .products-section {
     padding: var(--padding-section-desktop);
@@ -802,83 +769,52 @@ ul { list-style: none; }
     h2 { font-size: 2em; }
     h3 { font-size: 1.4em; }
 
-    .navbar {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 0 15px;
+    .main-header {
+        padding: 8px 0; /* Slightly less padding */
     }
+
+    .navbar {
+        padding: 0 10px; /* Adjust padding for smaller screens */
+    }
+
     .logo {
-        flex-basis: auto; /* Allow logo to take natural width */
-        margin-bottom: 0;
-        justify-content: flex-start;
-        font-size: 1.4em; /* Slightly smaller logo text */
+        font-size: 1.3em;
+        margin-left: auto; /* Center logo on smaller screens (if only 3 elements) */
+        margin-right: auto;
     }
     .logo img {
-        height: 30px;
-    }
-    .logo-text-small {
-        margin-left: -38px; /* Adjust for smaller logo image */
-    }
-
-    .currency-toggle-button {
-        margin-left: auto; /* Push to the right */
-        order: 2; /* Position after search toggle, before nav toggle if search toggle exists */
-    }
-
-    /* Search bar moves to a new line on mobile */
-    .search-container {
-        width: 100%;
-        order: 4; /* Pushed below header elements */
-        margin: 15px 0 0 0; /* Add top margin */
-        padding: 0 0; /* No horizontal padding here, container handles it */
-    }
-    .search-input {
-        border-radius: var(--border-radius-sm); /* Full radius for single element */
-    }
-    .search-button {
-        border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; /* Only right corners rounded */
+        height: 28px;
     }
 
     .nav-toggle {
-        display: block; /* Show hamburger icon */
-        order: 3; /* Position after currency toggle */
-        margin-left: 15px; /* Space from currency toggle */
-    }
-    .nav-menu { /* Mobile menu, hidden by default */
-        flex-direction: column;
-        width: 100%;
-        background-color: var(--background-card);
-        position: absolute;
-        top: 100%; /* Position below header */
-        left: 0;
-        box-shadow: var(--shadow-medium);
-        display: none; /* Hidden by default */
-        padding: 15px 0;
-        border-top: 1px solid var(--border-color);
-        z-index: 990; /* Below header, above other content */
-    }
-    .nav-menu.active { /* Class added by JS to show mobile menu */
-        display: flex;
-    }
-    .nav-menu li {
-        margin: 8px 0;
-        text-align: center;
-        width: 100%; /* Full width for list items */
-    }
-    .nav-menu a {
-        padding: 10px 0; /* More clickable area */
-        display: block;
-    }
-    .nav-menu a::after {
-        left: 50%; /* Center underline for mobile */
-        transform: translateX(-50%);
+        font-size: 1.4em;
+        margin-right: 10px;
     }
 
+    .currency-toggle-button {
+        padding: 5px 8px;
+        font-size: 0.75em;
+        margin-left: 10px;
+    }
+
+    .search-container {
+        margin-top: 8px; /* Slightly less margin */
+        padding: 0 10px; /* Adjust padding */
+    }
+    .search-input {
+        padding: 7px 40px 7px 12px;
+        font-size: 0.85em;
+    }
+    .search-button {
+        right: 10px; /* Adjust position */
+        width: 35px;
+        height: calc(100% - 2px); /* Account for input border */
+    }
 
     .hero-section {
         padding: var(--padding-section-mobile);
         min-height: 320px;
-        margin: 15px auto; /* Adjust margin */
+        margin: 15px auto;
     }
     .hero-section h1 {
         font-size: 2.8em;
@@ -954,37 +890,39 @@ ul { list-style: none; }
         min-width: 100px;
     }
     .main-header {
-        padding: 8px 0;
+        padding: 5px 0; /* Even less padding */
     }
     .logo {
-        font-size: 1.3em;
-        padding-left: 5px; /* A bit of padding for logo */
+        font-size: 1.2em;
     }
     .logo img {
-        height: 28px;
+        height: 25px;
     }
-    .logo-text-small {
-        margin-left: -35px; /* Adjust for smaller logo image */
-        font-size: 0.55em;
+    .nav-toggle {
+        font-size: 1.3em;
+    }
+    .currency-toggle-button {
+        padding: 4px 7px;
+        font-size: 0.7em;
     }
 
-    /* Mobile search bar appearance - adjust for overlay or slide down */
     .search-container {
-        padding: 0 0; /* Match container padding */
+        margin-top: 5px; /* Even less margin */
+        padding: 0 10px;
     }
     .search-input {
-        padding: 8px 45px 8px 15px;
-        font-size: 0.9em;
+        padding: 6px 35px 6px 10px;
+        font-size: 0.8em;
     }
     .search-button {
-        width: 40px;
-        font-size: 0.9em;
+        width: 30px;
+        right: 10px;
     }
 
     .hero-section {
         padding: 30px 10px;
         min-height: 250px;
-        margin: 10px auto; /* Adjust margin */
+        margin: 10px auto;
     }
     .hero-section h1 {
         font-size: 2em;
@@ -1036,7 +974,7 @@ ul { list-style: none; }
         padding: 0 10px;
     }
     .footer-column {
-        max-width: 95%; /* Allow more width on very small screens */
+        max-width: 95%;
     }
     .footer-column h3 {
         font-size: 1.05em;
@@ -1054,11 +992,11 @@ ul { list-style: none; }
 /* Very Small Mobile (max-width 480px) */
 @media (max-width: 480px) {
     .product-grid {
-        grid-template-columns: 1fr; /* Single column layout for very small screens */
+        grid-template-columns: 1fr;
     }
     .product-card {
-        max-width: 320px; /* Max width to keep cards from being too wide */
-        margin: 0 auto; /* Center single cards */
+        max-width: 320px;
+        margin: 0 auto;
     }
     .product-detail-content {
         padding: 15px;
@@ -1067,14 +1005,14 @@ ul { list-style: none; }
         font-size: 1.6em;
     }
     .product-info .price-details {
-        flex-direction: column; /* Stack price details on very small screens */
+        flex-direction: column;
         align-items: flex-start;
     }
     .product-info #product-detail-price {
         font-size: 1.8em;
     }
     .action-buttons {
-        flex-direction: column; /* Stack buttons */
+        flex-direction: column;
         gap: 10px;
     }
     .buy-now-btn {
@@ -1082,14 +1020,13 @@ ul { list-style: none; }
         width: 100%;
     }
     .footer-column {
-        text-align: center; /* Center footer columns again for tiny screens */
+        text-align: center;
     }
     .footer-column h3 {
-        margin-bottom: 8px; /* Reduce margin */
+        margin-bottom: 8px;
     }
     .social-links {
         justify-content: center;
         margin-bottom: 15px;
     }
 }
-
