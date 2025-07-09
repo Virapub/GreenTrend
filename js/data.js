@@ -93,7 +93,7 @@ const products = [
     priceUSD: 11.67,
     category: "Appliances",
     link: "https://amzn.to/44k5wVJ",
-    image: "https://m.media-amazon.com/images/I/71P7uD9M72L._SL1500_.jpg", // Example: Use correct image URL if different
+    image: "https://m.media-amazon.com/images/I/61IK+zdG-IL._SL1200_.jpg", // Example: Use correct image URL if different
     rating: 4.6,
     features: ["USB rechargeable for cordless convenience", "One-button operation for ease of use", "Easy to clean components", "Portable design for small kitchens or travel", "Capacity: 250ml (approx)"],
     details: "This mini electric food chopper is your perfect companion for quick meal prep. Its cordless, USB rechargeable design offers ultimate convenience. Ideal for chopping garlic, onions, ginger, chilies, and even small amounts of baby food. The powerful motor ensures efficient chopping with a single button press. A compact solution for all your chopping needs."
