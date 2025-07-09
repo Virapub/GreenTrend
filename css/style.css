@@ -402,7 +402,7 @@ img {
 .category-card img {
     width: 100px;
     height: auto;
-    object-fit: fill;
+    object-fit: cover;
     padding: 10px;
     margin-bottom: 15px;
 }
