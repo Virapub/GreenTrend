@@ -30,7 +30,7 @@ const categories = [
         id: 'cat-cooking', // New category for "Automatic Pan Stirrer", "INKBIRD Thermometer"
         name: 'Cooking',
         slug: 'cooking',
-        image: 'images/cooking.jpeg' // Ensure this image exists
+        image: 'images/images/20250709_210722_0000.jpg' // Ensure this image exists
     },
     {
         id: 'cat-safety', // New category for "BBQ Grill Gloves"
