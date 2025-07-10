@@ -6,7 +6,7 @@ const categories = [
         id: 'cat-appliances',
         name: 'Appliances',
         slug: 'appliances',
-        image: 'images/appliances.jpeg'
+        image: 'images/images/20250709_210535_0000.jpg'
     },
     {
         id: 'cat-smart-gadgets',
