@@ -12,7 +12,7 @@ const categories = [
         id: 'cat-smart-gadgets',
         name: 'Smart Gadgets',
         slug: 'smart-gadgets',
-        image: 'images/smart-gadgets.jpeg'
+        image: 'images/images/20250710_072238_0000.jpg'
     },
     {
         id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
