@@ -36,7 +36,7 @@ const categories = [
         id: 'cat-safety', // New category for "BBQ Grill Gloves"
         name: 'Safety',
         slug: 'safety',
-        image: 'images/safety.jpeg' // Ensure this image exists
+        image: 'images/20250710_073105_0000.jpg' // Ensure this image exists
     }
 ];
 
