@@ -18,7 +18,7 @@ const categories = [
         id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
         name: 'Accessories',
         slug: 'accessories',
-        image: 'images/accessories.jpeg' // Ensure this image exists
+        image: 'images/images/20250710_071804_0000.jpg' // Ensure this image exists
     },
     {
         id: 'cat-prep-tools', // New category for "Cutting Board", "Digital Measuring Spoon", "Magnetic Measuring Spoons", "Electric Garlic Chopper"
