@@ -6,19 +6,19 @@ const categories = [
         id: 'cat-appliances',
         name: 'Appliances',
         slug: 'appliances',
-        image: 'images/images/20250709_210535_0000.jpg'
+        image: 'images/20250709_210535_0000.jpg'
     },
     {
         id: 'cat-smart-gadgets',
         name: 'Smart Gadgets',
         slug: 'smart-gadgets',
-        image: 'images/images/20250710_072238_0000.jpg'
+        image: 'images/20250710_072238_0000.jpg'
     },
     {
         id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
         name: 'Accessories',
         slug: 'accessories',
-        image: 'images/images/20250710_071804_0000.jpg' // Ensure this image exists
+        image: 'images/20250710_071804_0000.jpg' // Ensure this image exists
     },
     {
         id: 'cat-prep-tools', // New category for "Cutting Board", "Digital Measuring Spoon", "Magnetic Measuring Spoons", "Electric Garlic Chopper"
@@ -30,7 +30,7 @@ const categories = [
         id: 'cat-cooking', // New category for "Automatic Pan Stirrer", "INKBIRD Thermometer"
         name: 'Cooking',
         slug: 'cooking',
-        image: 'images/images/20250709_210722_0000.jpg' // Ensure this image exists
+        image: 'images/20250709_210722_0000.jpg' // Ensure this image exists
     },
     {
         id: 'cat-safety', // New category for "BBQ Grill Gloves"
