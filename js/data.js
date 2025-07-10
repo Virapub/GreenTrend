@@ -24,7 +24,7 @@ const categories = [
         id: 'cat-prep-tools', // New category for "Cutting Board", "Digital Measuring Spoon", "Magnetic Measuring Spoons", "Electric Garlic Chopper"
         name: 'Prep Tools',
         slug: 'prep-tools',
-        image: 'images/prep-tools.jpeg' // Ensure this image exists
+        image: 'images/20250710_072457_0000.jpg' // Ensure this image exists
     },
     {
         id: 'cat-cooking', // New category for "Automatic Pan Stirrer", "INKBIRD Thermometer"
