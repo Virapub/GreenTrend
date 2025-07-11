@@ -2,7 +2,7 @@
 
 // Global Variables
 let currentCurrency = "INR"; // Default currency when page loads
-const USD_EXCHANGE_RATE = 83.5; // IMPORTANT: Update this value regularly! (e.g. 1 USD = 83.5 INR)
+const USD_EXCHANGE_RATE = 83.7; // IMPORTANT: Update this value regularly! (e.g. 1 USD = 83.7 INR - as of latest check)
 
 // --- Helper Functions ---
 
@@ -37,9 +37,12 @@ function updateDisplayedPrices() {
     // Update price on the single product detail page (product-detail.html)
     const detailPriceElement = document.getElementById('product-detail-price');
     if (detailPriceElement) {
-        const priceInINR = parseFloat(detailPriceElement.dataset.inr-price);
+        // Corrected: Use dataset.inrPrice for camelCase conversion from data-inr-price
+        const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
         if (!isNaN(priceInINR)) {
             detailPriceElement.textContent = formatPrice(priceInINR);
+        } else {
+            console.warn('Product detail price data-inr-price is not a valid number.', detailPriceElement.dataset.inrPrice);
         }
     }
 }
@@ -50,10 +53,22 @@ function setupSearch() {
     const searchResultsContainer = document.getElementById('searchResults');
     const searchButton = document.getElementById('searchButton');
 
-    if (!searchInput || !searchResultsContainer || !searchButton) {
-        console.warn('Search elements (searchBox, searchResults, or searchButton) not found. Search functionality may not work.');
+    // Added checks for all elements to avoid errors if one is missing
+    if (!searchInput) {
+        console.warn('Search input element (#searchBox) not found. Search functionality may not work.');
         return;
     }
+    if (!searchResultsContainer) {
+        console.warn('Search results container (#searchResults) not found. Search functionality may not work.');
+        return;
+    }
+    if (!searchButton) {
+        console.warn('Search button (#searchButton) not found. Search functionality may not work.');
+        return;
+    }
+
+    console.log('Search functionality elements found:', {searchInput, searchResultsContainer, searchButton});
+
 
     const performLiveSearch = (query) => {
         searchResultsContainer.innerHTML = ''; // Clear previous results
@@ -110,7 +125,12 @@ function setupSearch() {
     // Close search results dropdown on outside click
     document.addEventListener('click', (event) => {
         // Check if the click is outside the search input, search button, and search results container
-        if (!searchInput.contains(event.target) && !searchResultsContainer.contains(event.target) && !searchButton.contains(event.target)) {
+        // This is crucial for avoiding unexpected closures and ensuring all relevant elements are considered
+        const isClickInsideSearchArea = searchInput.contains(event.target) || 
+                                       searchResultsContainer.contains(event.target) || 
+                                       searchButton.contains(event.target);
+        
+        if (!isClickInsideSearchArea) {
             searchResultsContainer.style.display = 'none';
         }
     });
@@ -128,7 +148,7 @@ function setupSearch() {
 function setupMobileNav() {
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
-    const searchResults = document.getElementById('searchResults'); // To close search results if menu opens
+    // const searchResults = document.getElementById('searchResults'); // No need to get searchResults here, setupSearch handles it.
 
     if (!navToggle) {
         console.warn('Navigation toggle button (#navToggle) not found.');
@@ -141,9 +161,10 @@ function setupMobileNav() {
 
     navToggle.addEventListener('click', () => {
         navMenu.classList.toggle('active');
-        // Close search results if the navigation menu is opened
-        if (searchResults && searchResults.style.display !== 'none') {
-            searchResults.style.display = 'none';
+        // Ensure search results are hidden when mobile nav is active
+        const searchResults = document.getElementById('searchResults'); // Get it inside if needed
+        if (searchResults && navMenu.classList.contains('active')) {
+             searchResults.style.display = 'none';
         }
         // Toggle body scroll lock to prevent scrolling when menu is open
         document.body.classList.toggle('no-scroll');
@@ -299,7 +320,8 @@ async function renderProductDetail(productId) {
                     </ul>
                 </div>` : ''}
                 <div class="action-buttons">
-                    <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="btn btn-accent buy-now-btn">Buy Now</a>
+                    <a href="${product.link || '#'}" target="_blank" rel="noopener noreferrer" class="btn btn-accent buy-now-btn">Buy Now</a>
+                    ${!product.link ? '<p style="color: red; font-size: 0.9em; margin-top: 10px;">(Purchase link not available)</p>' : ''}
                 </div>
             </div>
         `;
@@ -356,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProducts(featuredProducts, 'product-grid');
         } else {
             console.warn('Featured Products data not available or empty for homepage. Check data.js or ensure featuredProducts is defined.');
+            // If you want to remove this section completely, remove the HTML div in index.html too.
         }
     }
 
@@ -430,23 +453,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof renderProductDetail !== 'undefined') {
                 renderProductDetail(productId);
             } else {
-                console.error('renderProductDetail function not defined.');
+                console.error('renderProductDetail function is not defined. Check script loading order.');
             }
         } else {
-            const productDetailContent = document.getElementById('product-detail-content');
-            if (productDetailContent) {
-                productDetailContent.innerHTML = '<div class="error">Error: Product ID missing in URL.</div>';
-            }
-            console.warn('Product ID missing in URL for product detail page.');
+            console.warn('Product ID not found in URL for product detail page.');
         }
     }
 
-    // Initialize core functionalities
+    // Call general setup functions
     setupSearch();
     setupMobileNav();
     setupFooterYear();
 
-    // Initial price update for any elements not covered by rendering functions (e.g., if hardcoded)
-    updateDisplayedPrices();
     console.log('GreenTrend initialization complete.');
 });
