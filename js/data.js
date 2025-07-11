@@ -415,6 +415,76 @@ const products = [
     rating: 4.3,
     features: ["Heat resistant", "Non-slip grip", "Machine washable"],
     details: "Protect your hands while grilling and cooking with BBQGO heat-resistant gloves. Made with advanced materials, they provide excellent protection from high temperatures. The non-slip grip ensures secure handling of hot tools and food, while being machine washable for easy cleanup. Essential safety gear for any BBQ enthusiast or kitchen chef."
+  },
+    {
+    id: "samsung-330l-refrigerator",
+    name: "Samsung 330L Frost-Free Convertible Smart Refrigerator",
+    description: "A smart and energy-efficient refrigerator from Samsung, perfect for small families seeking smart temperature control with convertible modes.",
+    priceINR: 37990,
+    priceUSD: 453.88, // (37990 / 83.7).toFixed(2)
+    category: "Refrigerators",
+    categorySlug: "refrigerators",
+    link: "https://amzn.to/44H04ei",
+    image: "https://m.media-amazon.com/images/I/615o8Esh9YL._SL1500_.jpg",
+    rating: 4.2, // Assuming a reasonable rating
+    features: ["Capacity: 330 Liters", "3 Star Energy Rating", "Frost-Free Operation", "5-in-1 Convertible Modes", "Digital Inverter Compressor", "Wi-Fi Control", "Ideal for small families"],
+    details: "This Samsung Smart Refrigerator offers a generous 330L capacity and a 3-star energy rating for efficiency. Its innovative 5-in-1 Convertible modes provide flexible storage solutions, adapting to your family's needs. Equipped with a digital inverter compressor and Wi-Fi control, it ensures optimal cooling and smart management from your phone. A perfect blend of technology and convenience for modern kitchens."
+  },
+  {
+    id: "lg-380l-refrigerator",
+    name: "LG 380L 3 Star Smart Double-Door Refrigerator",
+    description: "Experience smart cooling with LG's 380L double-door refrigerator featuring Wi-Fi connectivity and ThinQ app control for ultimate convenience.",
+    priceINR: 42990,
+    priceUSD: 513.62, // (42990 / 83.7).toFixed(2)
+    category: "Refrigerators",
+    categorySlug: "refrigerators",
+    link: "https://amzn.to/46zx7Ua",
+    image: "https://m.media-amazon.com/images/I/71Vp-a+yXoL._SL1500_.jpg",
+    rating: 4.3, // Assuming a reasonable rating
+    features: ["Capacity: 380 Liters", "Double-Door Design", "3 Star Energy Rating", "Digital Inverter Compressor", "Wi-Fi Enabled", "ThinQ App Control", "High Energy Efficiency"],
+    details: "The LG 380L Smart Double-Door Refrigerator combines spacious storage with intelligent features. Its digital inverter compressor ensures quiet operation and long-lasting performance, while Wi-Fi connectivity and the ThinQ app allow you to control and monitor your refrigerator remotely. Designed for energy efficiency, this model is a smart addition to any home."
+  },
+  {
+    id: "samsung-419l-bespoke-ai-refrigerator",
+    name: "Samsung 419L BESPOKE AI Double-Door Refrigerator",
+    description: "A premium Samsung refrigerator with customizable BESPOKE design and advanced AI cooling for a stylish and smart kitchen.",
+    priceINR: 48990,
+    priceUSD: 585.30, // (48990 / 83.7).toFixed(2)
+    category: "Refrigerators",
+    categorySlug: "refrigerators",
+    link: "https://amzn.to/3GHf6J3",
+    image: "https://m.media-amazon.com/images/I/41Wjaze0ntL._SL1125_.jpg",
+    rating: 4.6, // Assuming a reasonable rating
+    features: ["Capacity: 419 Liters", "BESPOKE Customizable Design", "AI Cooling Technology", "Wi-Fi Enabled", "Stylish and Modern Look", "Double-Door Design"],
+    details: "Elevate your kitchen's aesthetics with the Samsung 419L BESPOKE AI Double-Door Refrigerator. Its unique BESPOKE design allows for personalized panel choices, blending seamlessly with your decor. Powered by advanced AI cooling, it optimizes temperature and humidity for extended food freshness. Wi-Fi connectivity offers smart control, making this refrigerator a true centerpiece of modern living."
+  },
+  {
+    id: "samsung-653l-side-by-side-refrigerator",
+    name: "Samsung 653L Frost-Free Side-by-Side 3 Star Smart Refrigerator",
+    description: "A spacious side-by-side smart refrigerator from Samsung, featuring AI, Wi-Fi, and Convertible 5-in-1 modes for large families.",
+    priceINR: 79990,
+    priceUSD: 955.67, // (79990 / 83.7).toFixed(2)
+    category: "Refrigerators",
+    categorySlug: "refrigerators",
+    link: "https://amzn.to/3IBzmfI",
+    image: "https://m.media-amazon.com/images/I/517RRNPv9AL._SL1500_.jpg",
+    rating: 4.4, // Assuming a reasonable rating
+    features: ["Capacity: 653 Liters", "3 Star Energy Rating", "Frost-Free Operation", "Side-by-Side Design", "AI & Wi-Fi Connectivity", "Convertible 5-in-1 Modes", "Digital Inverter Compressor", "Twin Cooling Plus"],
+    details: "Designed for large families, the Samsung 653L Side-by-Side Smart Refrigerator offers massive storage and cutting-edge technology. With AI and Wi-Fi capabilities, manage your cooling from anywhere. The Convertible 5-in-1 modes provide unmatched flexibility, while the Digital Inverter and Twin Cooling Plus ensure optimal freshness and energy efficiency. A premium choice for modern homes."
+  },
+  {
+    id: "lg-630l-instaview-refrigerator",
+    name: "LG 630L InstaView Wi-Fi Smart Side-by-Side Refrigerator",
+    description: "Experience innovative cooling with LG's InstaView refrigerator, offering smart features like Wi-Fi ThinQ app control and a convertible design.",
+    priceINR: 167800,
+    priceUSD: 2004.78, // (167800 / 83.7).toFixed(2)
+    category: "Refrigerators",
+    categorySlug: "refrigerators",
+    link: "https://amzn.to/4lQXslh",
+    image: "https://m.media-amazon.com/images/I/61mctwojb5L._SL1500_.jpg",
+    rating: 4.7, // Assuming a reasonable rating
+    features: ["Capacity: 630 Liters", "InstaView Door-in-Door", "Wi-Fi ThinQ App Control", "Convertible Functionality", "Self-Cleaning Water Dispenser", "Smart Inverter Compressor", "Side-by-Side Design", "Model: GL-X257AMC3"],
+    details: "The LG 630L InstaView Smart Side-by-Side Refrigerator redefines convenience and style. Its unique InstaView Door-in-Door feature lets you see inside with just two knocks, reducing cold air loss. Seamlessly control and monitor your fridge with the Wi-Fi ThinQ app. With a convertible design, self-cleaning dispenser, and Smart Inverter Compressor, it offers unmatched performance and luxury for your kitchen."
   }
 ];
 
