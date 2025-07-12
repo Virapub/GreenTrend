@@ -442,7 +442,7 @@ const products = [
     description: "A smart and energy-efficient refrigerator from Samsung, perfect for small families seeking smart temperature control with convertible modes.",
     priceINR: 37990,
     priceUSD: 453.88, // (37990 / 83.7).toFixed(2)
-    category: "Refrigerators",
+    category: "Premium Products",
     categorySlug: "refrigerators",
     link: "https://amzn.to/44H04ei",
     image: "https://m.media-amazon.com/images/I/615o8Esh9YL._SL1500_.jpg",
@@ -456,7 +456,7 @@ const products = [
     description: "Experience smart cooling with LG's 380L double-door refrigerator featuring Wi-Fi connectivity and ThinQ app control for ultimate convenience.",
     priceINR: 42990,
     priceUSD: 513.62, // (42990 / 83.7).toFixed(2)
-    category: "Refrigerators",
+    category: "Premium Products",
     categorySlug: "refrigerators",
     link: "https://amzn.to/46zx7Ua",
     image: "https://m.media-amazon.com/images/I/71Vp-a+yXoL._SL1500_.jpg",
@@ -470,7 +470,7 @@ const products = [
     description: "A premium Samsung refrigerator with customizable BESPOKE design and advanced AI cooling for a stylish and smart kitchen.",
     priceINR: 48990,
     priceUSD: 585.30, // (48990 / 83.7).toFixed(2)
-    category: "Refrigerators",
+    category: "Premium Products",
     categorySlug: "refrigerators",
     link: "https://amzn.to/3GHf6J3",
     image: "https://m.media-amazon.com/images/I/41Wjaze0ntL._SL1125_.jpg",
@@ -484,7 +484,7 @@ const products = [
     description: "A spacious side-by-side smart refrigerator from Samsung, featuring AI, Wi-Fi, and Convertible 5-in-1 modes for large families.",
     priceINR: 79990,
     priceUSD: 955.67, // (79990 / 83.7).toFixed(2)
-    category: "Refrigerators",
+    category: "Premium Products",
     categorySlug: "refrigerators",
     link: "https://amzn.to/3IBzmfI",
     image: "https://m.media-amazon.com/images/I/517RRNPv9AL._SL1500_.jpg",
@@ -498,7 +498,7 @@ const products = [
     description: "Experience innovative cooling with LG's InstaView refrigerator, offering smart features like Wi-Fi ThinQ app control and a convertible design.",
     priceINR: 167800,
     priceUSD: 2004.78, // (167800 / 83.7).toFixed(2)
-    category: "Refrigerators",
+    category: "Premium Products",
     categorySlug: "refrigerators",
     link: "https://amzn.to/4lQXslh",
     image: "https://m.media-amazon.com/images/I/61mctwojb5L._SL1500_.jpg",
