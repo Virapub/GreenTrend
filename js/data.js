@@ -1,3 +1,29 @@
+const categories = [
+    {
+        id: 'cat-appliances',
+        name: 'Appliances',
+        slug: 'appliances',
+        image: 'images/categories/kitchen-appliances.jpg'
+    },
+    {
+        id: 'cat-smart-gadgets',
+        name: 'Smart Gadgets',
+        slug: 'smart-gadgets',
+        image: 'images/categories/smart-gadgets.jpg'
+    },
+    {
+        id: 'cat-storages',
+        name: 'storages/cleaning',
+        slug: 'storages-cleaning',
+        image: 'images/cleaning.jpg' // Ensure this image exists
+    },
+    {
+        id: 'cat-accessories', // New category for "Mini Ice Cube Tray", "Air Fryer Liners"
+        name: 'Accessories',
+        slug: 'accessories',
+        image: 'images/categories/accessories.jpg' // Ensure this image exists
+    }
+  ];
 // --- Products Data (Includes previously discussed products + your new list) ---
 const products = [
   {
