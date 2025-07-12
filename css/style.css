@@ -409,6 +409,26 @@ img {
     font-weight: 600;
     font-size: 1.1em;
 }
+.category-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.category-bar button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #2ecc71;
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.category-bar button:hover {
+  background-color: #27ae60;
+}
 
 /* Product Grid */
 .featured-products-section, .products-page .products-section {
