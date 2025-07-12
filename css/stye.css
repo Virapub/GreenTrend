@@ -554,3 +554,132 @@ p {
 .fade-in {
   animation: fadeIn 0.3s ease-in;
 }
+/* style.css - Essential Fixes Only */
+
+/* Fix 1: Mobile Nav Toggle */
+#navMenu.active {
+  display: block !important;
+  transform: translateX(0) !important;
+}
+
+#navToggle {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  #navToggle {
+    display: block;
+  }
+  #navMenu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+}
+
+/* Fix 2: Search Results Positioning */
+#searchResults {
+  position: absolute;
+  background: white;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  z-index: 100;
+  display: none;
+}
+
+#searchResults a {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Fix 3: Currency Toggle Button */
+#currency-toggle-button {
+  padding: 5px 10px;
+  background: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Fix 4: Product Price Alignment */
+.price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9em;
+}
+
+/* Fix 5: Hero Section Margin */
+.hero-section {
+  margin-top: 80px; /* Adjust based on your header height */
+}
+
+/* Fix 6: Loading State for Product Detail */
+.loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Fix 7: Responsive Product Grid */
+.product-card {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 600px) {
+  #product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 900px) {
+  #product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Fix 8: Sticky Header */
+.main-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Fix 9: Footer Always at Bottom */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.main-footer {
+  margin-top: auto;
+  }
