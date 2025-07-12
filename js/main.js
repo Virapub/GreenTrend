@@ -459,6 +459,33 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn('Product ID not found in URL for product detail page.');
         }
     }
+    function getCategoryByPrice(price) {
+  if (price <= 1000) return 'upto1000';
+  if (price <= 10000) return 'upto10000';
+  return 'luxury';
+}
+
+function filterProductsByCategory(selectedCategory) {
+  const filtered = products.filter(product => {
+    const category = getCategoryByPrice(product.price);
+    return category === selectedCategory;
+  });
+
+  renderProducts(filtered);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const categoryButtons = document.querySelectorAll('.price-filter');
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const selectedCategory = this.dataset.category;
+      filterProductsByCategory(selectedCategory);
+    });
+  });
+
+  // Default view: show all
+  renderProducts(products);
+});
 
     // Call general setup functions
     setupSearch();
