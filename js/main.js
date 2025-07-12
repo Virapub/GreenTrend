@@ -299,7 +299,7 @@ async function renderProductDetail(productId) {
                     </ul>
                 </div>` : ''}
                 <div class="action-buttons">
-                    <a href="${product.affiliateLink}" target="_blank" rel="noopener noreferrer" class="btn btn-accent buy-now-btn">Buy Now on Amazon</a>
+                    <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="btn btn-accent buy-now-btn">Buy Now</a>
                 </div>
             </div>
         `;
