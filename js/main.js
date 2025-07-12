@@ -1,496 +1,628 @@
-// js/main.js
+// js/main.js - GreenTrend E-commerce v2.0
 
-// Global Variables
-let currentCurrency = "INR"; // Default currency when page loads
-const USD_EXCHANGE_RATE = 83.7; // IMPORTANT: Update this value regularly! (e.g. 1 USD = 83.7 INR - as of latest check)
-
-// --- Helper Functions ---
-
-// Function to format price based on current currency
-function formatPrice(priceInINR) {
-    if (currentCurrency === "INR") {
-        return `₹${priceInINR.toLocaleString('en-IN')}`;
-    } else {
-        const priceInUSD = (priceInINR / USD_EXCHANGE_RATE).toFixed(2);
-        return `$${priceInUSD}`;
+/**
+ * Global Configuration
+ */
+const CONFIG = {
+    defaultCurrency: "INR",
+    exchangeRates: {
+        USD: 83.7, // 1 USD = 83.7 INR
+        EUR: 90.5, // Added Euro support
+        GBP: 105.2 // Added British Pound support
+    },
+    priceRounding: {
+        USD: 2,
+        EUR: 2,
+        GBP: 2,
+        INR: 0
+    },
+    search: {
+        minChars: 2,
+        debounceTime: 300
+    },
+    breakpoints: {
+        mobile: 768,
+        tablet: 992
     }
-}
+};
 
-// Function to update all displayed prices on the current page
-function updateDisplayedPrices() {
-    // Update prices on product cards (e.g., home page, products page)
-    document.querySelectorAll('.product-card .price[data-inr-price]').forEach(priceElement => {
-        const priceInINR = parseFloat(priceElement.dataset.inrPrice);
-        if (!isNaN(priceInINR)) {
-            // Find or create the span for current price
-            let currentPriceSpan = priceElement.querySelector('.current-price');
-            if (!currentPriceSpan) {
-                currentPriceSpan = document.createElement('span');
-                currentPriceSpan.className = 'current-price';
-                // Prepend to ensure it's the first child for consistent display
-                priceElement.prepend(currentPriceSpan);
-            }
-            currentPriceSpan.textContent = formatPrice(priceInINR);
-        }
-    });
+// State Management
+const APP_STATE = {
+    currentCurrency: CONFIG.defaultCurrency,
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
+    userPreferences: JSON.parse(localStorage.getItem('userPreferences')) || {
+        darkMode: false,
+        currency: CONFIG.defaultCurrency
+    }
+};
 
-    // Update price on the single product detail page (product-detail.html)
-    const detailPriceElement = document.getElementById('product-detail-price');
-    if (detailPriceElement) {
-        // Corrected: Use dataset.inrPrice for camelCase conversion from data-inr-price
-        const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
-        if (!isNaN(priceInINR)) {
-            detailPriceElement.textContent = formatPrice(priceInINR);
+/**
+ * Utility Functions
+ */
+const Utils = {
+    // Format price based on current currency
+    formatPrice: (priceInINR) => {
+        if (APP_STATE.currentCurrency === "INR") {
+            return `₹${priceInINR.toLocaleString('en-IN', { maximumFractionDigits: CONFIG.priceRounding.INR })}`;
         } else {
-            console.warn('Product detail price data-inr-price is not a valid number.', detailPriceElement.dataset.inrPrice);
+            const rate = CONFIG.exchangeRates[APP_STATE.currentCurrency];
+            const convertedPrice = priceInINR / rate;
+            return `${APP_STATE.currentCurrency === 'USD' ? '$' : APP_STATE.currentCurrency === 'EUR' ? '€' : '£'}${convertedPrice.toFixed(CONFIG.priceRounding[APP_STATE.currentCurrency])}`;
+        }
+    },
+
+    // Debounce function for performance optimization
+    debounce: (func, delay) => {
+        let timeoutId;
+        return function(...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+    },
+
+    // Get URL parameters
+    getUrlParams: () => {
+        return Object.fromEntries(new URLSearchParams(window.location.search).entries());
+    },
+
+    // Show loading spinner
+    showLoading: (element) => {
+        if (element) {
+            element.innerHTML = '<div class="loading-spinner"></div>';
+            element.classList.add('loading');
+        }
+    },
+
+    // Hide loading spinner
+    hideLoading: (element) => {
+        if (element) {
+            element.classList.remove('loading');
+        }
+    },
+
+    // Update localStorage
+    updateLocalStorage: (key, value) => {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch (error) {
+            console.error('LocalStorage update failed:', error);
+            return false;
         }
     }
-}
+};
 
-// --- Search Functionality ---
-function setupSearch() {
-    const searchInput = document.getElementById('searchBox');
-    const searchResultsContainer = document.getElementById('searchResults');
-    const searchButton = document.getElementById('searchButton');
+/**
+ * DOM Update Functions
+ */
+const DOMUpdates = {
+    // Update all displayed prices on the page
+    updateDisplayedPrices: () => {
+        // Product cards
+        document.querySelectorAll('[data-inr-price]').forEach(element => {
+            const priceInINR = parseFloat(element.dataset.inrPrice);
+            if (!isNaN(priceInINR)) {
+                const displayElement = element.querySelector('.current-price') || element;
+                displayElement.textContent = Utils.formatPrice(priceInINR);
+                
+                // Update original price if exists
+                const originalPriceElement = element.querySelector('.original-price');
+                if (originalPriceElement && element.dataset.originalInrPrice) {
+                    const originalPriceInINR = parseFloat(element.dataset.originalInrPrice);
+                    originalPriceElement.textContent = `₹${originalPriceInINR.toLocaleString('en-IN')}`;
+                }
+            }
+        });
 
-    // Added checks for all elements to avoid errors if one is missing
-    if (!searchInput) {
-        console.warn('Search input element (#searchBox) not found. Search functionality may not work.');
-        return;
+        // Cart totals
+        CartManager.updateCartTotal();
+    },
+
+    // Toggle currency display
+    toggleCurrency: () => {
+        const currencyOrder = ['INR', 'USD', 'EUR', 'GBP'];
+        const currentIndex = currencyOrder.indexOf(APP_STATE.currentCurrency);
+        APP_STATE.currentCurrency = currencyOrder[(currentIndex + 1) % currencyOrder.length];
+        
+        // Update UI
+        const currencyToggle = document.getElementById('currency-toggle');
+        if (currencyToggle) {
+            currencyToggle.textContent = APP_STATE.currentCurrency;
+        }
+        
+        // Save preference
+        APP_STATE.userPreferences.currency = APP_STATE.currentCurrency;
+        Utils.updateLocalStorage('userPreferences', APP_STATE.userPreferences);
+        
+        DOMUpdates.updateDisplayedPrices();
+    },
+
+    // Update mobile menu state
+    toggleMobileMenu: (forceClose = false) => {
+        const navMenu = document.getElementById('navMenu');
+        const navToggle = document.getElementById('navToggle');
+        
+        if (navMenu) {
+            if (forceClose) {
+                navMenu.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            } else {
+                navMenu.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            }
+        }
+        
+        if (navToggle) {
+            navToggle.setAttribute('aria-expanded', navMenu.classList.contains('active'));
+        }
     }
-    if (!searchResultsContainer) {
-        console.warn('Search results container (#searchResults) not found. Search functionality may not work.');
-        return;
-    }
-    if (!searchButton) {
-        console.warn('Search button (#searchButton) not found. Search functionality may not work.');
-        return;
-    }
+};
 
-    console.log('Search functionality elements found:', {searchInput, searchResultsContainer, searchButton});
+/**
+ * Search Module
+ */
+const SearchModule = {
+    init: () => {
+        const searchInput = document.getElementById('searchBox');
+        const searchResults = document.getElementById('searchResults');
+        const searchButton = document.getElementById('searchButton');
 
+        if (!searchInput || !searchResults) return;
 
-    const performLiveSearch = (query) => {
-        searchResultsContainer.innerHTML = ''; // Clear previous results
-        if (query.length < 2) { // Show results only if query is at least 2 chars
-            searchResultsContainer.style.display = 'none';
+        // Live search with debouncing
+        searchInput.addEventListener('input', Utils.debounce((e) => {
+            SearchModule.performSearch(e.target.value.trim(), searchResults);
+        }, CONFIG.search.debounceTime));
+
+        // Search button click
+        if (searchButton) {
+            searchButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+                }
+            });
+        }
+
+        // Close search results on outside click
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Keyboard navigation
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                searchResults.style.display = 'none';
+            }
+        });
+    },
+
+    performSearch: (query, resultsContainer) => {
+        resultsContainer.innerHTML = '';
+        
+        if (query.length < CONFIG.search.minChars) {
+            resultsContainer.style.display = 'none';
             return;
         }
 
-        // Ensure 'products' array is available from data.js
-        if (typeof products === 'undefined' || !Array.isArray(products)) {
-            console.error('Products data not available for search. Make sure data.js is loaded correctly.');
-            searchResultsContainer.innerHTML = '<div class="no-results-msg">Error: Product data missing.</div>';
-            searchResultsContainer.style.display = 'block';
+        if (typeof products === 'undefined') {
+            resultsContainer.innerHTML = '<div class="search-error">Product data not loaded</div>';
+            resultsContainer.style.display = 'block';
             return;
         }
 
-        const filteredProducts = products.filter(product =>
+        const filtered = products.filter(product => 
             product.name.toLowerCase().includes(query.toLowerCase()) ||
-            (product.description && product.description.toLowerCase().includes(query.toLowerCase())) ||
-            (product.category && product.category.toLowerCase().includes(query.toLowerCase()))
+            product.description?.toLowerCase().includes(query.toLowerCase()) ||
+            product.category?.toLowerCase().includes(query.toLowerCase())
         );
 
-        if (filteredProducts.length > 0) {
-            filteredProducts.forEach(product => {
-                const searchResultLink = document.createElement('a');
-                searchResultLink.href = `product-detail.html?id=${product.id}`;
-                searchResultLink.innerHTML = `
+        if (filtered.length > 0) {
+            filtered.slice(0, 5).forEach(product => {
+                const item = document.createElement('a');
+                item.href = `product-detail.html?id=${product.id}`;
+                item.className = 'search-result-item';
+                item.innerHTML = `
                     <img src="${product.image}" alt="${product.name}">
-                    <span>${product.name} - ${formatPrice(product.priceINR)}</span>
+                    <div>
+                        <h4>${product.name}</h4>
+                        <div class="search-price">${Utils.formatPrice(product.priceINR)}</div>
+                    </div>
                 `;
-                searchResultsContainer.appendChild(searchResultLink);
+                resultsContainer.appendChild(item);
             });
-            searchResultsContainer.style.display = 'block';
+            resultsContainer.style.display = 'block';
         } else {
-            searchResultsContainer.innerHTML = '<div class="no-results-msg">No results found</div>';
-            searchResultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = '<div class="no-results">No products found</div>';
+            resultsContainer.style.display = 'block';
         }
-    };
-
-    // Event listener for search input (live search)
-    searchInput.addEventListener('input', (e) => {
-        performLiveSearch(e.target.value.trim());
-    });
-
-    // Event listener for search button click (redirect to products page with search query)
-    searchButton.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent form submission if it's part of a form
-        const query = searchInput.value.trim();
-        if (query.length > 0) {
-            window.location.href = `products.html?search=${encodeURIComponent(query)}`;
-        }
-    });
-
-    // Close search results dropdown on outside click
-    document.addEventListener('click', (event) => {
-        // Check if the click is outside the search input, search button, and search results container
-        // This is crucial for avoiding unexpected closures and ensuring all relevant elements are considered
-        const isClickInsideSearchArea = searchInput.contains(event.target) || 
-                                       searchResultsContainer.contains(event.target) || 
-                                       searchButton.contains(event.target);
-        
-        if (!isClickInsideSearchArea) {
-            searchResultsContainer.style.display = 'none';
-        }
-    });
-
-    // Optionally close search results on Escape key
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            searchResultsContainer.style.display = 'none';
-            searchInput.blur(); // Remove focus from search input
-        }
-    });
-}
-
-// --- Mobile Navigation Toggle functionality ---
-function setupMobileNav() {
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    // const searchResults = document.getElementById('searchResults'); // No need to get searchResults here, setupSearch handles it.
-
-    if (!navToggle) {
-        console.warn('Navigation toggle button (#navToggle) not found.');
-        return;
     }
-    if (!navMenu) {
-        console.warn('Navigation menu (#navMenu) not found.');
-        return;
-    }
+};
 
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        // Ensure search results are hidden when mobile nav is active
-        const searchResults = document.getElementById('searchResults'); // Get it inside if needed
-        if (searchResults && navMenu.classList.contains('active')) {
-             searchResults.style.display = 'none';
+/**
+ * Product Rendering Module
+ */
+const ProductRenderer = {
+    renderProducts: (productList, containerId, options = {}) => {
+        const container = document.getElementById(containerId);
+        if (!container) return false;
+
+        container.innerHTML = '';
+
+        if (!productList || productList.length === 0) {
+            container.innerHTML = '<div class="no-products">No products available</div>';
+            return false;
         }
-        // Toggle body scroll lock to prevent scrolling when menu is open
-        document.body.classList.toggle('no-scroll');
-    });
 
-    // Close nav menu when a link is clicked (for single page applications or smooth scroll)
-    navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            document.body.classList.remove('no-scroll');
+        productList.forEach(product => {
+            const card = document.createElement('div');
+            card.className = `product-card ${options.featured ? 'featured' : ''}`;
+            card.innerHTML = ProductRenderer.generateProductCardHTML(product);
+            container.appendChild(card);
         });
-    });
 
-    // Close nav menu when window is resized to desktop (e.g., from portrait mobile to landscape tablet/desktop)
-    window.addEventListener('resize', () => {
-        // 992px is typically where desktop styles kick in (adjust as per your CSS media query)
-        if (window.innerWidth > 992 && navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-            document.body.classList.remove('no-scroll');
+        DOMUpdates.updateDisplayedPrices();
+        return true;
+    },
+
+    generateProductCardHTML: (product) => {
+        return `
+            <a href="product-detail.html?id=${product.id}" class="product-link">
+                <div class="product-image-container">
+                    <img src="${product.image}" alt="${product.name}" loading="lazy">
+                    ${product.discountPercent ? `<span class="discount-badge">${product.discountPercent}% OFF</span>` : ''}
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <div class="price" data-inr-price="${product.priceINR}" ${product.originalPriceINR ? `data-original-inr-price="${product.originalPriceINR}"` : ''}>
+                        <span class="current-price"></span>
+                        ${product.originalPriceINR ? `<span class="original-price"></span>` : ''}
+                    </div>
+                    <div class="rating">
+                        ${'★'.repeat(Math.floor(product.rating))}
+                        ${product.rating % 1 >= 0.5 ? '½' : ''}
+                        <span>(${product.reviews || 0})</span>
+                    </div>
+                    <button class="btn add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+                </div>
+            </a>
+        `;
+    },
+
+    renderProductDetail: (productId) => {
+        const container = document.getElementById('product-detail-content');
+        if (!container) return false;
+
+        Utils.showLoading(container);
+
+        if (typeof products === 'undefined') {
+            container.innerHTML = '<div class="error">Product data not available</div>';
+            return false;
         }
-    });
-}
 
-// --- Initialize Current Year in Footer ---
-function setupFooterYear() {
-    const currentYearSpan = document.getElementById('current-year');
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
-}
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            container.innerHTML = '<div class="error">Product not found</div>';
+            return false;
+        }
 
-// --- Product and Category Rendering Functions ---
+        container.innerHTML = ProductRenderer.generateProductDetailHTML(product);
+        DOMUpdates.updateDisplayedPrices();
+        
+        // Initialize product gallery if exists
+        const gallery = container.querySelector('.product-gallery');
+        if (gallery) {
+            ProductRenderer.initProductGallery(gallery);
+        }
 
-// Renders a list of products into a specified container
-function renderProducts(productList, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error(`Error: Product container with ID "${containerId}" not found.`);
-        return;
-    }
+        return true;
+    },
 
-    container.innerHTML = ''; // Clear existing content
-
-    if (!productList || productList.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--secondary-color); margin-top: 20px;">No products found.</p>';
-        return;
-    }
-
-    productList.forEach(product => {
-        const productCard = document.createElement('a');
-        productCard.href = `product-detail.html?id=${product.id}`;
-        productCard.className = 'product-card';
-        // Add a class for specific pages if needed, e.g., 'featured-product-card'
-        // productCard.classList.add('featured-product-card');
-
-        // Use data-inr-price to store the base price for currency conversion
-        productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <div class="product-details">
-                <h3>${product.name}</h3>
-                <div class="price" data-inr-price="${product.priceINR}">
-                    <span class="current-price">${formatPrice(product.priceINR)}</span>
-                    ${product.originalPriceINR ? `<span class="original-price">₹${product.originalPriceINR.toLocaleString('en-IN')}</span>` : ''}
+    generateProductDetailHTML: (product) => {
+        return `
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="${product.image}" alt="${product.name}">
                 </div>
-                <div class="rating">
-                    ${'⭐'.repeat(Math.floor(product.rating))}
-                    ${product.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt"></i>' : ''}
-                    <span class="rating-text">(${product.rating}/5)</span>
-                </div>
-                <button class="btn btn-primary buy-btn">View Details</button>
+                ${product.additionalImages ? `
+                <div class="thumbnail-container">
+                    ${product.additionalImages.map(img => `
+                        <img src="${img}" alt="${product.name} - additional view">
+                    `).join('')}
+                </div>` : ''}
             </div>
-        `;
-        container.appendChild(productCard);
-    });
-
-    updateDisplayedPrices(); // Update prices after rendering
-}
-
-// Renders a list of categories into a specified container
-function renderCategories(categoryList, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error(`Error: Category container with ID "${containerId}" not found.`);
-        return;
-    }
-
-    container.innerHTML = ''; // Clear existing content
-
-    if (!categoryList || categoryList.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--secondary-color); margin-top: 20px;">No categories found.</p>';
-        return;
-    }
-
-    categoryList.forEach(category => {
-        const categoryCard = document.createElement('a');
-        categoryCard.href = `products.html?category=${category.slug}`; // Link to products page with category filter
-        categoryCard.className = 'category-card';
-        categoryCard.innerHTML = `
-            <img src="${category.image}" alt="${category.name} Category">
-            <span>${category.name}</span>
-        `;
-        container.appendChild(categoryCard);
-    });
-}
-
-// Renders a single product's detailed information on the product detail page
-async function renderProductDetail(productId) {
-    const contentDiv = document.getElementById('product-detail-content');
-    if (!contentDiv) {
-        console.error('Product detail content container (#product-detail-content) not found.');
-        return;
-    }
-
-    // Show loading state
-    contentDiv.innerHTML = '<div class="loading">Loading product details...</div>';
-    contentDiv.classList.add('loading');
-
-    // Ensure 'products' array is available from data.js
-    if (typeof products === 'undefined' || !Array.isArray(products)) {
-        console.error('Products data not available for product detail. Make sure data.js is loaded correctly.');
-        contentDiv.innerHTML = '<div class="error">Error: Product data missing.</div>';
-        contentDiv.classList.remove('loading');
-        return;
-    }
-
-    // Find the product from your `products` data array
-    const product = products.find(p => p.id === productId);
-
-    if (product) {
-        contentDiv.classList.remove('loading'); // Remove loading class
-        contentDiv.innerHTML = `
-            <div class="product-image-gallery">
-                <img class="product-main-image" src="${product.image}" alt="${product.name}">
-                </div>
             <div class="product-info">
                 <h1>${product.name}</h1>
-                <div class="price-details">
-                    <span id="product-detail-price" data-inr-price="${product.priceINR}">${formatPrice(product.priceINR)}</span>
-                    ${product.originalPriceINR ? `<span class="original-price">₹${product.originalPriceINR.toLocaleString('en-IN')}</span>` : ''}
-                    ${product.discountPercent ? `<span class="discount-percent">${product.discountPercent}% Off</span>` : ''}
+                <div class="price-container">
+                    <span class="current-price" data-inr-price="${product.priceINR}"></span>
+                    ${product.originalPriceINR ? `
+                        <span class="original-price">₹${product.originalPriceINR.toLocaleString('en-IN')}</span>
+                        <span class="discount-percent">${product.discountPercent}% OFF</span>
+                    ` : ''}
                 </div>
                 <div class="rating">
-                    ${'⭐'.repeat(Math.floor(product.rating))}
-                    ${product.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt"></i>' : ''}
-                    <span class="rating-text">(${product.rating}/5)</span>
+                    ${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '½' : ''}
+                    <span>${product.rating} (${product.reviews || 0} reviews)</span>
                 </div>
-                <p class="description">${product.description}</p>
-                ${product.features && product.features.length > 0 ? `
+                <div class="availability">
+                    <span class="in-stock">${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-primary add-to-cart" data-product-id="${product.id}">
+                        ${product.stock > 0 ? 'Add to Cart' : 'Notify Me'}
+                    </button>
+                    <button class="btn btn-outline wishlist-btn" data-product-id="${product.id}">
+                        <i class="far fa-heart"></i> Wishlist
+                    </button>
+                </div>
+                <div class="product-description">
+                    <h3>Description</h3>
+                    <p>${product.description}</p>
+                </div>
+                ${product.features ? `
                 <div class="product-features">
-                    <h3>Key Features:</h3>
+                    <h3>Features</h3>
                     <ul>
-                        ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                        ${product.features.map(feat => `<li>${feat}</li>`).join('')}
                     </ul>
                 </div>` : ''}
-                <div class="action-buttons">
-                    <a href="${product.link || '#'}" target="_blank" rel="noopener noreferrer" class="btn btn-accent buy-now-btn">Buy Now</a>
-                    ${!product.link ? '<p style="color: red; font-size: 0.9em; margin-top: 10px;">(Purchase link not available)</p>' : ''}
-                </div>
+                ${product.specifications ? `
+                <div class="product-specs">
+                    <h3>Specifications</h3>
+                    <table>
+                        ${Object.entries(product.specifications).map(([key, value]) => `
+                            <tr>
+                                <th>${key}</th>
+                                <td>${value}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                </div>` : ''}
             </div>
         `;
-        updateDisplayedPrices(); // Update prices after rendering detail page
-    } else {
-        contentDiv.innerHTML = '<div class="error">Product not found. Please check the URL.</div>';
-        contentDiv.classList.remove('loading');
-    }
-}
+    },
 
-
-// --- DOM Content Loaded Listener (Main Initialization) ---
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded. Initializing GreenTrend...');
-
-    // Adjust hero-section margin for sticky header (only on index.html)
-    const mainHeader = document.querySelector('.main-header');
-    const heroSection = document.querySelector('.hero-section');
-    if (mainHeader && heroSection) {
-        const headerHeight = mainHeader.offsetHeight;
-        heroSection.style.marginTop = `${headerHeight + 25}px`; // Add some extra space for better separation
-        console.log(`Header height: ${headerHeight}px. Hero section margin top set.`);
-    } else {
-        console.log('Main header or hero section not found for margin adjustment.');
-    }
-
-
-    // Initialize currency toggle button functionality
-    const currencyToggleButton = document.getElementById('currency-toggle-button');
-    if (currencyToggleButton) {
-        currencyToggleButton.textContent = currentCurrency; // Set initial text
-        currencyToggleButton.addEventListener('click', () => {
-            currentCurrency = (currentCurrency === "INR" ? "USD" : "INR");
-            currencyToggleButton.textContent = currentCurrency;
-            updateDisplayedPrices(); // Recalculate and display all prices
-            console.log(`Currency toggled to: ${currentCurrency}`);
+    initProductGallery: (galleryElement) => {
+        const mainImage = galleryElement.querySelector('.main-image img');
+        const thumbnails = galleryElement.querySelectorAll('.thumbnail-container img');
+        
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                mainImage.src = thumb.src;
+                mainImage.alt = thumb.alt;
+            });
         });
-    } else {
-        console.warn('Currency toggle button (#currency-toggle-button) not found.');
     }
+};
 
-    // --- Page-specific rendering logic ---
+/**
+ * Category Module
+ */
+const CategoryModule = {
+    renderCategories: (categoryList, containerId) => {
+        const container = document.getElementById(containerId);
+        if (!container) return false;
 
-    // Render content for the homepage (index.html)
-    if (document.body.classList.contains('homepage')) {
-        console.log('Homepage detected. Rendering categories and featured products.');
-        // Ensure 'categories' and 'featuredProducts' are available from data.js
-        if (typeof categories !== 'undefined' && Array.isArray(categories) && categories.length > 0) {
-            renderCategories(categories, 'category-list');
-        } else {
-            console.warn('Categories data not available or empty for homepage. Check data.js.');
-        }
-        if (typeof featuredProducts !== 'undefined' && Array.isArray(featuredProducts) && featuredProducts.length > 0) {
-            renderProducts(featuredProducts, 'product-grid');
-        } else {
-            console.warn('Featured Products data not available or empty for homepage. Check data.js or ensure featuredProducts is defined.');
-            // If you want to remove this section completely, remove the HTML div in index.html too.
-        }
-    }
+        container.innerHTML = '';
 
-    // Handle product listing on products.html
-    if (document.body.classList.contains('products-page')) {
-        console.log('Products page detected. Rendering products based on URL params.');
-        const urlParams = new URLSearchParams(window.location.search);
-        const categorySlug = urlParams.get('category');
-        const searchQuery = urlParams.get('search');
-        let productsToRender = []; // Initialize as empty array
-
-        // Ensure 'products' data is available from data.js
-        if (typeof products !== 'undefined' && Array.isArray(products)) {
-            productsToRender = products; // Default to all products
-
-            if (categorySlug) {
-                productsToRender = products.filter(product => product.categorySlug === categorySlug);
-                const categoryName = categories.find(cat => cat.slug === categorySlug)?.name;
-                // Update the heading on the products page
-                const productsHeading = document.getElementById('products-heading');
-                if (productsHeading) {
-                    productsHeading.textContent = categoryName ? `${categoryName} Products` : "Products";
-                }
-                console.log(`Filtering by category: ${categorySlug}. Found ${productsToRender.length} products.`);
-            } else if (searchQuery) {
-                productsToRender = products.filter(product =>
-                    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                    (product.category && product.category.toLowerCase().includes(searchQuery.toLowerCase()))
-                );
-                 // Update the heading on the products page
-                const productsHeading = document.getElementById('products-heading');
-                if (productsHeading) {
-                     productsHeading.textContent = `Search Results for "${searchQuery}"`;
-                }
-                console.log(`Filtering by search query: "${searchQuery}". Found ${productsToRender.length} products.`);
-            } else {
-                 // Default heading for all products
-                 const productsHeading = document.getElementById('products-heading');
-                if (productsHeading) {
-                     productsHeading.textContent = "All Products";
-                }
-            }
-        } else {
-            console.error('Products data not available for products page. Make sure data.js is loaded correctly.');
-            const productsHeading = document.getElementById('products-heading');
-            if (productsHeading) {
-                productsHeading.textContent = "Error: Product data missing";
-            }
+        if (!categoryList || categoryList.length === 0) {
+            container.innerHTML = '<div class="no-categories">No categories available</div>';
+            return false;
         }
 
-        // Render the filtered/all products
-        if (productsToRender.length > 0) {
-            renderProducts(productsToRender, 'product-grid');
-        } else {
-            const container = document.getElementById('product-grid');
-            if (container) {
-                container.innerHTML = '<p style="text-align: center; color: var(--secondary-color); margin-top: 20px;">No products found in this category/search.</p>';
-                console.log('No products to render. Displaying "No products found" message.');
-            } else {
-                console.warn('Product grid container (#product-grid) not found on products page.');
-            }
+        categoryList.forEach(category => {
+            const card = document.createElement('a');
+            card.href = `products.html?category=${category.slug}`;
+            card.className = 'category-card';
+            card.innerHTML = `
+                <img src="${category.image}" alt="${category.name}" loading="lazy">
+                <h3>${category.name}</h3>
+                <p>${category.productCount || 0} products</p>
+            `;
+            container.appendChild(card);
+        });
+
+        return true;
+    },
+
+    filterProductsByCategory: (categorySlug) => {
+        if (!categorySlug) return products;
+        return products.filter(product => product.categorySlug === categorySlug);
+    },
+
+    filterProductsByPriceRange: (range) => {
+        switch (range) {
+            case 'under1000':
+                return products.filter(p => p.priceINR < 1000);
+            case '1000-5000':
+                return products.filter(p => p.priceINR >= 1000 && p.priceINR <= 5000);
+            case '5000-10000':
+                return products.filter(p => p.priceINR > 5000 && p.priceINR <= 10000);
+            case 'over10000':
+                return products.filter(p => p.priceINR > 10000);
+            default:
+                return products;
         }
     }
+};
 
-    // Handle product detail page
-    if (document.body.classList.contains('product-detail-page')) {
-        console.log('Product detail page detected. Rendering product details.');
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        if (productId) {
-            if (typeof renderProductDetail !== 'undefined') {
-                renderProductDetail(productId);
-            } else {
-                console.error('renderProductDetail function is not defined. Check script loading order.');
+/**
+ * Cart Management Module
+ */
+const CartManager = {
+    init: () => {
+        CartManager.updateCartCount();
+        CartManager.setupCartEventListeners();
+    },
+
+    setupCartEventListeners: () => {
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
+                const button = e.target.classList.contains('add-to-cart') ? e.target : e.target.closest('.add-to-cart');
+                const productId = button.dataset.productId;
+                CartManager.addToCart(productId);
             }
+        });
+    },
+
+    addToCart: (productId, quantity = 1) => {
+        const product = products.find(p => p.id === productId);
+        if (!product) return false;
+
+        const existingItem = APP_STATE.cart.find(item => item.id === productId);
+        
+        if (existingItem) {
+            existingItem.quantity += quantity;
         } else {
-            console.warn('Product ID not found in URL for product detail page.');
+            APP_STATE.cart.push({
+                ...product,
+                quantity,
+                addedAt: new Date().toISOString()
+            });
         }
+
+        Utils.updateLocalStorage('cart', APP_STATE.cart);
+        CartManager.updateCartCount();
+        CartManager.showAddToCartNotification(product.name);
+        return true;
+    },
+
+    updateCartCount: () => {
+        const countElements = document.querySelectorAll('.cart-count');
+        const totalItems = APP_STATE.cart.reduce((sum, item) => sum + item.quantity, 0);
+        
+        countElements.forEach(el => {
+            el.textContent = totalItems;
+            el.style.display = totalItems > 0 ? 'flex' : 'none';
+        });
+    },
+
+    updateCartTotal: () => {
+        const totalElements = document.querySelectorAll('.cart-total');
+        if (!totalElements.length) return;
+
+        const total = APP_STATE.cart.reduce((sum, item) => {
+            return sum + (item.priceINR * item.quantity);
+        }, 0);
+
+        totalElements.forEach(el => {
+            el.textContent = Utils.formatPrice(total);
+        });
+    },
+
+    showAddToCartNotification: (productName) => {
+        const notification = document.createElement('div');
+        notification.className = 'cart-notification';
+        notification.innerHTML = `
+            <span>${productName} added to cart!</span>
+            <a href="cart.html" class="btn btn-small">View Cart</a>
+        `;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
     }
-    function getCategoryByPrice(price) {
-  if (price <= 1000) return 'upto1000';
-  if (price <= 10000) return 'upto10000';
-  return 'luxury';
-}
+};
 
-function filterProductsByCategory(selectedCategory) {
-  const filtered = products.filter(product => {
-    const category = getCategoryByPrice(product.price);
-    return category === selectedCategory;
-  });
+/**
+ * Initialization Function
+ */
+const initApp = () => {
+    // Set current currency from user preferences
+    APP_STATE.currentCurrency = APP_STATE.userPreferences.currency || CONFIG.defaultCurrency;
+    
+    // Initialize currency toggle
+    const currencyToggle = document.getElementById('currency-toggle');
+    if (currencyToggle) {
+        currencyToggle.textContent = APP_STATE.currentCurrency;
+        currencyToggle.addEventListener('click', DOMUpdates.toggleCurrency);
+    }
 
-  renderProducts(filtered);
-}
+    // Initialize mobile navigation
+    const navToggle = document.getElementById('navToggle');
+    if (navToggle) {
+        navToggle.addEventListener('click', () => DOMUpdates.toggleMobileMenu());
+    }
 
-document.addEventListener('DOMContentLoaded', function () {
-  const categoryButtons = document.querySelectorAll('.price-filter');
-  categoryButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const selectedCategory = this.dataset.category;
-      filterProductsByCategory(selectedCategory);
+    // Close mobile menu when clicking on links
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => DOMUpdates.toggleMobileMenu(true));
     });
-  });
 
-  // Default view: show all
-  renderProducts(products);
-});
+    // Close mobile menu on larger screens
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > CONFIG.breakpoints.tablet) {
+            DOMUpdates.toggleMobileMenu(true);
+        }
+    });
 
-    // Call general setup functions
-    setupSearch();
-    setupMobileNav();
-    setupFooterYear();
+    // Initialize search
+    SearchModule.init();
 
-    console.log('GreenTrend initialization complete.');
-});
+    // Initialize cart
+    CartManager.init();
+
+    // Set current year in footer
+    document.getElementById('current-year')?.textContent = new Date().getFullYear();
+
+    // Page-specific initializations
+    if (document.body.classList.contains('homepage')) {
+        // Homepage initialization
+        if (typeof categories !== 'undefined') {
+            CategoryModule.renderCategories(categories, 'category-list');
+        }
+        if (typeof featuredProducts !== 'undefined') {
+            ProductRenderer.renderProducts(featuredProducts, 'featured-products', { featured: true });
+        }
+    } else if (document.body.classList.contains('products-page')) {
+        // Products page initialization
+        const params = Utils.getUrlParams();
+        let productsToRender = products;
+        
+        if (params.category) {
+            productsToRender = CategoryModule.filterProductsByCategory(params.category);
+            const categoryName = categories?.find(c => c.slug === params.category)?.name;
+            document.getElementById('products-heading')?.textContent = categoryName || 'Products';
+        } else if (params.search) {
+            productsToRender = products.filter(p => 
+                p.name.toLowerCase().includes(params.search.toLowerCase()) ||
+                p.description?.toLowerCase().includes(params.search.toLowerCase())
+            );
+            document.getElementById('products-heading')?.textContent = `Search: "${params.search}"`;
+        } else if (params.priceRange) {
+            productsToRender = CategoryModule.filterProductsByPriceRange(params.priceRange);
+            document.getElementById('products-heading')?.textContent = 'Filtered Products';
+        }
+        
+        ProductRenderer.renderProducts(productsToRender, 'product-grid');
+    } else if (document.body.classList.contains('product-detail-page')) {
+        // Product detail page initialization
+        const { id } = Utils.getUrlParams();
+        if (id) {
+            ProductRenderer.renderProductDetail(id);
+        }
+    } else if (document.body.classList.contains('cart-page')) {
+        // Cart page initialization would go here
+    }
+
+    // Adjust hero section margin for sticky header
+    const header = document.querySelector('.main-header');
+    const hero = document.querySelector('.hero-section');
+    if (header && hero) {
+        hero.style.marginTop = `${header.offsetHeight + 20}px`;
+    }
+};
+
+// Start the application when DOM is ready
+document.addEventListener('DOMContentLoaded', initApp);
