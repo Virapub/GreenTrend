@@ -372,7 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
             productsToRender = products; // Default to all products
 
             if (categorySlug) {
-                productsToRender = products.filter(product => product.categorySlug === categorySlug);
+                productsToRender = products.filter(product => {
+    const slug = categories.find(cat => cat.name === product.category)?.slug;
+    return slug === categorySlug;
+});
                 const categoryName = categories.find(cat => cat.slug === categorySlug)?.name;
                 // Update the heading on the products page
                 const productsHeading = document.getElementById('products-heading');
