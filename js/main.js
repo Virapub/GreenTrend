@@ -37,7 +37,7 @@ function updateDisplayedPrices() {
     // Update price on the single product detail page (product-detail.html)
     const detailPriceElement = document.getElementById('product-detail-price');
     if (detailPriceElement) {
-        const priceInINR = parseFloat(detailPriceElement.dataset.inr-price);
+        const priceInINR = parseFloat(detailPriceElement.dataset.inrPrice);
         if (!isNaN(priceInINR)) {
             detailPriceElement.textContent = formatPrice(priceInINR);
         }
