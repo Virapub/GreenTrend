@@ -248,6 +248,14 @@ function renderCategories(categoryList, containerId) {
         container.appendChild(categoryCard);
     });
 }
+if (categorySlug) {
+  productsToRender = products.filter(product => {
+    const priceCategory = getPriceBasedCategory(product.priceINR);
+    const category = categories.find(cat => cat.slug === categorySlug);
+    return priceCategory === category?.name;
+  });
+  // ... rest of the code
+}
 
 // Renders a single product's detailed information on the product detail page
 async function renderProductDetail(productId) {
