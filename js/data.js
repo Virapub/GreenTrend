@@ -18,6 +18,18 @@ const categories = [
     image: 'images/categories/premium.jpg'
   }
 ];
+// 🔰 Step 1: Add this function at the top of your data.js
+function getPriceBasedCategory(priceINR) {
+  if (priceINR >= 0 && priceINR <= 1999) {
+    return 'Low Budget Finds';
+  } else if (priceINR >= 2000 && priceINR <= 29999) {
+    return 'Mid Range Picks';
+  } else if (priceINR >= 30000) {
+    return 'Premium Products';
+  } else {
+    return 'Uncategorized'; // fallback for invalid prices
+  }
+}
 // --- Products Data (Includes previously discussed products + your new list) ---
 const products = [
   {
