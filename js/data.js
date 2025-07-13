@@ -30,14 +30,6 @@ function getPriceBasedCategory(priceINR) {
     return 'Uncategorized';
   }
 }
-
-const products = [
-  // ... (all your product objects, with duplicate commas removed)
-];
-
-const featuredProducts = products.filter(product =>
-  ['collapsible-electric-kettle', 'automatic-soap-dispenser', 'magnetic-fridge-shelf', 'mini-food-chopper', 'fridge-organizer-bins', 'smart-trash-can', 'roll-up-drying-rack', 'automatic-pan-stirrer'].includes(product.id)
-);
 // --- Products Data (Includes previously discussed products + your new list) ---
 const products = [
   {
