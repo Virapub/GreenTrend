@@ -3,19 +3,19 @@ const categories = [
     id: 'cat-low-price',
     name: 'Low Budget Finds',
     slug: 'low-budget',
-    image: 'images/categories/low-budget.jpg'
+    image: 'images/low-budget.png'
   },
   {
     id: 'cat-mid-price',
     name: 'Mid Range Picks',
     slug: 'mid-range',
-    image: 'images/cat-premium.png'
+    image: 'images/mid-range.png'
   },
   {
     id: 'cat-high-price',
     name: 'Premium Products',
     slug: 'premium',
-    image: 'images/categories/premium.jpg'
+    image: 'images/cat-premium.png'
   }
 ];
 
