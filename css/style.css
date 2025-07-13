@@ -667,14 +667,15 @@ img {
     margin-bottom: 30px;
 }
 
-.footer-about, .footer-links, .footer-social {
-    flex: 1 1 280px; /* Base width, allows shrinking */
-}
 @media (min-width: 768px) {
     .how-it-works {
         flex-direction: column;
         align-items: center;
     }
+}
+
+.footer-about, .footer-links, .footer-social {
+    flex: 1 1 280px; /* Base width, allows shrinking */
 }
 
 .footer-content h3 {
