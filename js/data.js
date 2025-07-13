@@ -9,7 +9,7 @@ const categories = [
     id: 'cat-mid-price',
     name: 'Mid Range Picks',
     slug: 'mid-range',
-    image: 'images/categories/mid-range.jpg'
+    image: 'images/cat-premium.png'
   },
   {
     id: 'cat-high-price',
