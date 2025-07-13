@@ -1,4 +1,4 @@
-const categories = [
+const category-list = [
   {
     id: 'cat-low-price',
     name: 'Low Budget Finds',
