@@ -1,72 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GreenTrend - Smart Kitchen Gadgets</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="GreenTrend - Eco-friendly smart kitchen gadgets for modern homes">
-  <meta name="keywords" content="eco-friendly, kitchen gadgets, smart home, green products">
+  <meta name="keywords" content="eco-friendly, kitchen gadgets, smart home, green products, sustainable">
+  <meta name="author" content="GreenTrend">
+  <title>GreenTrend - Smart Kitchen Gadgets</title>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style-old.css" />
-  <script defer src="data.js"></script>
-  <script defer src="main.js"></script>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo-container">
-      <img src="images/logo.png" alt="GreenTrend Logo" class="logo-img">
-      <h1>GreenTrend</h1>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="images/logo.png" alt="GreenTrend Logo" class="logo-img" width="40">
+        GreenTrend
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+        <button id="currency-toggle-button" class="btn btn-outline-light ms-3" aria-label="Toggle currency">INR</button>
+      </div>
     </div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="products.html">Products</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-    <button id="currency-toggle-button">INR</button>
-  </header>
+  </nav>
 
-  <!-- 🔍 Search -->
-  <section class="search-section">
-    <input type="text" id="searchBox" placeholder="Search smart kitchen gadgets..." />
-    <div id="searchResults"></div>
+  <!-- Hero Section -->
+  <section id="home" class="hero d-flex align-items-center text-center">
+    <div class="container">
+      <h1 class="display-4">Eco-Friendly Kitchen Gadgets</h1>
+      <p class="lead">Discover sustainable, smart solutions for your modern home with GreenTrend.</p>
+      <a href="products.html" class="btn btn-primary btn-lg">Shop Now</a>
+    </div>
   </section>
 
-  <!-- ⭐ Featured Products -->
-  <section class="container">
-    <h2>Featured Products</h2>
-    <div class="grid" id="featured-products"></div>
+  <!-- Search Section -->
+  <section class="search-section py-5 bg-light">
+    <div class="container">
+      <form class="d-flex justify-content-center" role="search">
+        <input type="text" id="searchBox" class="form-control w-50" placeholder="Search smart kitchen gadgets..." aria-label="Search products">
+        <button class="btn btn-primary ms-2" type="submit"><i class="fas fa-search"></i></button>
+      </form>
+      <div id="searchResults" class="mt-3"></div>
+    </div>
   </section>
 
-  <!-- 🏷️ Categories -->
-  <section class="container">
-    <h2>Shop by Category</h2>
-    <div class="grid" id="category-list"></div>
+  <!-- Featured Products -->
+  <section class="container py-5">
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row" id="featured-products"></div>
   </section>
 
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="images/logo.png" alt="GreenTrend Logo" class="logo-img">
-        <h3>GreenTrend</h3>
-      </div>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <a href="#">Privacy Policy</a>
-      </div>
-      <div class="footer-social">
-        <p>Follow Us:</p>
-        <div class="social-icons">
-          <a href="#"><img src="images/facebook.png" alt="Facebook"></a>
-          <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
-          <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+  <!-- Categories -->
+  <section class="container py-5 bg-light">
+    <h2 class="text-center mb-4">Shop by Category</h2>
+    <div class="row" id="category-list"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-logo">
+          <img src="images/logo.png" alt="GreenTrend Logo" class="logo-img" width="50">
+          <h3>GreenTrend</h3>
+          <p>Eco-friendly smart kitchen gadgets for a sustainable future.</p>
+        </div>
+        <div class="col-md-4 footer-links">
+          <h5>Quick Links</h5>
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+        <div class="col-md-4 footer-social">
+          <h5>Follow Us</h5>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
         </div>
       </div>
+      <p class="copyright text-center mt-3">© 2025 GreenTrend. All rights reserved.</p>
     </div>
-    <p class="copyright">&copy; 2025 GreenTrend. All rights reserved.</p>
   </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
