@@ -41,7 +41,7 @@ const products = [
     category: getPriceBasedCategory(1499),
     categorySlug: "low-budget",
     link: "https://amzn.to/459anJu",
-    image: "https://m.media-amazon.com/images/I/512mRNNNbkL._SL1500_.jpg", // Amazon direct link
+    image: "https://m.media-amazon.com/images/I/61b0X0QeuWL._AC_SL1500_.jpg", // Amazon direct link
     rating: 4.5,
     features: ["Collapsible design for portability", "800W rapid boil power", "BPA-free food-grade silicone", "Auto shut-off & boil-dry protection", "Capacity: 0.6 Liters (approx)"],
     details: "This innovative collapsible electric kettle is designed for convenience and portability. Its compact size makes it ideal for travel, camping, or small apartments. Made with food-grade silicone, it's safe and durable. Features include fast boiling, automatic shut-off when water boils, and boil-dry protection for safety. A must-have for modern kitchens and travelers alike!"
