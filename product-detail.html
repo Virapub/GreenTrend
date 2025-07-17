@@ -1,29 +1,56 @@
-<!-- ✅ GreenTrend - product-detail.html (Updated) --><!DOCTYPE html><html lang="en">
+<!-- ✅ GreenTrend - product-detail.html -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Details | GreenTrend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details - GreenTrend</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="data.js"></script>
-  <script defer src="product-detail.js"></script>
+  <script defer src="main.js"></script>
+  <script defer>
+    // Load Product Details on Page Load
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get("id");
+      const detailContainer = document.getElementById("product-detail");
+
+      if (!productId) {
+        detailContainer.innerHTML = "<p>Product not found.</p>";
+        return;
+      }
+
+      const product = products.find(p => p.id === productId);
+      if (!product) {
+        detailContainer.innerHTML = "<p>Product not found.</p>";
+        return;
+      }
+
+      detailContainer.innerHTML = `
+        <div class="product-detail-box">
+          <img src="${product.image}" alt="${product.name}" />
+          <div class="product-info">
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <p class="price">${formatPrice(product.priceINR, product.priceUSD)}</p>
+            <a class="buy-btn" href="${currentCurrency === 'INR' ? product.buyLinkIN : product.buyLinkUS}" target="_blank">Buy Now</a>
+          </div>
+        </div>
+      `;
+    });
+  </script>
 </head>
 <body>
   <header>
     <h1>GreenTrend</h1>
     <button id="currency-toggle-button">INR</button>
-  </header>  <main id="product-detail">
-    <div class="product-card">
-      <img id="product-image" alt="Product Image" />
-      <div class="product-info">
-        <h1 id="product-name"></h1>
-        <p id="product-description"></p>
-        <p><strong>Price:</strong> <span id="product-price"></span></p>
-        <p id="product-rating"></p>
-        <ul id="product-features"></ul>
-        <a id="buy-button" class="btn" target="_blank">Buy Now</a>
-      </div>
-    </div>
-  </main>  <footer>
+  </header>
+
+  <section id="product-detail">
+    <p>Loading product details...</p>
+  </section>
+
+  <footer>
     <p>&copy; 2025 GreenTrend. All rights reserved.</p>
   </footer>
 </body>
