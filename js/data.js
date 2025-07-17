@@ -36,7 +36,91 @@ const products = [ { id: "collapsible-electric-kettle", name: "Collapsible Elect
                   { id: "magnetic-fridge-shelf", name: "Magnetic Fridge Shelf Rack", description: "Multi-purpose magnetic storage organizer that attaches easily to your refrigerator, saving counter space.", priceINR: 1199, priceUSD: 14.0, category: "Low Budget", categorySlug: "low-budget", affiliateLink: "https://www.amazon.com/dp/B08KHN7SS4?tag=greentrend08-20", image: "https://m.media-amazon.com/images/I/81aAamdevaL.SL1500.jpg", rating: 4.3, features: [ "Strong magnetic back for secure hold", "Multi-tier design for various items", "Durable carbon steel construction", "Easy to install and reposition", "Space-saving solution" ], details: "Maximize your kitchen space with this magnetic fridge shelf rack. Its powerful magnets provide a secure hold on your refrigerator, eliminating the need for drilling. The multi-tiered design is perfect for spices, condiments, paper towels, or small kitchen tools, keeping your countertops clutter-free and organized. Made of durable carbon steel for long-lasting use." }, 
                   { id: "mini-food-chopper", name: "Mini Electric Food Chopper", description: "Compact and powerful wireless food chopper for garlic, ginger, chilies, and small quantities of vegetables.", priceINR: 999, priceUSD: 11.67, category: "Low Budget", categorySlug: "low-budget", affiliateLink: "https://www.amazon.com/dp/B093F9RY28?tag=greentrend08-20", image: "https://m.media-amazon.com/images/I/61IK+zdG-IL.SL1200.jpg", rating: 4.6, features: [ "USB rechargeable for cordless convenience", "One-button operation for ease of use", "Easy to clean components", "Portable design for small kitchens or travel", "Capacity: 250ml (approx)" ], details: "This mini electric food chopper is your perfect companion for quick meal prep. Its cordless, USB rechargeable design offers ultimate convenience. Ideal for chopping garlic, onions, ginger, chilies, and even small amounts of baby food. The powerful motor ensures efficient chopping with a single button press. A compact solution for all your chopping needs." }, 
                   { id: "digital-kitchen-scale", name: "Digital Kitchen Scale", description: "High-precision digital scale for accurate measurements of ingredients, perfect for baking and cooking.", priceINR: 850, priceUSD: 9.93, category: "Low Budget", categorySlug: "low-budget", affiliateLink: "https://www.amazon.com/dp/B00V5IM580?tag=greentrend08-20", image: "https://m.media-amazon.com/images/I/313SCZswZZL.jpg", rating: 4.7, features: [ "Tare function for zeroing containers", "Multiple unit conversion (g, oz, ml, lb)", "Clear LCD display", "Sleek, slim design for easy storage", "Weight Capacity: 5kg" ], details: "Achieve culinary precision with this high-precision digital kitchen scale. Its accurate sensors ensure perfect measurements for baking, cooking, and portion control. The tare function allows you to weigh ingredients directly in your bowl, and the multiple unit conversion makes it versatile for all recipes. Slim design for easy storage and a clear LCD for easy reading." } ];
-
+                  {
+  id: "electric-dhokla-steamer",
+  name: "Electric Dhokla/Idli Steamer",
+  priceINR: 1699,
+  priceUSD: 20.3,
+  image: "images/dhokla-steamer.jpg",
+  category: "Cooking Tools",
+  rating: 4.4,
+  affiliateLink: "https://www.amazon.com/dp/B08CZNY4PC?tag=greentrend08-20",
+  features: [
+    "2-tier trays",
+    "Electric steaming",
+    "Compact design",
+    "Easy to use"
+  ],
+  details: "Make soft idlis and fluffy dhoklas easily. Perfect for Ganesh Chaturthi bhog."
+},
+{
+  id: "pani-puri-maker-set",
+  name: "Pani Puri Maker Set with Serving Bowls",
+  priceINR: 749,
+  priceUSD: 9,
+  image: "images/pani-puri-maker.jpg",
+  category: "Snack Tools",
+  rating: 4.1,
+  affiliateLink: "https://www.amazon.com/dp/B0B6F9SMJ6?tag=greentrend08-20",
+  features: [
+    "Includes puri press",
+    "Serving tray & bowls",
+    "Easy to use",
+    "Great for home parties"
+  ],
+  details: "Enjoy pani puri at home with this easy-to-use set. Great for Rakhi & festival get-togethers."
+},
+{
+  id: "hand-blender-compact",
+  name: "Compact Hand Blender",
+  priceINR: 899,
+  priceUSD: 10.8,
+  image: "images/hand-blender.jpg",
+  category: "Mixing Tools",
+  rating: 4.3,
+  affiliateLink: "https://www.amazon.com/dp/B09XJ7YMVZ?tag=greentrend08-20",
+  features: [
+    "Detachable blades",
+    "Ergonomic grip",
+    "Lightweight",
+    "Quick blending"
+  ],
+  details: "Blend batter, mix sweets or whip cream instantly. Festival must-have."
+},
+{
+  id: "compact-otg-baker",
+  name: "Mini OTG for Baking",
+  priceINR: 1899,
+  priceUSD: 23,
+  image: "images/mini-otg.jpg",
+  category: "Baking Tools",
+  rating: 4.2,
+  affiliateLink: "https://www.amazon.com/dp/B08PZ5T6NN?tag=greentrend08-20",
+  features: [
+    "Easy temperature control",
+    "Small batch baking",
+    "Quick heating",
+    "Energy efficient"
+  ],
+  details: "Bake ladoos, modaks or mini cakes for prasad. Compact and affordable."
+},
+{
+  id: "electric-coconut-scraper",
+  name: "Electric Coconut Scraper",
+  priceINR: 1399,
+  priceUSD: 17,
+  image: "images/electric-coconut-scraper.jpg",
+  category: "South Indian Tools",
+  rating: 4.5,
+  affiliateLink: "https://www.amazon.com/dp/B0B1FLZSGG?tag=greentrend08-20",
+  features: [
+    "Stainless steel blade",
+    "Powerful motor",
+    "Safe to use",
+    "Easy cleaning"
+  ],
+  details: "Ideal for Ganesh Chaturthi coconut-based bhog. Motorized and fast."
+}
 
 
 // --- Featured Products (You can adjust this list as needed for your homepage) ---
