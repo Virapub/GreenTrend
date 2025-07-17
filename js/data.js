@@ -33,19 +33,23 @@ function getPriceBasedCategory(priceINR) {
 // --- Products Data (Includes previously discussed products + your new list) ---
 const products = [
   {
-    id: "collapsible-electric-kettle",
-    name: "Collapsible Electric Kettle",
-    description: "Space-saving collapsible kettle with auto shut-off and boil-dry protection, perfect for travel or small kitchens.",
-    priceINR: 1499,
-    priceUSD: 17.51,
-    category: getPriceBasedCategory(1499),
-    categorySlug: "low-budget",
-    link: "https://amzn.to/459anJu",
-    image: "https://m.media-amazon.com/images/I/61b0X0QeuWL._AC_SL1500_.jpg", // Amazon direct link
-    rating: 4.5,
-    features: ["Collapsible design for portability", "800W rapid boil power", "BPA-free food-grade silicone", "Auto shut-off & boil-dry protection", "Capacity: 0.6 Liters (approx)"],
-    details: "This innovative collapsible electric kettle is designed for convenience and portability. Its compact size makes it ideal for travel, camping, or small apartments. Made with food-grade silicone, it's safe and durable. Features include fast boiling, automatic shut-off when water boils, and boil-dry protection for safety. A must-have for modern kitchens and travelers alike!"
-  },
+  id: "collapsible-electric-kettle",
+  name: "Collapsible Electric Kettle",
+  priceIN: 1499,
+  priceUS: 25.19,
+  rating: 4.5,
+  image: "images/kettle.jpg",
+  category: "kitchen-appliances",
+  features: [
+    "Collapsible design for portability",
+    "800W rapid boil power",
+    "BPA-free food-grade silicone",
+    "Auto shut-off & boil-dry protection",
+    "Capacity: 0.6 Liters (approx)"
+  ],
+  buyLinkIN: "https://www.amazon.in/dp/YOUR_IN_AFFILIATE_LINK?tag=YOUR_TRACKING_ID",
+  buyLinkUS: "https://www.amazon.com/dp/YOUR_US_AFFILIATE_LINK?tag=YOUR_TRACKING_ID"
+},
   {
     id: "automatic-soap-dispenser",
     name: "Automatic Soap Dispenser",
