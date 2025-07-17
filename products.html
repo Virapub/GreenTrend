@@ -1,10 +1,11 @@
-<!-- ✅ GreenTrend - products.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Products - GreenTrend</title>
+  <meta name="description" content="Browse our collection of eco-friendly kitchen products">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css" />
   <script defer src="data.js"></script>
   <script defer src="main.js"></script>
@@ -31,7 +32,7 @@
       }
 
       if (filteredProducts.length === 0) {
-        resultsContainer.innerHTML = "<p>No products found.</p>";
+        resultsContainer.innerHTML = "<p class='no-results'>No products found. Try a different search.</p>";
       } else {
         resultsContainer.innerHTML = filteredProducts.map(product => `
           <div class="product-card">
@@ -47,18 +48,48 @@
   </script>
 </head>
 <body>
-  <header>
-    <h1>GreenTrend</h1>
+  <header class="navbar">
+    <div class="logo-container">
+      <img src="images/logo.png" alt="GreenTrend Logo" class="logo-img">
+      <h1>GreenTrend</h1>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
     <button id="currency-toggle-button">INR</button>
   </header>
 
-  <section>
+  <section class="container">
     <h2 id="results-title">Loading...</h2>
     <div class="grid" id="product-results"></div>
   </section>
 
   <footer>
-    <p>&copy; 2025 GreenTrend. All rights reserved.</p>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="images/logo.png" alt="GreenTrend Logo" class="logo-img">
+        <h3>GreenTrend</h3>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="footer-social">
+        <p>Follow Us:</p>
+        <div class="social-icons">
+          <a href="#"><img src="images/facebook.png" alt="Facebook"></a>
+          <a href="#"><img src="images/instagram.png" alt="Instagram"></a>
+          <a href="#"><img src="images/twitter.png" alt="Twitter"></a>
+        </div>
+      </div>
+    </div>
+    <p class="copyright">&copy; 2025 GreenTrend. All rights reserved.</p>
   </footer>
 </body>
 </html>
