@@ -47,7 +47,7 @@ const products = [
     "Auto shut-off & boil-dry protection",
     "Capacity: 0.6 Liters (approx)"
   ],
-  buyLinkIN: "https://www.amazon.in/dp/YOUR_IN_AFFILIATE_LINK?tag=YOUR_TRACKING_ID",
+  buyLinkIN: "https://www.amazon.in/dp/https://amzn.to/3IwoUX0?tag=YOUR_TRACKING_ID",
   buyLinkUS: "https://www.amazon.com/dp/https://amzn.to/4nSPlX5?tag=YOUR_TRACKING_ID"
 },
   {
