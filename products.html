@@ -1,27 +1,63 @@
-<!-- ✅ GreenTrend - products.html (All Products Page) --><!DOCTYPE html><html lang="en">
+<!-- ✅ GreenTrend - products.html -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All Products - GreenTrend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products - GreenTrend</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="data.js"></script>
-  <script defer src="products.js"></script>
+  <script defer src="main.js"></script>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categorySlug = urlParams.get("category");
+      const searchQuery = urlParams.get("search");
+      const resultsContainer = document.getElementById("product-results");
+
+      let filteredProducts = products;
+
+      if (categorySlug) {
+        filteredProducts = products.filter(p => getPriceBasedCategory(p.priceINR).toLowerCase().replace(/\s+/g, '-') === categorySlug);
+        document.getElementById("results-title").textContent = `Showing Products in "${categorySlug.replace(/-/g, ' ')}"`;
+      } else if (searchQuery) {
+        filteredProducts = products.filter(p =>
+          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.description.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        document.getElementById("results-title").textContent = `Search Results for "${searchQuery}"`;
+      } else {
+        document.getElementById("results-title").textContent = "All Smart Kitchen Gadgets";
+      }
+
+      if (filteredProducts.length === 0) {
+        resultsContainer.innerHTML = "<p>No products found.</p>";
+      } else {
+        resultsContainer.innerHTML = filteredProducts.map(product => `
+          <div class="product-card">
+            <img src="${product.image}" alt="${product.name}" />
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p class="price">${formatPrice(product.priceINR, product.priceUSD)}</p>
+            <a class="buy-btn" href="product-detail.html?id=${product.id}">View Details</a>
+          </div>
+        `).join('');
+      }
+    });
+  </script>
 </head>
 <body>
   <header>
     <h1>GreenTrend</h1>
     <button id="currency-toggle-button">INR</button>
-  </header>  <!-- 🔍 Filter + Search -->  <section id="search-section">
-    <select id="category-filter">
-      <option value="all">All Categories</option>
-      <option value="Low Budget Finds">Low Budget Finds</option>
-      <option value="Mid Range Picks">Mid Range Picks</option>
-      <option value="Premium Products">Premium Products</option>
-    </select>
-    <input type="text" id="searchBox" placeholder="Search products..." />
-  </section>  <!-- 📦 All Products Grid -->  <main>
-    <div class="grid" id="product-grid"></div>
-  </main>  <footer>
+  </header>
+
+  <section>
+    <h2 id="results-title">Loading...</h2>
+    <div class="grid" id="product-results"></div>
+  </section>
+
+  <footer>
     <p>&copy; 2025 GreenTrend. All rights reserved.</p>
   </footer>
 </body>
