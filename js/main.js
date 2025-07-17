@@ -1,20 +1,131 @@
-// ✅ GreenTrend - Updated main.js
+// Currency Toggle
+let currentCurrency = 'INR';
+const currencyButton = document.getElementById('currency-toggle-button');
+currencyButton.addEventListener('click', () => {
+  currentCurrency = currentCurrency === 'INR' ? 'USD' : 'INR';
+  currencyButton.textContent = currentCurrency;
+  renderProducts();
+  renderProductDetails();
+});
 
-let currency = 'INR';
+// Format Price
+function formatPrice(priceINR, priceUSD) {
+  return `${currentCurrency} ${currentCurrency === 'INR' ? priceINR : priceUSD}`;
+}
 
-// Toggle Currency const currencyToggleBtn = document.getElementById('currency-toggle-button'); currencyToggleBtn.addEventListener('click', () => { currency = currency === 'INR' ? 'USD' : 'INR'; currencyToggleBtn.textContent = currency; renderAll(); });
+// Render Products (for index.html)
+function renderProducts() {
+  const productContainer = document.getElementById('featured-products');
+  if (productContainer) {
+    productContainer.innerHTML = '';
+    products.forEach(product => {
+      const productCard = `
+        <div class="col-md-4 mb-4">
+          <div class="card product-card">
+            <img src="${product.image}" class="card-img-top" alt="${product.name}" loading="lazy">
+            <div class="card-body">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">${product.description}</p>
+              <p class="card-text"><strong>${formatPrice(product.price.INR, product.price.USD)}</strong></p>
+              <a href="products.html?id=${product.id}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      `;
+      productContainer.innerHTML += productCard;
+    });
+  }
+}
 
-// Render Featured Products function renderFeatured() { const container = document.getElementById('featured-products'); container.innerHTML = ''; featuredProducts.forEach(product => container.appendChild(createProductCard(product))); }
+// Render Categories (for index.html)
+function renderCategories() {
+  const categoryContainer = document.getElementById('category-list');
+  if (categoryContainer) {
+    categoryContainer.innerHTML = '';
+    categories.forEach(category => {
+      const categoryCard = `
+        <div class="col-md-4 mb-4">
+          <div class="card category-card">
+            <img src="${category.image}" class="card-img-top" alt="${category.name}" loading="lazy">
+            <div class="card-body">
+              <h5 class="card-title">${category.name}</h5>
+              <a href="products.html" class="btn btn-outline-primary">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      `;
+      categoryContainer.innerHTML += categoryCard;
+    });
+  }
+}
 
-// Render Categories function renderCategories() { const container = document.getElementById('category-list'); container.innerHTML = ''; categories.forEach(cat => { const div = document.createElement('div'); div.className = 'category-card'; div.innerHTML = <img src="${cat.image}" alt="${cat.name}" /> <h3>${cat.name}</h3>; container.appendChild(div); }); }
+// Search Functionality (for index.html)
+document.getElementById('searchBox')?.addEventListener('input', function (e) {
+  const query = e.target.value.toLowerCase();
+  const resultsContainer = document.getElementById('searchResults');
+  if (resultsContainer) {
+    resultsContainer.innerHTML = '';
+    if (query) {
+      const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(query) || 
+        product.description.toLowerCase().includes(query)
+      );
+      resultsContainer.style.display = filteredProducts.length ? 'block' : 'none';
+      resultsContainer.innerHTML = filteredProducts.length
+        ? filteredProducts.map(product => `
+          <div class="search-result-item">
+            <img src="${product.image}" alt="${product.name}" width="50" loading="lazy">
+            <div>
+              <h6>${product.name}</h6>
+              <p>${formatPrice(product.price.INR, product.price.USD)}</p>
+            </div>
+          </div>
+        `).join('')
+        : '<p>No results found.</p>';
+    } else {
+      resultsContainer.style.display = 'none';
+    }
+  }
+});
 
-// Render All Products function renderProducts() { const container = document.getElementById('product-grid'); if (!container) return; container.innerHTML = ''; products.forEach(product => container.appendChild(createProductCard(product))); }
+// Render Product Details (for products.html)
+function renderProductDetails() {
+  const detailContainer = document.getElementById('product-detail');
+  if (!detailContainer) return;
 
-// Search Functionality const searchBox = document.getElementById('searchBox'); if (searchBox) { searchBox.addEventListener('input', () => { const keyword = searchBox.value.toLowerCase(); const resultsDiv = document.getElementById('searchResults'); resultsDiv.innerHTML = ''; if (keyword.length > 0) { const filtered = products.filter(p => p.name.toLowerCase().includes(keyword)); filtered.forEach(p => { const div = document.createElement('div'); div.className = 'search-result'; div.textContent = p.name; div.onclick = () => window.location.href = product-detail.html?id=${p.id}; resultsDiv.appendChild(div); }); } }); }
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('id');
 
-// Create Product Card function createProductCard(product) { const div = document.createElement('div'); div.className = 'product-card'; div.innerHTML = <img src="${product.image}" alt="${product.name}" /> <h3>${product.name}</h3> <p>${product.description}</p> <p class="price">${currency === 'INR' ? '₹' + product.priceINR : '$' + product.priceUSD}</p> <a href="${currency === 'INR' ? product.buyLinkIN : product.buyLinkUS}" target="_blank" class="buy-btn">Buy Now</a>; return div; }
+  if (!productId) {
+    detailContainer.innerHTML = '<p class="text-danger text-center">Product not found.</p>';
+    return;
+  }
 
-// Master Render function renderAll() { renderFeatured(); renderCategories(); renderProducts(); }
+  const product = products.find(p => p.id === productId);
+  if (!product) {
+    detailContainer.innerHTML = '<p class="text-danger text-center">Product not found.</p>';
+    return;
+  }
 
-document.addEventListener('DOMContentLoaded', renderAll);
+  detailContainer.innerHTML = `
+    <div class="product-detail-box">
+      <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+      <div class="product-info">
+        <h2>${product.name}</h2>
+        <div class="rating">${product.rating ? '⭐'.repeat(Math.round(product.rating)) + ` (${product.rating}/5)` : 'No ratings yet'}</div>
+        <p class="description">${product.description}</p>
+        ${product.features ? `<ul class="features">${product.features.map(f => `<li>✔️ ${f}</li>`).join('')}</ul>` : ''}
+        <p class="price"><strong>${formatPrice(product.price.INR, product.price.USD)}</strong></p>
+        <a class="btn btn-primary buy-now-btn" href="${currentCurrency === 'INR' ? product.buyLinkIN : product.buyLinkUS}" target="_blank" aria-label="Buy ${product.name}">Buy Now</a>
+        <button class="btn btn-outline-secondary back-btn" onclick="window.history.back()" aria-label="Back to products">← Back to Products</button>
+      </div>
+    </div>
+  `;
+}
 
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  renderCategories();
+  renderProductDetails();
+});
