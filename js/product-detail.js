@@ -1,12 +1,38 @@
-// ✅ GreenTrend - product-detail.js
+// ✅ GreenTrend - product-detail.js (Handles Product Detail Page)
 
-// Get product ID from URL const urlParams = new URLSearchParams(window.location.search); const productId = urlParams.get('id');
+document.addEventListener("DOMContentLoaded", () => { const params = new URLSearchParams(window.location.search); const productId = params.get("id"); const currencyToggle = document.getElementById("currency-toggle-button");
 
-// Find product from data.js const product = products.find(p => p.id === productId);
+const product = products.find(p => p.id === productId);
 
-// Currency Toggle Logic (shared) let currency = 'INR'; const currencyBtn = document.getElementById('currency-toggle-button'); currencyBtn.addEventListener('click', () => { currency = currency === 'INR' ? 'USD' : 'INR'; currencyBtn.textContent = currency; renderProductDetails(); });
+if (!product) { document.getElementById("product-detail").innerHTML = <p>Product not found.</p>; return; }
 
-// Render Product Details function renderProductDetails() { if (!product) return; document.getElementById('product-image').src = product.image; document.getElementById('product-name').textContent = product.name; document.getElementById('product-description').textContent = product.description; document.getElementById('product-price').textContent = currency === 'INR' ? ₹${product.priceINR} : $${product.priceUSD}; document.getElementById('buy-button').href = currency === 'INR' ? product.buyLinkIN : product.buyLinkUS; document.getElementById('product-rating').textContent = ⭐ ${product.rating || '4.5'} / 5; const featuresList = document.getElementById('product-features'); featuresList.innerHTML = ''; if (product.features && product.features.length) { product.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; featuresList.appendChild(li); }); } }
+const imageEl = document.getElementById("product-image"); const nameEl = document.getElementById("product-name"); const descEl = document.getElementById("product-description"); const priceEl = document.getElementById("product-price"); const ratingEl = document.getElementById("product-rating"); const featuresEl = document.getElementById("product-features"); const buyBtn = document.getElementById("buy-button");
 
-document.addEventListener('DOMContentLoaded', renderProductDetails);
+let currentCurrency = "INR";
+
+function renderProductDetails() { imageEl.src = product.image; imageEl.alt = product.name; nameEl.textContent = product.name; descEl.textContent = product.description;
+
+if (currentCurrency === "USD") {
+  priceEl.textContent = `$${product.priceUSD}`;
+  buyBtn.href = product.buyLinkUS || "#";
+} else {
+  priceEl.textContent = `₹${product.priceINR}`;
+  buyBtn.href = product.buyLinkIN || "#";
+}
+
+ratingEl.innerHTML = `⭐ ${product.rating} / 5`;
+featuresEl.innerHTML = "";
+if (product.features && product.features.length > 0) {
+  product.features.forEach(feature => {
+    const li = document.createElement("li");
+    li.textContent = feature;
+    featuresEl.appendChild(li);
+  });
+}
+
+}
+
+// Currency toggle handler currencyToggle.addEventListener("click", () => { currentCurrency = currentCurrency === "INR" ? "USD" : "INR"; currencyToggle.textContent = currentCurrency; renderProductDetails(); });
+
+renderProductDetails(); });
 
