@@ -48,7 +48,7 @@ const products = [
     "Capacity: 0.6 Liters (approx)"
   ],
   buyLinkIN: "https://www.amazon.in/dp/YOUR_IN_AFFILIATE_LINK?tag=YOUR_TRACKING_ID",
-  buyLinkUS: "https://www.amazon.com/dp/YOUR_US_AFFILIATE_LINK?tag=YOUR_TRACKING_ID"
+  buyLinkUS: "https://www.amazon.com/dp/https://amzn.to/4nSPlX5?tag=YOUR_TRACKING_ID"
 },
   {
     id: "automatic-soap-dispenser",
