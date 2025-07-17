@@ -1,51 +1,65 @@
-/* 🌙 Dark Theme (JioHotstar Style) */
+/* 🌙 JioHotstar-Inspired Dark Theme */
 :root {
-  /* JioHotstar Colors */
-  --primary-dark: #0f0617;       /* Dark purple-black */
-  --primary-color: #6e00ff;      /* Purple-blue (Hotstar's accent) */
-  --secondary-color: #1a1a2e;    /* Dark blue */
-  --accent-color: #8a2be2;       /* Light purple */
+  /* Color Palette */
+  --primary-dark: #0f0617;       /* Deep purple-black (background) */
+  --primary-color: #6e00ff;      /* Vibrant purple-blue (buttons/links) */
+  --secondary-color: #1a1a2e;    /* Dark navy (cards/sections) */
+  --accent-color: #8a2be2;       /* Soft purple (highlights) */
   --text-color: #ffffff;         /* White text */
-  --light-text: #b8b8b8;         /* Gray text */
-  --card-bg: #1e1e3a;            /* Dark card background */
-  --header-bg: #0f0617;          /* Dark header */
+  --light-text: #b8b8b8;         /* Light gray (secondary text) */
 }
 
-/* Apply Dark Theme */
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
+  font-family: 'Segoe UI', sans-serif;
   background-color: var(--primary-dark);
   color: var(--text-color);
+  line-height: 1.6;
 }
 
-/* Header (JioHotstar Style) */
-.navbar {
-  background-color: var(--header-bg);
-  border-bottom: 1px solid var(--primary-color);
-}
-
-/* Cards (Dark with Glow Effect) */
-.product-card, .category-card, .product-detail-box {
-  background-color: var(--card-bg);
-  box-shadow: 0 4px 20px rgba(110, 0, 255, 0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(110, 0, 255, 0.3);
+/* Header (Dark with Purple Accent) */
+header {
+  background-color: var(--primary-dark);
+  color: var(--text-color);
+  padding: 1rem;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 /* Buttons (Hotstar Purple) */
 .buy-btn, .buy-now-btn, #currency-toggle-button {
   background-color: var(--primary-color);
   color: white;
+  transition: all 0.3s;
 }
 
 .buy-btn:hover, .buy-now-btn:hover {
   background-color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
-/* Search Bar (Glowing Effect) */
+/* Product Cards (Dark with Glow) */
+.product-card {
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 15px rgba(110, 0, 255, 0.2);
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 25px rgba(110, 0, 255, 0.3);
+}
+
+/* Price Text (Purple) */
+.price {
+  color: var(--primary-color) !important;
+  font-weight: bold;
+}
+
+/* Search Bar */
 #searchBox {
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -56,12 +70,35 @@ body {
   box-shadow: 0 0 10px var(--primary-color);
 }
 
-/* Price Text (Hotstar Blue) */
-.price {
-  color: var(--primary-color) !important;
+/* Footer (Gradient) */
+footer {
+  background: linear-gradient(to right, var(--primary-dark), var(--secondary-color));
+  color: var(--light-text);
 }
 
-/* Footer (Dark Gradient) */
-footer {
-  background: linear-gradient(to right, var(--header-bg), var(--secondary-color));
+/* 🔥 Hotstar-Specific Additions */
+/* Add glowing effect to interactive elements */
+a, button {
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+/* Product Detail Page */
+.product-detail-box {
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 20px rgba(110, 0, 255, 0.2);
+}
+
+/* Responsive Design (Keep this at the end) */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  header {
+    flex-direction: column;
+  }
 }
