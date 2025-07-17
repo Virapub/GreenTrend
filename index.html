@@ -1,132 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- ✅ GreenTrend - FINAL UPDATED index.html (Homepage) --><!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hover - Smart Gadgets for a Smarter Person</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GreenTrend - Smart Kitchen Gadgets</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="data.js"></script>
+  <script defer src="main.js"></script>
 </head>
-<body class="homepage">
-
-    <header class="main-header">
-        <div class="container">
-            <div class="navbar">
-                <button id="navToggle" class="nav-toggle"><i class="fas fa-bars"></i></button>
-                <div class="logo">
-                    <img src="images/LOGO.png" alt="GreenTrend Logo">
-                    <span>
-                        GreenTrend
-                        <span class="logo-tagline">Smart Kitchen Gadgets</span>
-                    </span>
-                </div>
-                <button id="currency-toggle-button" class="currency-toggle-button">INR</button>
-            </div>
-            <div class="search-container">
-                <input type="text" id="searchBox" class="search-input" placeholder="Search for products, categories, brands...">
-                <button id="searchButton" class="search-button"><i class="fas fa-search"></i></button>
-                <div id="searchResults" class="search-results">
-                    </div>
-            </div>
-        </div>
-        <nav id="navMenu" class="nav-menu">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="disclosure.html">Disclosure</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero-section">
-            <div class="container">
-                <h1>Discover the Future of Kitchens</h1>
-                <p>Upgrade your home with the smartest, most efficient gadgets designed for modern living.</p>
-                <a href="products.html" class="btn btn-primary">Shop Now</a>
-            </div>
-        </section>
-
-        <section class="categories-section">
-            <div class="container">
-                <h2 class="section-title">Shop by Category</h2>
-                <div id="category-list" class="category-list">
-                    </div>
-            </div>
-        </section>
-
-        <section class="featured-products-section">
-            <div class="container">
-                <h2 class="section-title">Featured Products</h2>
-                <div id="product-grid" class="product-grid">
-                    </div>
-                <div class="view-all-btn-container">
-                    <a href="products.html" class="btn btn-primary">View All Products</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="how-it-works-section">
-            <div class="container">
-                <h2 class="section-title">How It Works</h2>
-                <div class="steps-grid">
-                    <div class="step-card">
-                        <i class="fas fa-search"></i>
-                        <h3>Explore & Discover</h3>
-                        <p>Browse our curated collection of smart kitchen gadgets.</p>
-                    </div>
-                    <div class="step-card">
-                        <i class="fas fa-lightbulb"></i>
-                        <h3>Learn & Compare</h3>
-                        <p>Get detailed reviews and comparisons to make informed decisions.</p>
-                    </div>
-                    <div class="step-card">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>Buy with Confidence</h3>
-                        <p>Click through to trusted retailers like Amazon for secure purchases.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <h3>About GreenTrend</h3>
-                    <p>Your one-stop shop for smart kitchen gadgets that simplify your life and make your home more efficient.</p>
-                </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="disclosure.html">Disclosure</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-social">
-                    <h3>Follow Us</h3>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; <span id="current-year"></span> GreenTrend. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+<body>
+  <header>
+    <h1>GreenTrend</h1>
+    <button id="currency-toggle-button">INR</button>
+  </header>  <!-- 🔍 Search Bar -->  <section id="search-section">
+    <input type="text" id="searchBox" placeholder="Search smart kitchen gadgets..." />
+    <div id="searchResults"></div>
+  </section>  <!-- ⭐ Featured Products -->  <section id="featured">
+    <h2>Featured Products</h2>
+    <div class="grid" id="product-grid"></div>
+  </section>  <!-- 🏷️ Categories -->  <section id="categories">
+    <h2>Shop by Category</h2>
+    <div class="grid" id="category-list"></div>
+  </section>  <footer>
+    <p>&copy; 2025 GreenTrend. All rights reserved.</p>
+  </footer>
 </body>
 </html>
