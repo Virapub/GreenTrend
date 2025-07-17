@@ -1,17 +1,19 @@
-// ✅ GreenTrend - main.js
+// ✅ GreenTrend - Professional Main JS
 
 let currentCurrency = "INR";
 
-// --- Format Price According to Currency ---
+// Format Price According to Currency
 function formatPrice(inr, usd) {
   return currentCurrency === "INR"
-    ? `₹${inr}`
+    ? `₹${inr.toLocaleString('en-IN')}`
     : `$${usd.toFixed(2)}`;
 }
 
-// --- Render Featured Products ---
+// Render Featured Products
 function renderFeaturedProducts() {
   const container = document.getElementById("featured-products");
+  if (!container) return;
+  
   container.innerHTML = "";
 
   featuredProducts.forEach(product => {
@@ -23,20 +25,25 @@ function renderFeaturedProducts() {
       <h3>${product.name}</h3>
       <p>${product.description}</p>
       <p class="price">${formatPrice(product.priceINR, product.priceUSD)}</p>
-      <a href="${currentCurrency === 'INR' ? product.buyLinkIN : product.buyLinkUS}" target="_blank" class="buy-btn">Buy Now</a>
+      <a href="product-detail.html?id=${product.id}" class="buy-btn">View Details</a>
     `;
     container.appendChild(card);
   });
 }
 
-// --- Render Categories ---
+// Render Categories
 function renderCategories() {
   const catContainer = document.getElementById("category-list");
+  if (!catContainer) return;
+  
   catContainer.innerHTML = "";
 
   categories.forEach(cat => {
     const div = document.createElement("div");
     div.classList.add("category-card");
+    div.addEventListener("click", () => {
+      window.location.href = `products.html?category=${cat.slug}`;
+    });
 
     div.innerHTML = `
       <img src="${cat.image}" alt="${cat.name}">
@@ -46,13 +53,14 @@ function renderCategories() {
   });
 }
 
-// --- Live Search Functionality ---
+// Live Search Functionality
 function setupSearch() {
   const input = document.getElementById("searchBox");
   const results = document.getElementById("searchResults");
+  if (!input || !results) return;
 
   input.addEventListener("input", () => {
-    const term = input.value.toLowerCase();
+    const term = input.value.trim().toLowerCase();
     results.innerHTML = "";
 
     if (term === "") {
@@ -61,11 +69,12 @@ function setupSearch() {
     }
 
     const matched = products.filter(p =>
-      p.name.toLowerCase().includes(term) || p.description.toLowerCase().includes(term)
+      p.name.toLowerCase().includes(term) || 
+      p.description.toLowerCase().includes(term)
     );
 
     if (matched.length === 0) {
-      results.innerHTML = "<p>No products found</p>";
+      results.innerHTML = "<p class='no-results'>No products found</p>";
     } else {
       matched.forEach(p => {
         const item = document.createElement("div");
@@ -86,24 +95,57 @@ function setupSearch() {
 
     results.style.display = "block";
   });
+
+  // Hide results when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !results.contains(e.target)) {
+      results.style.display = "none";
+    }
+  });
 }
 
-// --- Currency Toggle Setup ---
+// Currency Toggle Setup
 function setupCurrencyToggle() {
   const toggle = document.getElementById("currency-toggle-button");
+  if (!toggle) return;
+
+  // Set initial currency based on user location
+  if (navigator.language.includes("en-US")) {
+    currentCurrency = "USD";
+    toggle.textContent = "USD";
+  }
 
   toggle.addEventListener("click", () => {
     currentCurrency = currentCurrency === "INR" ? "USD" : "INR";
     toggle.textContent = currentCurrency;
-    renderFeaturedProducts(); // Refresh prices
-    setupSearch(); // Update price in search results
+    
+    // Refresh all price displays
+    renderFeaturedProducts();
+    setupSearch();
+    
+    // Refresh product detail page if needed
+    if (window.location.pathname.includes("product-detail")) {
+      const event = new Event("DOMContentLoaded");
+      document.dispatchEvent(event);
+    }
   });
 }
 
-// --- On Load ---
+// Highlight current page in navigation
+function setupNavigation() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// On Load
 document.addEventListener("DOMContentLoaded", () => {
   renderFeaturedProducts();
   renderCategories();
   setupSearch();
   setupCurrencyToggle();
+  setupNavigation();
 });
