@@ -1,15 +1,16 @@
-/* 🌙 JioHotstar-Inspired Dark Theme */
+/* 🎨 Professional Color Theme */
 :root {
-  /* Color Palette */
-  --primary-dark: #0f0617;       /* Deep purple-black (background) */
-  --primary-color: #6e00ff;      /* Vibrant purple-blue (buttons/links) */
-  --secondary-color: #1a1a2e;    /* Dark navy (cards/sections) */
-  --accent-color: #8a2be2;       /* Soft purple (highlights) */
-  --text-color: #ffffff;         /* White text */
-  --light-text: #b8b8b8;         /* Light gray (secondary text) */
+  /* Modern Color Palette */
+  --primary-color: #2563eb;      /* Vibrant blue (buttons/links) */
+  --primary-dark: #111827;       /* Dark slate (background) */
+  --secondary-color: #1f2937;    /* Dark gray (cards) */
+  --accent-color: #4f46e5;       /* Deep indigo (highlights) */
+  --text-color: #f9fafb;         /* Off-white text */
+  --light-text: #d1d5db;         /* Light gray (secondary text) */
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Base Styles */
+/* 📱 Base Styles (Mobile First) */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,88 +18,108 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   background-color: var(--primary-dark);
   color: var(--text-color);
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Header (Dark with Purple Accent) */
-header {
-  background-color: var(--primary-dark);
-  color: var(--text-color);
+/* 🖥️ Layout Control */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 1rem;
-  border-bottom: 2px solid var(--primary-color);
 }
 
-/* Buttons (Hotstar Purple) */
-.buy-btn, .buy-now-btn, #currency-toggle-button {
-  background-color: var(--primary-color);
-  color: white;
-  transition: all 0.3s;
+/* 🏷️ Header */
+header {
+  background-color: var(--secondary-color);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--card-shadow);
 }
 
-.buy-btn:hover, .buy-now-btn:hover {
-  background-color: var(--accent-color);
-  transform: translateY(-2px);
-}
-
-/* Product Cards (Dark with Glow) */
+/* 📦 Cards (Balanced Image-Text Ratio) */
 .product-card {
   background-color: var(--secondary-color);
-  box-shadow: 0 4px 15px rgba(110, 0, 255, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
 }
 
-.product-card:hover {
-  box-shadow: 0 6px 25px rgba(110, 0, 255, 0.3);
+.product-card img {
+  width: 100%;
+  height: 180px; /* Fixed height for consistency */
+  object-fit: cover;
 }
 
-/* Price Text (Purple) */
-.price {
-  color: var(--primary-color) !important;
-  font-weight: bold;
+.product-card h3 {
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem 0;
 }
 
-/* Search Bar */
-#searchBox {
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  border: 2px solid var(--primary-color);
-}
-
-#searchBox:focus {
-  box-shadow: 0 0 10px var(--primary-color);
-}
-
-/* Footer (Gradient) */
-footer {
-  background: linear-gradient(to right, var(--primary-dark), var(--secondary-color));
+.product-card p {
+  font-size: 0.9rem;
+  padding: 0 1rem;
   color: var(--light-text);
+  margin-bottom: 1rem;
 }
 
-/* 🔥 Hotstar-Specific Additions */
-/* Add glowing effect to interactive elements */
-a, button {
-  transition: all 0.3s;
+/* 📊 Grid System */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
-a:hover {
-  color: var(--accent-color);
+/* 🛒 Buttons */
+.buy-btn, .buy-now-btn {
+  display: block;
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 0.75rem;
+  margin-top: auto;
+  text-decoration: none;
+  transition: background-color 0.3s;
 }
 
-/* Product Detail Page */
-.product-detail-box {
+.buy-btn:hover {
+  background-color: var(--accent-color);
+}
+
+/* 🔍 Search Bar */
+#searchBox {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.75rem 1rem;
+  margin: 1rem auto;
+  display: block;
   background-color: var(--secondary-color);
-  box-shadow: 0 4px 20px rgba(110, 0, 255, 0.2);
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
 }
 
-/* Responsive Design (Keep this at the end) */
-@media (max-width: 768px) {
+/* 📱 Mobile Responsiveness */
+@media (max-width: 640px) {
+  .product-card img {
+    height: 150px; /* Slightly smaller images on mobile */
+  }
+  
   .grid {
     grid-template-columns: 1fr;
   }
-  
-  header {
-    flex-direction: column;
+}
+
+/* 🖥️ Desktop Enhancements */
+@media (min-width: 1024px) {
+  .product-card img {
+    height: 200px; /* Slightly larger on desktop */
   }
 }
