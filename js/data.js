@@ -40,7 +40,7 @@ const products = [
     priceUSD: 17.51,
     category: getPriceBasedCategory(1499),
     categorySlug: "low-budget",
-    link: "https://amzn.to/3Ig7oGl",
+    link: "https://amzn.to/459anJu",
     image: "https://m.media-amazon.com/images/I/512mRNNNbkL._SL1500_.jpg", // Amazon direct link
     rating: 4.5,
     features: ["Collapsible design for portability", "800W rapid boil power", "BPA-free food-grade silicone", "Auto shut-off & boil-dry protection", "Capacity: 0.6 Liters (approx)"],
