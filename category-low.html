@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Low Budget Finds - Smart Kitchen Gadgets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
+</head>
+<body>
+    <header>
+        <!-- Same navbar as index.html -->
+        <div class="navbar">
+            <div class="logo-space">
+                <span class="logo-text">Smart Kitchen Gadgets</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li>
+                        <a href="#">Categories</a>
+                        <ul class="dropdown">
+                            <li><a href="category-low.html" class="active">Low Budget Finds</a></li>
+                            <li><a href="category-mid.html">Mid Range Picks</a></li>
+                            <li><a href="category-premium.html">Premium Products</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="currency-toggle">
+                <label>
+                    <input type="radio" name="currency" value="INR" checked>
+                    INR
+                </label>
+                <label>
+                    <input type="radio" name="currency" value="USD">
+                    USD
+                </label>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>Low Budget Finds</h2>
+            <div class="products-grid" id="low-products"></div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Smart Kitchen Gadgets. Amazon Affiliate Website for India & US.</p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const lowProducts = products.filter(p => p.category === "Low Budget Finds");
+            renderProducts(lowProducts, "low-products");
+            document.querySelectorAll('input[name="currency"]').forEach(input => {
+                input.addEventListener("change", () => renderProducts(lowProducts, "low-products"));
+            });
+        });
+    </script>
+</body>
+</html>
