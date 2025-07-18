@@ -1,483 +1,719 @@
-/* Modern CSS Reset */
-:root {
-  --primary-color: #28a745;
-  --primary-dark: #218838;
-  --secondary-color: #343a40;
-  --light-color: #f8f9fa;
-  --dark-color: #212529;
-  --text-color: #333;
-  --text-light: #6c757d;
-  --white: #fff;
-  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
-}
-
+/* रीसेट डिफॉल्ट स्टाइल्स */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+/* CSS वेरिएबल्स */
+:root {
+    --primary: #ff7a5c;
+    --primary-dark: #e56a4d;
+    --secondary: #4a9b8c;
+    --light: #fff8f5;
+    --dark: #333333;
+    --accent: #ffd166;
+    --gray: #f5f5f5;
+    --border: #eaeaea;
 }
 
+/* बेसिक बॉडी स्टाइलिंग */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--light-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  overflow-x: hidden;
+    font-family: 'Inter', 'Segoe UI', 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fffdf9 0%, #fff8f2 100%);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+/* कंटेनर */
+.container, .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: var(--transition);
-  border: none;
-  cursor: pointer;
+/* नेविगेशन बार */
+nav {
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.btn-primary {
-  background-color: var(--primary-color);
-  color: var(--white);
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-3px);
-}
-
-.btn-secondary {
-  background-color: var(--secondary-color);
-  color: var(--white);
-}
-
-.btn-secondary:hover {
-  opacity: 0.9;
-  transform: translateY(-3px);
-}
-
-/* Header */
-.header {
-  background-color: var(--white);
-  box-shadow: var(--box-shadow);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: 1rem 0;
-}
-
-.header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
 }
 
-.logo a {
-  color: inherit;
-  text-decoration: none;
+.links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
-.mobile-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: var(--dark-color);
-  cursor: pointer;
+.links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-size: 1rem;
+    transition: color 0.3s ease;
 }
 
-.navbar {
-  display: flex;
-  gap: 1.5rem;
+.links a:hover, .links a.active {
+    color: var(--primary);
+    font-weight: 600;
 }
 
-.navbar a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* ड्रॉप-डाउन मेनू */
+.dropdown {
+    position: relative;
 }
 
-.navbar a:hover, .navbar a.active {
-  color: var(--primary-color);
+.dropbtn {
+    background: none;
+    border: none;
+    color: var(--dark);
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
 }
 
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.dropbtn:hover {
+    color: var(--primary);
 }
 
-.currency-toggle select {
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-size: 0.9rem;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 8px;
+    top: 100%;
+    left: 0;
 }
 
-.search-container {
-  position: relative;
+.dropdown-content.show {
+    display: block;
 }
 
-.search-container input {
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  min-width: 200px;
+.dropdown-content a {
+    color: var(--dark);
+    padding: 10px 14px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.search-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--text-light);
-  cursor: pointer;
+.dropdown-content a:hover {
+    background-color: var(--light);
+    color: var(--primary);
 }
 
-/* Hero Section */
-.hero {
-  height: 70vh;
-  min-height: 500px;
-  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/hero-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  display: flex;
-  align-items: center;
-  color: var(--white);
-  text-align: center;
+/* हैमबर्गर मेनू */
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
 }
 
-.hero-content {
-  max-width: 800px;
-  margin: 0 auto;
+/* हेडर */
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff9a9e, #fad0c4);
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
-/* Sections */
-section {
-  padding: 4rem 0;
+header p {
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.95;
 }
 
-.section-title {
-  text-align: center;
-  margin-bottom: 3rem;
+.decoration {
+    position: absolute;
+    opacity: 0.1;
+    font-size: 6rem;
 }
 
-.section-title h2 {
-  font-size: 2.2rem;
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  position: relative;
-  display: inline-block;
+.decoration.fork {
+    top: 10px;
+    left: 5%;
+    transform: rotate(-30deg);
 }
 
-.section-title h2::after {
-  content: '';
-  position: absolute;
-  width: 50%;
-  height: 3px;
-  background-color: var(--primary-color);
-  bottom: -10px;
-  left: 25%;
+.decoration.knife {
+    bottom: 10px;
+    right: 5%;
+    transform: rotate(25deg);
 }
 
-/* Grid Layouts */
-.product-grid,
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+/* सर्च बार */
+.search {
+    text-align: center;
+    margin: 1.5rem 1rem;
 }
 
-/* Cards */
-.product-card,
-.category-card {
-  background-color: var(--white);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: var(--box-shadow);
-  transition: var(--transition);
+.search input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
 }
 
-.product-card:hover,
-.category-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.search input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(255, 111, 97, 0.2);
 }
 
-.product-card img,
-.category-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+/* प्रोडक्ट्स ग्रिड */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
 }
 
-.product-card .info,
-.category-card .info {
-  padding: 1.5rem;
+/* प्रोडक्ट कार्ड */
+.product {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
 }
 
-.product-card .info h3,
-.category-card .info h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--dark-color);
+.product:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.product-card .info .price {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 1rem;
+.image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--gray);
+    margin-bottom: 0.8rem;
 }
 
-.product-card .info .desc {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+    transition: transform 0.3s ease;
 }
 
-.product-card .info .btn {
-  width: 100%;
-  text-align: center;
+.product:hover .image-container img {
+    transform: scale(1.03);
 }
 
-/* Newsletter */
-.newsletter {
-  background-color: var(--secondary-color);
-  color: var(--white);
-  text-align: center;
-  padding: 3rem 0;
+.product-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-.newsletter h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+.title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
 }
 
-.newsletter p {
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+.price {
+    color: var(--secondary);
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
 }
 
-.newsletter form {
-  display: flex;
-  max-width: 500px;
-  margin: 0 auto;
+.buy {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background: var(--primary-dark);
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
 }
 
-.newsletter input {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border: none;
-  border-radius: 5px 0 0 5px;
+.buy:hover {
+    background: #d35400;
 }
 
-.newsletter button {
-  border-radius: 0 5px 5px 0;
+/* कार्ड */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Footer */
-.footer {
-  background-color: var(--dark-color);
-  color: var(--white);
-  padding: 3rem 0 0;
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+h2 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.footer-col h4 {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  position: relative;
+h2 i {
+    background: var(--light);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
 }
 
-.footer-col h4::after {
-  content: '';
-  position: absolute;
-  width: 40px;
-  height: 2px;
-  background-color: var(--primary-color);
-  bottom: -8px;
-  left: 0;
+.intro {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
 }
 
-.footer-col ul {
-  list-style: none;
+/* रिस्पॉन्सिव मील प्लान */
+.meal-plan {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.footer-col ul li {
-  margin-bottom: 0.8rem;
+.meal-day {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid var(--border);
 }
 
-.footer-col ul li i {
-  margin-right: 0.5rem;
-  color: var(--primary-color);
+.meal-day h3 {
+    color: var(--primary-dark);
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
 }
 
-.footer-col a {
-  color: var(--white);
-  text-decoration: none;
-  transition: var(--transition);
+.meal-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
 }
 
-.footer-col a:hover {
-  color: var(--primary-color);
-  padding-left: 5px;
+.meal-item:last-child {
+    border-bottom: none;
+}
+
+.meal-item i {
+    color: var(--primary);
+    font-size: 1.2rem;
+    min-width: 30px;
+}
+
+.meal-content {
+    flex-grow: 1;
+}
+
+.meal-title {
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: 1rem;
+}
+
+.meal-desc {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.3rem;
+}
+
+/* ग्रोसरी सेक्शन */
+.grocery-section {
+    margin-top: 1.5rem;
+}
+
+.grocery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.grocery-card {
+    background: white;
+    border-radius: 8px;
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease;
+}
+
+.grocery-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.grocery-card i {
+    color: var(--secondary);
+    font-size: 1.1rem;
+    background: #e8f5f2;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* फूटर */
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    color: #f0f0f0;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.footer-column h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-column h3::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--primary);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
 }
 
 .social-links {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
 }
 
 .social-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    transition: all 0.3s ease;
 }
 
 .social-links a:hover {
-  background-color: var(--primary-color);
-  transform: translateY(-3px);
+    background: var(--primary);
+    transform: translateY(-2px);
 }
 
-.footer-bottom {
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+.copyright {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+/* रिस्पॉन्सिव डिज़ाइन */
+@media (max-width: 768px) {
+    .links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #ffffff;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        background: #f9f9f9;
+    }
+
+    .dropdown-content a {
+        padding: 0.8rem 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header p {
+        font-size: 0.9rem;
+    }
+
+    .decoration {
+        display: none;
+    }
+
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .meal-day {
+        padding: 0.8rem;
+    }
+
+    .meal-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .meal-item i {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .hamburger {
+        font-size: 1.3rem;
+    }
+
+    header {
+        padding: 1.5rem 0.8rem;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    header p {
+        font-size: 0.85rem;
+    }
+
+    .search input[type="text"] {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+
+    .product {
+        padding: 0.8rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .price {
+        font-size: 0.9rem;
+    }
+
+    .buy {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .meal-title {
+        font-size: 0.9rem;
+    }
+
+    .meal-desc {
+        font-size: 0.8rem;
+    }
+}
+.search-results {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
 }
 
-.legal-links {
-  display: flex;
-  gap: 1.5rem;
+.search-result {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
+.search-result:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-@media (max-width: 768px) {
-  .mobile-menu-toggle {
-    display: block;
-  }
-  
-  .navbar {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    padding: 1rem 0;
-  }
-  
-  .navbar.active {
-    display: flex;
-  }
-  
-  .header-controls {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  
-  .hero {
-    height: 60vh;
-  }
-  
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .hero p {
-    font-size: 1rem;
-  }
-  
-  .newsletter form {
-    flex-direction: column;
-  }
-  
-  .newsletter input,
-  .newsletter button {
-    width: 100%;
-    border-radius: 5px;
-  }
-  
-  .newsletter button {
-    margin-top: 0.5rem;
-  }
+.search-result a {
+  text-decoration: none;
+  color: #333;
 }
 
-@media (max-width: 576px) {
-  .product-grid,
-  .category-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-bottom {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .legal-links {
-    justify-content: center;
+.result-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-type {
+  font-size: 0.9rem;
+  color: #666;
+}
+/* ✅ Paste this at the END of your style.css file */
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.footer-column h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  white-space: nowrap;
+  word-break: break-word;
+}
+
+.footer-column h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--primary);
+}
+
+@media (min-width: 1024px) {
+  .footer-content {
+    gap: 2.5rem;
   }
 }
