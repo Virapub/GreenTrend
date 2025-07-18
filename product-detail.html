@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="product-detail-title">Product Details - GreenTrend</title>
+    <meta name="description" id="product-detail-description" content="Detailed information about a smart kitchen gadget from GreenTrend.">
+    <meta name="keywords" id="product-detail-keywords" content="smart kitchen gadget, kitchen tech, GreenTrend, product details">
+    <meta property="og:title" id="og-title" content="">
+    <meta property="og:description" id="og-description" content="">
+    <meta property="og:image" id="og-image" content="">
+    <meta property="og:url" id="og-url" content="">
+    <meta property="og:type" content="product">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">GreenTrend</a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <div class="dropdown-content">
+                        <a href="products.html?category=low-budget">Low Budget Finds</a>
+                        <a href="products.html?category=mid-range">Mid Range Picks</a>
+                        <a href="products.html?category=premium">Premium Products</a>
+                    </div>
+                </li>
+                <li>
+                    <button id="currency-toggle" class="currency-button" aria-label="Toggle Currency between USD and INR">USD / INR</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="product-detail-container">
+        <section class="product-detail-card" id="product-detail-section">
+            <p>Loading product details...</p>
+        </section>
+        <div class="back-to-products">
+            <a href="products.html" class="button-small">← Back to All Products</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GreenTrend. All rights reserved. As an Amazon Associate, we earn from qualifying purchases.</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
