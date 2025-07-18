@@ -8,7 +8,7 @@ const products = [
         category: "mid-range",
         priceUSD: 89.99,
         priceINR: 7499.00,
-        amazonLinkUS: "https://amzn.to/3GT5nzp", // Replace with your US affiliate ID
+        amazonLinkUS: "", // Replace with your US affiliate ID
         amazonLinkIN: "https://amzn.to/3IBKh9p"  // Replace with your IN affiliate ID
     }
     // Add more products here, ensuring each has an image and belongs to a category
