@@ -1,54 +1,68 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="GreenTrend - Smart Kitchen Gadgets under ₹2000 & $25" />
-  <title>GreenTrend - Smart Kitchen Finds</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GreenTrend - Smart Kitchen Gadgets</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
-    <div class="container">
-      <div class="logo">GreenTrend</div>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="#featured">Featured</a>
-        <a href="#categories">Categories</a>
-        <a href="#products">Products</a>
-      </nav>
-      <div class="actions">
-        <select id="currency-toggle">
-          <option value="INR">₹ INR</option>
-          <option value="USD">$ USD</option>
-        </select>
+    <div class="container nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/LOGO.png" alt="GreenTrend Logo" class="logo-img" />
+        </a>
+      </div>
+      <div class="currency-toggle">
+        <button id="currency-btn">INR ₹</button>
       </div>
     </div>
-  </header>  <!-- Hero Section -->  <section class="hero">
-    <div class="hero-content">
-      <h1>Smart Kitchen Gadgets</h1>
-      <p>Discover affordable & premium picks under ₹2000 / $25</p>
-      <a href="#products" class="btn">Shop Now</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Upgrade Your Kitchen Smartly</h1>
+      <p>Discover top-rated gadgets for Indian & US homes</p>
+      <a href="products.html" class="btn">Shop Now</a>
     </div>
-  </section>  <!-- Featured Products -->  <section id="featured" class="section">
-    <h2 class="section-title">Featured Picks</h2>
-    <div class="products" id="featured-products"></div>
-  </section>  <!-- Categories -->  <section id="categories" class="section">
-    <h2 class="section-title">Shop by Category</h2>
-    <div class="categories" id="categories-container"></div>
-  </section>  <!-- All Products -->  <section id="products" class="section">
-    <h2 class="section-title">All Products</h2>
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Search kitchen gadgets..." />
-    </div>
-    <div class="products" id="all-products"></div>
-  </section>  <!-- Footer -->  <footer class="footer">
+  </section>
+
+  <!-- Categories -->
+  <section class="categories">
     <div class="container">
-      <p>&copy; 2025 GreenTrend. All rights reserved.</p>
-      <p>
-        <a href="#">Pinterest</a> |
-        <a href="#">Privacy</a> |
-        <a href="#">Contact</a>
-      </p>
+      <h2 class="section-title">Shop by Category</h2>
+      <div class="category-grid" id="category-container">
+        <!-- Category cards will be injected by JS -->
+      </div>
     </div>
-  </footer>  <script src="script/data.js"></script>  <script src="script/utils.js"></script>  <script src="script/main.js"></script></body>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured">
+    <div class="container">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="product-grid" id="featured-container">
+        <!-- Featured products will be injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 GreenTrend. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Pinterest</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
 </html>
