@@ -1,116 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Products - GreenTrend</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Smart Kitchen Gadgets - GreenTrend</title>
+    <meta name="description" content="Browse all smart kitchen gadgets available on GreenTrend. Filter by Low Budget Finds, Mid Range Picks, and Premium Products.">
+    <meta name="keywords" content="smart kitchen gadgets, kitchen tech, innovative cooking, eco-friendly kitchen, kitchen appliances, GreenTrend, affiliate marketing, low budget, mid range, premium products, kitchen search">
+    <meta property="og:title" content="All Smart Kitchen Gadgets - GreenTrend">
+    <meta property="og:description" content="Explore GreenTrend's full range of smart kitchen devices.">
+    <meta property="og:image" content="images/hero-background.jpg">
+    <meta property="og:url" content="https://yourwebsite.github.io/greentrend/products.html">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Shared Header -->
-  <header class="header">
-    <div class="container">
-      <div class="logo">
-        <a href="index.html">GreenTrend</a>
-      </div>
-      
-      <button class="mobile-menu-toggle" aria-label="Toggle menu">
-        <i class="fas fa-bars"></i>
-      </button>
-      
-      <nav class="navbar">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="products.html" class="active"><i class="fas fa-utensils"></i> Products</a>
-        <a href="#"><i class="fas fa-info-circle"></i> About</a>
-      </nav>
-      
-      <div class="header-controls">
-        <div class="currency-toggle">
-          <select id="currency-select" aria-label="Select currency">
-            <option value="IN">INR ₹</option>
-            <option value="US">USD $</option>
-          </select>
-        </div>
-        <div class="search-container">
-          <input type="text" id="search-input" placeholder="Search products..." aria-label="Search products">
-          <button class="search-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">GreenTrend</a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <div class="dropdown-content">
+                        <a href="products.html?category=low-budget">Low Budget Finds</a>
+                        <a href="products.html?category=mid-range">Mid Range Picks</a>
+                        <a href="products.html?category=premium">Premium Products</a>
+                    </div>
+                </li>
+                <li>
+                    <button id="currency-toggle" class="currency-button" aria-label="Toggle Currency between USD and INR">USD / INR</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <div class="container">
-      <!-- Breadcrumbs -->
-      <nav class="breadcrumbs">
-        <a href="index.html">Home</a>
-        <i class="fas fa-chevron-right"></i>
-        <span>Products</span>
-      </nav>
-      
-      <!-- Page Header -->
-      <div class="page-header">
-        <h1>Our Products</h1>
-        <p>Browse our collection of smart kitchen gadgets</p>
-      </div>
-      
-      <!-- Filters -->
-      <div class="filters">
-        <div class="filter-group">
-          <label for="category-filter">Category</label>
-          <select id="category-filter">
-            <option value="all">All Categories</option>
-            <option value="appliances">Appliances</option>
-            <option value="tools">Tools</option>
-            <!-- More categories -->
-          </select>
-        </div>
-        
-        <div class="filter-group">
-          <label for="price-filter">Price Range</label>
-          <select id="price-filter">
-            <option value="all">All Prices</option>
-            <option value="low">Under ₹1000</option>
-            <option value="medium">₹1000 - ₹5000</option>
-            <option value="high">Over ₹5000</option>
-          </select>
-        </div>
-        
-        <button id="reset-filters" class="btn btn-secondary">
-          <i class="fas fa-sync-alt"></i> Reset
-        </button>
-      </div>
-      
-      <!-- Product Grid -->
-      <div class="product-grid" id="product-grid"></div>
-      
-      <!-- Pagination -->
-      <div class="pagination">
-        <button class="btn btn-secondary" disabled>
-          <i class="fas fa-chevron-left"></i> Previous
-        </button>
-        <span>Page 1 of 5</span>
-        <button class="btn btn-secondary">
-          Next <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-    </div>
-  </main>
+    <main>
+        <section class="products-listing">
+            <h2>Our Smart Kitchen Gadgets</h2>
+            <div class="filter-controls">
+                <div class="category-filters">
+                    <button class="filter-button active" data-category="all">All Products</button>
+                    <button class="filter-button" data-category="low-budget">Low Budget Finds</button>
+                    <button class="filter-button" data-category="mid-range">Mid Range Picks</button>
+                    <button class="filter-button" data-category="premium">Premium Products</button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="product-search" placeholder="Search products..." aria-label="Search products">
+                </div>
+            </div>
+            <div class="product-grid" id="all-products-grid">
+                </div>
+            <p id="no-results" style="display: none; text-align: center; margin-top: 30px; font-size: 1.2rem; color: #666;">No products found matching your criteria.</p>
+        </section>
+    </main>
 
-  <!-- Shared Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <!-- Same footer as index.html -->
-      </div>
-    </div>
-  </footer>
+    <footer>
+        <p>&copy; 2025 GreenTrend. All rights reserved. As an Amazon Associate, we earn from qualifying purchases.</p>
+    </footer>
 
-  <script src="js/utils.js"></script>
-  <script src="js/products.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
