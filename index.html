@@ -1,133 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenTrend - Smart Kitchen Gadgets</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <!-- Add Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenTrend - Smart Kitchen Gadgets for a Greener Home</title>
+    <meta name="description" content="Discover the latest smart kitchen gadgets for an efficient, eco-friendly, and enjoyable cooking experience. Shop low budget finds, mid-range picks, and premium products.">
+    <meta name="keywords" content="smart kitchen gadgets, kitchen tech, innovative cooking, eco-friendly kitchen, kitchen appliances, GreenTrend, affiliate marketing, smart home kitchen">
+    <meta property="og:title" content="GreenTrend - Smart Kitchen Gadgets">
+    <meta property="og:description" content="Your ultimate guide to smart kitchen gadgets. Find the best products for your modern and eco-conscious kitchen.">
+    <meta property="og:image" content="images/hero-background.jpg">
+    <meta property="og:url" content="https://yourwebsite.github.io/greentrend/">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Header with improved navigation -->
-  <header class="header">
-    <div class="container">
-      <div class="logo">
-        <a href="index.html">GreenTrend</a>
-      </div>
-      
-      <!-- Mobile menu toggle -->
-      <button class="mobile-menu-toggle" aria-label="Toggle menu">
-        <i class="fas fa-bars"></i>
-      </button>
-      
-      <nav class="navbar">
-        <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
-        <a href="products.html"><i class="fas fa-utensils"></i> Products</a>
-        <a href="#"><i class="fas fa-info-circle"></i> About</a>
-      </nav>
-      
-      <div class="header-controls">
-        <div class="currency-toggle">
-          <select id="currency-select" aria-label="Select currency">
-            <option value="IN">INR ₹</option>
-            <option value="US">USD $</option>
-          </select>
-        </div>
-        <div class="search-container">
-          <input type="text" id="search-input" placeholder="Search products..." aria-label="Search products">
-          <button class="search-btn" aria-label="Search">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">GreenTrend</a></div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <div class="dropdown-content">
+                        <a href="products.html?category=low-budget">Low Budget Finds</a>
+                        <a href="products.html?category=mid-range">Mid Range Picks</a>
+                        <a href="products.html?category=premium">Premium Products</a>
+                    </div>
+                </li>
+                <li>
+                    <button id="currency-toggle" class="currency-button" aria-label="Toggle Currency between USD and INR">USD / INR</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Hero section with CTA -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Smart Kitchen Starts Here</h1>
-        <p>Discover budget-friendly & premium kitchen gadgets</p>
-        <a href="products.html" class="btn btn-primary">Shop Now</a>
-      </div>
-    </div>
-  </section>
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Revolutionize Your Kitchen with Smart Tech</h1>
+                <p>Discover innovative, eco-friendly, and smart kitchen gadgets that make cooking a joy and life easier.</p>
+                <a href="products.html" class="button">Explore Gadgets</a>
+            </div>
+        </section>
 
-  <!-- Featured Products -->
-  <section class="featured-section">
-    <div class="container">
-      <h2>Featured Products</h2>
-      <div class="product-grid" id="featured-products"></div>
-    </div>
-  </section>
+        <section class="featured-products">
+            <h2>Featured Smart Gadgets</h2>
+            <div class="product-grid" id="featured-products-grid">
+                </div>
+            <div class="view-all-button">
+                <a href="products.html" class="button">View All Products</a>
+            </div>
+        </section>
 
-  <!-- Categories -->
-  <section class="categories-section">
-    <div class="container">
-      <h2>Shop by Category</h2>
-      <div class="category-grid" id="category-list"></div>
-    </div>
-  </section>
+        <section class="trending-categories">
+            <h2>Trending Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <a href="products.html?category=mid-range">
+                        <img src="images/product-images/smart-coffee-maker.jpg" alt="Smart Coffee Makers">
+                        <h3>Smart Brewing</h3>
+                        <p>Start your day right with intelligent coffee makers.</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="products.html?category=premium">
+                        <img src="images/product-images/smart-oven.jpg" alt="Smart Ovens & Cookware">
+                        <h3>Precision Cooking</h3>
+                        <p>Achieve culinary perfection with connected ovens and cookware.</p>
+                    </a>
+                </div>
+                <div class="category-card">
+                    <a href="products.html?category=low-budget">
+                        <img src="images/product-images/bamboo-utensils.jpg" alt="Eco-Friendly Kitchen Essentials">
+                        <h3>Eco-Friendly Picks</h3>
+                        <p>Sustainable and stylish tools for a greener kitchen.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <!-- Newsletter -->
-  <section class="newsletter">
-    <div class="container">
-      <h3>Stay Updated</h3>
-      <p>Subscribe to get the latest products and offers</p>
-      <form id="newsletter-form">
-        <input type="email" placeholder="Your email address" required>
-        <button type="submit" class="btn btn-secondary">Subscribe</button>
-      </form>
-    </div>
-  </section>
+    <footer>
+        <p>&copy; 2025 GreenTrend. All rights reserved. As an Amazon Associate, we earn from qualifying purchases.</p>
+    </footer>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>GreenTrend</h4>
-          <p>Making your kitchen smarter, one gadget at a time.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <ul>
-            <li><i class="fas fa-envelope"></i> hello@greentrend.com</li>
-            <li><i class="fas fa-phone"></i> +91 9876543210</li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Follow Us</h4>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-pinterest"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 GreenTrend. All rights reserved.</p>
-        <div class="legal-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/utils.js"></script>
-  <script src="js/main.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
