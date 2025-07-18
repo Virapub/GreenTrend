@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GreenTrend - Smart Kitchen Finds</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ✅ HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <h1>GreenTrend</h1>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="products.html">All Products</a>
+        <select id="currencyToggle">
+          <option value="INR">₹ INR</option>
+          <option value="USD">$ USD</option>
+        </select>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ✅ HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Discover Smart Kitchen Gadgets</h2>
+      <p>Save time, cook smarter – budget to premium picks under one roof.</p>
+      <a href="products.html" class="btn">Explore Products</a>
+    </div>
+  </section>
+
+  <!-- ✅ SEARCH BAR -->
+  <section class="search-section">
+    <input type="text" id="searchInput" placeholder="Search kitchen gadgets..." />
+  </section>
+
+  <!-- ✅ FEATURED PRODUCTS -->
+  <section class="featured-products">
+    <h2>🔥 Featured Products</h2>
+    <div class="product-grid" id="featuredContainer">
+      <!-- JS will load products here -->
+    </div>
+  </section>
+
+  <!-- ✅ CATEGORY SECTION -->
+  <section class="categories">
+    <h2>🗂️ Browse by Category</h2>
+    <div class="category-grid" id="categoryContainer">
+      <!-- JS will load categories here -->
+    </div>
+  </section>
+
+  <!-- ✅ FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="newsletter">
+        <h3>📬 Join Our Newsletter</h3>
+        <p>Get top kitchen gadget deals directly in your inbox.</p>
+        <form action="https://formsubmit.co/your-email@gmail.com" method="POST" target="_blank">
+          <input type="email" name="email" placeholder="Enter your email" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="pinterest-link">
+        <h3>📌 We're on Pinterest!</h3>
+        <p>Follow us for trending smart kitchen gadgets.</p>
+        <a href="https://www.pinterest.com/greentrend" target="_blank" class="btn">Follow on Pinterest</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 GreenTrend. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ✅ JS FILES -->
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
