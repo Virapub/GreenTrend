@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - GreenTrend</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Shared Header -->
+  <header class="header">
+    <!-- Same header as other pages -->
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="products.html">Products</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Product Name</span>
+      </nav>
+      
+      <!-- Product Detail -->
+      <div class="product-detail-container">
+        <div class="product-gallery">
+          <div class="main-image">
+            <img src="images/products/product-large.jpg" alt="Product Name" id="main-product-image">
+          </div>
+          <div class="thumbnail-grid">
+            <img src="images/products/product-thumb1.jpg" alt="Thumbnail 1" class="thumbnail">
+            <img src="images/products/product-thumb2.jpg" alt="Thumbnail 2" class="thumbnail">
+            <img src="images/products/product-thumb3.jpg" alt="Thumbnail 3" class="thumbnail">
+          </div>
+        </div>
+        
+        <div class="product-info">
+          <h1 id="product-title">Smart Kitchen Gadget</h1>
+          <div class="product-meta">
+            <span class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.5 (128 reviews)</span>
+            </span>
+            <span class="availability in-stock">In Stock</span>
+          </div>
+          
+          <div class="price-container">
+            <span class="current-price" id="product-price">₹2,999</span>
+            <span class="original-price">₹3,499</span>
+            <span class="discount">14% OFF</span>
+          </div>
+          
+          <div class="product-description">
+            <h3>Description</h3>
+            <p id="product-description">This smart kitchen gadget makes cooking easier with its advanced features and intuitive design. Perfect for modern kitchens looking to upgrade their cooking experience.</p>
+          </div>
+          
+          <div class="product-features">
+            <h3>Key Features</h3>
+            <ul id="product-features">
+              <li>Smart technology for precise cooking</li>
+              <li>Energy efficient design</li>
+              <li>Easy to clean surfaces</li>
+              <li>2-year warranty</li>
+            </ul>
+          </div>
+          
+          <div class="product-actions">
+            <div class="quantity-selector">
+              <button class="quantity-btn" id="decrease-qty">-</button>
+              <input type="number" value="1" min="1" id="product-quantity">
+              <button class="quantity-btn" id="increase-qty">+</button>
+            </div>
+            <button class="btn btn-primary" id="add-to-cart">
+              <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="btn btn-secondary" id="buy-now">
+              Buy Now
+            </button>
+          </div>
+          
+          <div class="product-specs">
+            <h3>Specifications</h3>
+            <table>
+              <tr>
+                <th>Brand</th>
+                <td id="product-brand">GreenTrend</td>
+              </tr>
+              <tr>
+                <th>Model</th>
+                <td id="product-model">GT-2025</td>
+              </tr>
+              <tr>
+                <th>Color</th>
+                <td id="product-color">Silver</td>
+              </tr>
+              <tr>
+                <th>Warranty</th>
+                <td id="product-warranty">2 Years</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Related Products -->
+      <section class="related-products">
+        <h2>You May Also Like</h2>
+        <div class="product-grid" id="related-products"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="footer">
+    <!-- Same footer as other pages -->
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>
