@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Products - GreenTrend</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo"><a href="index.html">GreenTrend</a></div>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Products</a>
+    </nav>
+    <div class="controls">
+      <select id="currency-select">
+        <option value="INR">INR ₹</option>
+        <option value="USD">USD $</option>
+      </select>
+      <input type="text" id="search-input" placeholder="Search Products..."/>
+    </div>
+  </header>
+
+  <!-- Category Filter -->
+  <section class="category-section">
+    <button class="cat-btn" data-category="all">All</button>
+    <button class="cat-btn" data-category="low-budget">Low Budget Finds</button>
+    <button class="cat-btn" data-category="mid-range">Mid Range Picks</button>
+    <button class="cat-btn" data-category="premium">Premium Products</button>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Product List Container -->
+    <div id="product-list" class="product-grid"></div>
+
+    <!-- Single Product Detail View -->
+    <div id="product-detail" class="product-detail hidden"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 GreenTrend. All rights reserved.</p>
+      <a href="#">Pinterest</a> |
+      <a href="#">Privacy</a> |
+      <a href="#">Terms</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="main.js"></script>
+  <script type="module" src="products.js"></script>
+
+</body>
+</html>
