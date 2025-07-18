@@ -44,8 +44,8 @@ body {
   height: 30vh; /* Increase height so text fits */
   display: flex;
   align-items: center;  /* vertically center the text */
-  justify-content: center; /* horizontally center */
-  text-align: center;
+  justify-content: left; /* horizontally center */
+  text-align: right;
   padding: 20px;
   box-sizing: border-box;
   color: white;
