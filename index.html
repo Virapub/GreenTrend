@@ -1,68 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- index.html --><!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GreenTrend - Smart Kitchen Gadgets</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
-    <div class="container nav-container">
-      <div class="logo">
-        <a href="index.html">
-          <img src="images/LOGO.png" alt="GreenTrend Logo" class="logo-img" />
-        </a>
-      </div>
-      <div class="currency-toggle">
-        <button id="currency-btn">INR ₹</button>
-      </div>
+    <div class="logo">GreenTrend</div>
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+    </nav>
+    <div class="currency-toggle">
+      <button id="toggleCurrency">INR</button>
     </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero-content">
-      <h1>Upgrade Your Kitchen Smartly</h1>
-      <p>Discover top-rated gadgets for Indian & US homes</p>
-      <a href="products.html" class="btn">Shop Now</a>
+  </header>  <section class="hero">
+    <div class="hero-text">
+      <h1>Smart Kitchen Starts Here</h1>
+      <p>Discover budget-friendly & premium kitchen gadgets</p>
     </div>
-  </section>
-
-  <!-- Categories -->
-  <section class="categories">
-    <div class="container">
-      <h2 class="section-title">Shop by Category</h2>
-      <div class="category-grid" id="category-container">
-        <!-- Category cards will be injected by JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Products -->
-  <section class="featured">
-    <div class="container">
-      <h2 class="section-title">Featured Products</h2>
-      <div class="product-grid" id="featured-container">
-        <!-- Featured products will be injected by JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-content">
+  </section>  <section class="featured-products" id="featured-products">
+    <h2>Featured Products</h2>
+    <div class="product-grid" id="featured-list"></div>
+  </section>  <section class="categories" id="category-section">
+    <h2>Shop by Category</h2>
+    <div class="category-grid" id="category-list"></div>
+  </section>  <footer class="footer">
+    <div class="footer-content">
       <p>&copy; 2025 GreenTrend. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Pinterest</a>
-        <a href="#">Terms</a>
-      </div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Pinterest</a>
     </div>
-  </footer>
-
-  <script src="data.js"></script>
-  <script src="main.js"></script>
-</body>
+  </footer>  <script src="js/utils.js"></script>  <script src="js/main.js"></script></body>
 </html>
