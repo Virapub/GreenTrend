@@ -254,7 +254,7 @@ section h2 {
 .product-card img {
     width: 100%;
     height: auto; /* Fixed height for uniformity */
-    object-fit: content; /* Ensures images cover the area without distortion */
+    object-fit: fill; /* Ensures images cover the area without distortion */
     display: block;
     border-bottom: 1px solid #eee;
 }
