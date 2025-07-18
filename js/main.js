@@ -1,92 +1,169 @@
-// Detect user country using localStorage fallback (mocked)
-let userCountry = localStorage.getItem('userCountry') || 'IN';
+// Modern JavaScript with better organization
+import { getCurrencySymbol, convertPrice, formatPrice } from './utils.js';
 
-// Currency symbols
-const currencySymbol = {
-  IN: '₹',
-  US: '$'
+// DOM Elements
+const elements = {
+  mobileMenuToggle: document.querySelector('.mobile-menu-toggle'),
+  navbar: document.querySelector('.navbar'),
+  currencySelect: document.getElementById('currency-select'),
+  searchInput: document.getElementById('search-input'),
+  featuredProducts: document.getElementById('featured-products'),
+  categoryList: document.getElementById('category-list'),
+  newsletterForm: document.getElementById('newsletter-form')
 };
 
-// Format price
-function formatPrice(price, country) {
-  const rate = country === 'US' ? 0.012 : 1; // Example rate: ₹1 = $0.012
-  return `${currencySymbol[country]}${Math.round(price * rate)}`;
+// State
+const state = {
+  currency: localStorage.getItem('currency') || 'IN',
+  products: [], // Will be populated with actual products
+  categories: [] // Will be populated with actual categories
+};
+
+// Initialize the app
+function init() {
+  setupEventListeners();
+  loadData();
+  renderUI();
 }
 
-// Render products dynamically
-function renderProducts(productArray, containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = '';
+// Set up event listeners
+function setupEventListeners() {
+  // Mobile menu toggle
+  if (elements.mobileMenuToggle) {
+    elements.mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+  }
 
-  const filtered = productArray.filter(p => p.availability.includes(userCountry));
+  // Currency change
+  if (elements.currencySelect) {
+    elements.currencySelect.addEventListener('change', handleCurrencyChange);
+    elements.currencySelect.value = state.currency;
+  }
+
+  // Search functionality
+  if (elements.searchInput) {
+    elements.searchInput.addEventListener('input', debounce(handleSearch, 300));
+  }
+
+  // Newsletter form
+  if (elements.newsletterForm) {
+    elements.newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+  }
+}
+
+// Toggle mobile menu
+function toggleMobileMenu() {
+  elements.navbar.classList.toggle('active');
+}
+
+// Handle currency change
+function handleCurrencyChange(e) {
+  state.currency = e.target.value;
+  localStorage.setItem('currency', state.currency);
+  renderProducts();
+}
+
+// Handle search
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  const filtered = state.products.filter(product => 
+    product.name.toLowerCase().includes(searchTerm) &&
+    product.availability.includes(state.currency)
+  );
+  renderProducts(filtered);
+}
+
+// Handle newsletter submission
+function handleNewsletterSubmit(e) {
+  e.preventDefault();
+  const email = e.target.querySelector('input[type="email"]').value;
+  // Here you would typically send this to your backend
+  alert(`Thanks for subscribing with ${email}!`);
+  e.target.reset();
+}
+
+// Load data (mock - replace with actual API calls)
+function loadData() {
+  // In a real app, you would fetch this from an API
+  state.products = [
+    // Sample product data
+    {
+      id: '1',
+      name: 'Smart Blender',
+      price: 2999,
+      image: 'images/products/blender.jpg',
+      category: 'appliances',
+      availability: ['IN', 'US'],
+      description: 'High-powered blender with smart features'
+    },
+    // More products...
+  ];
+  
+  state.categories = [
+    {
+      id: '1',
+      name: 'Appliances',
+      slug: 'appliances',
+      image: 'images/categories/appliances.jpg'
+    },
+    // More categories...
+  ];
+}
+
+// Render UI
+function renderUI() {
+  renderFeaturedProducts();
+  renderCategories();
+}
+
+// Render featured products
+function renderFeaturedProducts(productsToRender = state.products) {
+  if (!elements.featuredProducts) return;
+  
+  const filtered = productsToRender
+    .filter(p => p.availability.includes(state.currency))
+    .slice(0, 6); // Show only 6 featured products
+
   if (filtered.length === 0) {
-    container.innerHTML = '<p>No products available for your region.</p>';
+    elements.featuredProducts.innerHTML = '<p class="no-products">No featured products available for your region.</p>';
     return;
   }
 
-  filtered.forEach(product => {
-    const link = product.link[userCountry] || '#';
-    const productHTML = `
-      <div class="product-card">
-        <img src="${product.image}" alt="${product.name}" />
-        <h4>${product.name}</h4>
-        <p>${formatPrice(product.price, userCountry)}</p>
-        <a href="${link}" target="_blank">Buy Now</a>
+  elements.featuredProducts.innerHTML = filtered.map(product => `
+    <div class="product-card">
+      <img src="${product.image}" alt="${product.name}" loading="lazy">
+      <div class="info">
+        <h3>${product.name}</h3>
+        <p class="price">${formatPrice(product.price, state.currency)}</p>
+        <p class="desc">${product.description || ''}</p>
+        <a href="product.html?id=${product.id}" class="btn btn-primary">View Details</a>
       </div>
-    `;
-    container.innerHTML += productHTML;
-  });
-}
-
-// Render categories
-function renderCategories() {
-  const categoryContainer = document.getElementById('category-section');
-  if (!categoryContainer) return;
-
-  categoryContainer.innerHTML = categories.map(cat => `
-    <div class="category-card" data-category="${cat.slug}">
-      <img src="${cat.image}" alt="${cat.name}" />
-      <p>${cat.name}</p>
     </div>
   `).join('');
 }
 
-// Filter by category
-document.addEventListener('click', e => {
-  if (e.target.closest('.category-card')) {
-    const selected = e.target.closest('.category-card').dataset.category;
-    const filtered = products.filter(p => 
-      p.category.toLowerCase().includes(selected.replace('-', ' ')) &&
-      p.availability.includes(userCountry)
-    );
-    renderProducts(filtered, 'product-section');
-  }
-});
+// Render categories
+function renderCategories() {
+  if (!elements.categoryList) return;
+  
+  elements.categoryList.innerHTML = state.categories.map(category => `
+    <div class="category-card" data-category="${category.slug}">
+      <img src="${category.image}" alt="${category.name}" loading="lazy">
+      <div class="info">
+        <h3>${category.name}</h3>
+        <a href="products.html?category=${category.slug}" class="btn btn-secondary">Browse</a>
+      </div>
+    </div>
+  `).join('');
+}
 
-// Currency Toggle
-document.getElementById('currency-toggle')?.addEventListener('change', e => {
-  userCountry = e.target.value;
-  localStorage.setItem('userCountry', userCountry);
-  renderProducts(products, 'product-section');
-});
+// Debounce function for search
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
-// Live Search
-document.getElementById('search-input')?.addEventListener('input', e => {
-  const term = e.target.value.toLowerCase();
-  const results = products.filter(p =>
-    p.name.toLowerCase().includes(term) &&
-    p.availability.includes(userCountry)
-  );
-  renderProducts(results, 'product-section');
-});
-
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-  renderCategories();
-  renderProducts(products, 'product-section');
-
-  const currencySelect = document.getElementById('currency-toggle');
-  if (currencySelect) {
-    currencySelect.value = userCountry;
-  }
-});
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', init);
