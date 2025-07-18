@@ -1,0 +1,137 @@
+// Product data (edit/add products here!)
+const products = [
+    {
+        title: "Smart Electric Kettle",
+        image: "https://images-na.ssl-images-amazon.com/images/I/71ie6vWckhL._AC_SL1500_.jpg",
+        priceINR: 2499,
+        priceUSD: 29.99,
+        affiliateIN: "https://www.amazon.in/dp/B07XY7Q6N6/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B07XY7Q6N6/?tag=yourtag-20",
+        category: "Low Budget Finds",
+        featured: true
+    },
+    {
+        title: "Automatic Roti Maker",
+        image: "https://images-na.ssl-images-amazon.com/images/I/81WbGd+BbXL._AC_SL1500_.jpg",
+        priceINR: 5999,
+        priceUSD: 72.99,
+        affiliateIN: "https://www.amazon.in/dp/B08FZ8FH5K/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B08FZ8FH5K/?tag=yourtag-20",
+        category: "Mid Range Picks",
+        featured: true
+    },
+    {
+        title: "Smart WiFi Air Fryer",
+        image: "https://images-na.ssl-images-amazon.com/images/I/81TfU8vXQkL._AC_SL1500_.jpg",
+        priceINR: 10999,
+        priceUSD: 129.99,
+        affiliateIN: "https://www.amazon.in/dp/B07V3H7J8V/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B07V3H7J8V/?tag=yourtag-20",
+        category: "Premium Products",
+        featured: true
+    },
+    {
+        title: "Mini Blender Portable",
+        image: "https://images-na.ssl-images-amazon.com/images/I/71KNSJzH4QL._AC_SL1500_.jpg",
+        priceINR: 1399,
+        priceUSD: 16.99,
+        affiliateIN: "https://www.amazon.in/dp/B08HRW4X7S/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B08HRW4X7S/?tag=yourtag-20",
+        category: "Low Budget Finds",
+        featured: false
+    }
+    // Add more products as needed...
+];
+
+function getCurrency() {
+    return document.querySelector('input[name="currency"]:checked').value;
+}
+
+function renderProducts(productsToShow, containerId) {
+    const grid = document.getElementById(containerId);
+    grid.innerHTML = "";
+    let currency = getCurrency();
+    productsToShow.forEach(prod => {
+        const card = document.createElement('div');
+        card.className = "product-card";
+
+        // Image
+        const img = document.createElement('img');
+        img.src = prod.image;
+        img.alt = prod.title;
+        img.className = "product-image";
+        card.appendChild(img);
+
+        // Title
+        const title = document.createElement('div');
+        title.className = "product-title";
+        title.textContent = prod.title;
+        card.appendChild(title);
+
+        // Prices
+        const priceRow = document.createElement('div');
+        priceRow.className = "price-row";
+        const inrPrice = document.createElement('span');
+        inrPrice.className = "price-label";
+        inrPrice.textContent = `₹${prod.priceINR}`;
+        const usdPrice = document.createElement('span');
+        usdPrice.className = "price-label";
+        usdPrice.textContent = `$${prod.priceUSD}`;
+        priceRow.appendChild(inrPrice);
+        priceRow.appendChild(usdPrice);
+        card.appendChild(priceRow);
+
+        // Buy Now links
+        const buyLinks = document.createElement('div');
+        buyLinks.className = "buy-links";
+        const buyIN = document.createElement('a');
+        buyIN.className = "buy-now-btn";
+        buyIN.href = prod.affiliateIN;
+        buyIN.target = "_blank";
+        buyIN.textContent = "Buy for India";
+        const buyUS = document.createElement('a');
+        buyUS.className = "buy-now-btn";
+        buyUS.href = prod.affiliateUS;
+        buyUS.target = "_blank";
+        buyUS.textContent = "Buy for US";
+        buyLinks.appendChild(buyIN);
+        buyLinks.appendChild(buyUS);
+        card.appendChild(buyLinks);
+
+        // Show only selected currency (hide other price)
+        if (currency === "INR") {
+            usdPrice.style.opacity = "0.4";
+            buyUS.style.display = "none";
+            buyIN.style.display = "inline-block";
+        } else {
+            inrPrice.style.opacity = "0.4";
+            buyIN.style.display = "none";
+            buyUS.style.display = "inline-block";
+        }
+
+        grid.appendChild(card);
+    });
+}
+
+function updateFeaturedProducts() {
+    const featured = products.filter(p => p.featured);
+    renderProducts(featured, "featured-products");
+}
+
+// Currency toggle event
+document.addEventListener("DOMContentLoaded", () => {
+    updateFeaturedProducts();
+    document.querySelectorAll('input[name="currency"]').forEach(input => {
+        input.addEventListener("change", updateFeaturedProducts);
+    });
+
+    // Optional: Auto-detect country using browser language
+    // India: ['en-IN', 'hi-IN', ...], US: ['en-US', ...]
+    const lang = navigator.language || navigator.userLanguage;
+    if (lang && lang.endsWith("IN")) {
+        document.querySelector('input[value="INR"]').checked = true;
+    } else if (lang && lang.endsWith("US")) {
+        document.querySelector('input[value="USD"]').checked = true;
+    }
+    updateFeaturedProducts();
+});
