@@ -49,14 +49,6 @@ body {
   box-sizing: border-box;
 }
 
-.hero-content {
-  background-color: rgba(0, 0, 0, 0.5); /* dark overlay for readability */
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 90%;
-}
-
 .hero h1 {
   font-size: 2.5rem;
   font-weight: bold;
