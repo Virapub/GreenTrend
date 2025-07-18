@@ -1,0 +1,217 @@
+:root {
+    --primary: #2a3642;
+    --secondary: #f5f7fa;
+    --accent: #00b894;
+    --border: #e0e0e0;
+    --text: #333;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--secondary);
+    color: var(--text);
+}
+
+header {
+    background: var(--primary);
+    color: #fff;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1.5rem;
+    flex-wrap: wrap;
+}
+
+.logo-space {
+    display: flex;
+    align-items: center;
+}
+.logo-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-left: 0.2em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.7em 1.1em;
+    display: block;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 2.5em;
+    left: 0;
+    background: var(--primary);
+    min-width: 170px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+nav ul li:hover > .dropdown {
+    display: block;
+}
+
+.currency-toggle {
+    background: #fff;
+    color: var(--primary);
+    border-radius: 4px;
+    padding: 0.2em 0.7em;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.currency-toggle label {
+    cursor: pointer;
+}
+
+main {
+    max-width: 1100px;
+    margin: 2.5em auto 0 auto;
+    padding: 0 1em;
+}
+
+.featured-products h2 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.4em;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 16px rgba(0,184,148,0.08);
+}
+
+.product-image {
+    width: 100%;
+    max-width: 225px;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 1em;
+    border-radius: 6px;
+    background: #f8f8f8;
+}
+
+.product-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.6em;
+    min-height: 2.6em;
+    color: var(--primary);
+}
+
+.price-row {
+    font-size: 1em;
+    margin-bottom: 1em;
+    display: flex;
+    gap: 1.2em;
+    justify-content: center;
+}
+
+.price-label {
+    font-weight: 500;
+}
+
+.buy-links {
+    display: flex;
+    gap: 0.6em;
+    margin-bottom: 0.5em;
+}
+
+.buy-now-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 0.5em 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.98em;
+    transition: background 0.2s;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.buy-now-btn:hover {
+    background: #098765;
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        flex-direction: column;
+        gap: 0.7em;
+    }
+    nav ul {
+        flex-direction: column;
+    }
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    .product-image {
+        height: 150px;
+        max-width: 90vw;
+    }
+    main {
+        padding: 0 0.5em;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background: #f7f7f7;
+    color: #666;
+    font-size: 0.95em;
+    margin-top: 2em;
+}
