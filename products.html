@@ -2,63 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>All Products - Smart Kitchen Gadgets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Smart Kitchen Gadgets - GreenTrend</title>
-    <meta name="description" content="Browse all smart kitchen gadgets available on GreenTrend. Filter by Low Budget Finds, Mid Range Picks, and Premium Products.">
-    <meta name="keywords" content="smart kitchen gadgets, kitchen tech, innovative cooking, eco-friendly kitchen, kitchen appliances, GreenTrend, affiliate marketing, low budget, mid range, premium products, kitchen search">
-    <meta property="og:title" content="All Smart Kitchen Gadgets - GreenTrend">
-    <meta property="og:description" content="Explore GreenTrend's full range of smart kitchen devices.">
-    <meta property="og:image" content="images/hero-background.jpg">
-    <meta property="og:url" content="https://yourwebsite.github.io/greentrend/products.html">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
 </head>
 <body>
     <header>
-        <nav>
-            <div class="logo"><a href="index.html">GreenTrend</a></div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Categories</a>
-                    <div class="dropdown-content">
-                        <a href="products.html?category=low-budget">Low Budget Finds</a>
-                        <a href="products.html?category=mid-range">Mid Range Picks</a>
-                        <a href="products.html?category=premium">Premium Products</a>
-                    </div>
-                </li>
-                <li>
-                    <button id="currency-toggle" class="currency-button" aria-label="Toggle Currency between USD and INR">USD / INR</button>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="products-listing">
-            <h2>Our Smart Kitchen Gadgets</h2>
-            <div class="filter-controls">
-                <div class="category-filters">
-                    <button class="filter-button active" data-category="all">All Products</button>
-                    <button class="filter-button" data-category="low-budget">Low Budget Finds</button>
-                    <button class="filter-button" data-category="mid-range">Mid Range Picks</button>
-                    <button class="filter-button" data-category="premium">Premium Products</button>
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="product-search" placeholder="Search products..." aria-label="Search products">
-                </div>
+        <!-- Same navbar as index.html -->
+        <div class="navbar">
+            <div class="logo-space">
+                <span class="logo-text">Smart Kitchen Gadgets</span>
             </div>
-            <div class="product-grid" id="all-products-grid">
-                </div>
-            <p id="no-results" style="display: none; text-align: center; margin-top: 30px; font-size: 1.2rem; color: #666;">No products found matching your criteria.</p>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html" class="active">Products</a></li>
+                    <li>
+                        <a href="#">Categories</a>
+                        <ul class="dropdown">
+                            <li><a href="category-low.html">Low Budget Finds</a></li>
+                            <li><a href="category-mid.html">Mid Range Picks</a></li>
+                            <li><a href="category-premium.html">Premium Products</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="currency-toggle">
+                <label>
+                    <input type="radio" name="currency" value="INR" checked>
+                    INR
+                </label>
+                <label>
+                    <input type="radio" name="currency" value="USD">
+                    USD
+                </label>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>All Smart Kitchen Gadgets</h2>
+            <div class="products-grid" id="all-products"></div>
         </section>
     </main>
-
     <footer>
-        <p>&copy; 2025 GreenTrend. All rights reserved. As an Amazon Associate, we earn from qualifying purchases.</p>
+        <p>© 2025 Smart Kitchen Gadgets. Amazon Affiliate Website for India & US.</p>
     </footer>
-
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
+    <script>
+        // Render all products
+        document.addEventListener("DOMContentLoaded", () => {
+            renderProducts(products, "all-products");
+            document.querySelectorAll('input[name="currency"]').forEach(input => {
+                input.addEventListener("change", () => renderProducts(products, "all-products"));
+            });
+        });
+    </script>
 </body>
 </html>
