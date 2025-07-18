@@ -1,59 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All Products - GreenTrend</title>
-  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-  <!-- Header -->
+  <!-- Shared Header -->
   <header class="header">
-    <div class="logo"><a href="index.html">GreenTrend</a></div>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="products.html" class="active">Products</a>
-    </nav>
-    <div class="controls">
-      <select id="currency-select">
-        <option value="INR">INR ₹</option>
-        <option value="USD">USD $</option>
-      </select>
-      <input type="text" id="search-input" placeholder="Search Products..."/>
+    <div class="container">
+      <div class="logo">
+        <a href="index.html">GreenTrend</a>
+      </div>
+      
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav class="navbar">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="products.html" class="active"><i class="fas fa-utensils"></i> Products</a>
+        <a href="#"><i class="fas fa-info-circle"></i> About</a>
+      </nav>
+      
+      <div class="header-controls">
+        <div class="currency-toggle">
+          <select id="currency-select" aria-label="Select currency">
+            <option value="IN">INR ₹</option>
+            <option value="US">USD $</option>
+          </select>
+        </div>
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Search products..." aria-label="Search products">
+          <button class="search-btn" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- Category Filter -->
-  <section class="category-section">
-    <button class="cat-btn" data-category="all">All</button>
-    <button class="cat-btn" data-category="low-budget">Low Budget Finds</button>
-    <button class="cat-btn" data-category="mid-range">Mid Range Picks</button>
-    <button class="cat-btn" data-category="premium">Premium Products</button>
-  </section>
-
   <!-- Main Content -->
   <main class="main-content">
-    <!-- Product List Container -->
-    <div id="product-list" class="product-grid"></div>
-
-    <!-- Single Product Detail View -->
-    <div id="product-detail" class="product-detail hidden"></div>
+    <div class="container">
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Products</span>
+      </nav>
+      
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1>Our Products</h1>
+        <p>Browse our collection of smart kitchen gadgets</p>
+      </div>
+      
+      <!-- Filters -->
+      <div class="filters">
+        <div class="filter-group">
+          <label for="category-filter">Category</label>
+          <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="appliances">Appliances</option>
+            <option value="tools">Tools</option>
+            <!-- More categories -->
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="price-filter">Price Range</label>
+          <select id="price-filter">
+            <option value="all">All Prices</option>
+            <option value="low">Under ₹1000</option>
+            <option value="medium">₹1000 - ₹5000</option>
+            <option value="high">Over ₹5000</option>
+          </select>
+        </div>
+        
+        <button id="reset-filters" class="btn btn-secondary">
+          <i class="fas fa-sync-alt"></i> Reset
+        </button>
+      </div>
+      
+      <!-- Product Grid -->
+      <div class="product-grid" id="product-grid"></div>
+      
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="btn btn-secondary" disabled>
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <span>Page 1 of 5</span>
+        <button class="btn btn-secondary">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Shared Footer -->
   <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 GreenTrend. All rights reserved.</p>
-      <a href="#">Pinterest</a> |
-      <a href="#">Privacy</a> |
-      <a href="#">Terms</a>
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Same footer as index.html -->
+      </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script type="module" src="main.js"></script>
-  <script type="module" src="products.js"></script>
-
+  <script src="js/utils.js"></script>
+  <script src="js/products.js"></script>
 </body>
 </html>
