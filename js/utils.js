@@ -1,49 +1,34 @@
-// ✅ Currency Toggle Logic
-let currentCurrency = localStorage.getItem("currency") || "INR";
+// utils.js
 
-function formatPrice(product) {
-  return currentCurrency === "INR"
-    ? `₹${product.priceINR}`
-    : `$${product.priceUSD}`;
+// Get currency symbol
+export function getCurrencySymbol(currency) {
+  return currency === 'USD' ? '$' : '₹';
 }
 
-function getAffiliateLink(product) {
-  return currentCurrency === "INR"
-    ? product.affiliateLinkIN
-    : product.affiliateLinkUS;
+// Convert price based on selected currency
+export function convertPrice(priceINR, currency) {
+  const exchangeRate = 0.012; // 1 INR = 0.012 USD approx
+  return currency === 'USD'
+    ? (priceINR * exchangeRate).toFixed(2)
+    : priceINR;
 }
 
-// ✅ Toggle Currency Function
-function toggleCurrency() {
-  currentCurrency = currentCurrency === "INR" ? "USD" : "INR";
-  localStorage.setItem("currency", currentCurrency);
-  document.dispatchEvent(new Event("currencyChanged"));
+// Get current user's region (mock, can be replaced by IP API)
+export function getRegion() {
+  // Example logic: fallback to India
+  const region = localStorage.getItem('region');
+  return region === 'US' ? 'US' : 'IN';
 }
 
-// ✅ Get Query Param from URL (like id from product.html?id=xxx)
-function getQueryParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(param);
+// Set user region (from dropdown or detection)
+export function setRegion(region) {
+  localStorage.setItem('region', region);
 }
 
-// ✅ Filter Products by Category ID
-function getProductsByCategory(catId) {
-  return products.filter((p) => p.category === catId);
-}
-
-// ✅ Get Product by ID
-function getProductById(prodId) {
-  return products.find((p) => p.id === prodId);
-}
-
-// ✅ Currency Button Setup
-function setupCurrencyToggleButton(btnSelector) {
-  const btn = document.querySelector(btnSelector);
-  if (btn) {
-    btn.innerText = currentCurrency;
-    btn.addEventListener("click", () => {
-      toggleCurrency();
-      btn.innerText = currentCurrency;
-    });
-  }
+// Format price string
+export function formatPrice(price, currency) {
+  const symbol = getCurrencySymbol(currency);
+  return currency === 'USD'
+    ? `${symbol}${price}`
+    : `${symbol}${Number(price).toLocaleString('en-IN')}`;
 }
