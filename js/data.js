@@ -1,3 +1,4 @@
+// data.js
 const products = [
   {
     id: "1",
@@ -9,8 +10,7 @@ const products = [
     rating: 4.5,
     features: ["Variable speed control", "Eco-friendly materials", "Smart app integration"],
     buyLinkIN: "https://example.com/buy-blender-inr",
-    buyLinkUS: "https://example.com/buy Esteban
-System: buy-blender-usd"
+    buyLinkUS: "https://example.com/buy-blender-usd"
   },
   {
     id: "2",
