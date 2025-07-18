@@ -13,19 +13,18 @@ function formatPrice(priceINR, priceUSD) {
   return `${currentCurrency} ${currentCurrency === 'INR' ? priceINR : priceUSD}`;
 }
 
-// Render Products (for index.html)
+// Render Products
 function renderProducts() {
   const productContainer = document.getElementById('featured-products');
   if (productContainer) {
     productContainer.innerHTML = '';
     products.forEach(product => {
       const productCard = `
-        <div class="col-md-4 mb-4">
+        <div class="col">
           <div class="card product-card">
             <img src="${product.image}" class="card-img-top" alt="${product.name}" loading="lazy">
             <div class="card-body">
               <h5 class="card-title">${product.name}</h5>
-              <p class="card-text">${product.description}</p>
               <p class="card-text"><strong>${formatPrice(product.price.INR, product.price.USD)}</strong></p>
               <a href="products.html?id=${product.id}" class="btn btn-primary">View Details</a>
             </div>
@@ -37,14 +36,14 @@ function renderProducts() {
   }
 }
 
-// Render Categories (for index.html)
+// Render Categories
 function renderCategories() {
   const categoryContainer = document.getElementById('category-list');
   if (categoryContainer) {
     categoryContainer.innerHTML = '';
     categories.forEach(category => {
       const categoryCard = `
-        <div class="col-md-4 mb-4">
+        <div class="col">
           <div class="card category-card">
             <img src="${category.image}" class="card-img-top" alt="${category.name}" loading="lazy">
             <div class="card-body">
@@ -59,7 +58,7 @@ function renderCategories() {
   }
 }
 
-// Search Functionality (for index.html)
+// Search Functionality
 document.getElementById('searchBox')?.addEventListener('input', function (e) {
   const query = e.target.value.toLowerCase();
   const resultsContainer = document.getElementById('searchResults');
@@ -73,15 +72,15 @@ document.getElementById('searchBox')?.addEventListener('input', function (e) {
       resultsContainer.style.display = filteredProducts.length ? 'block' : 'none';
       resultsContainer.innerHTML = filteredProducts.length
         ? filteredProducts.map(product => `
-          <div class="search-result-item">
+          <div class="search-result-item d-flex align-items-center p-2 border-bottom">
             <img src="${product.image}" alt="${product.name}" width="50" loading="lazy">
-            <div>
-              <h6>${product.name}</h6>
-              <p>${formatPrice(product.price.INR, product.price.USD)}</p>
+            <div class="ms-3">
+              <h6 class="mb-0">${product.name}</h6>
+              <p class="mb-0">${formatPrice(product.price.INR, product.price.USD)}</p>
             </div>
           </div>
         `).join('')
-        : '<p>No results found.</p>';
+        : '<p class="p-2">No results found.</p>';
     } else {
       resultsContainer.style.display = 'none';
     }
