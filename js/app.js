@@ -6,7 +6,7 @@ function getUserCountry() {
     if (lang.toLowerCase().includes("in")) return "india";
     if (lang.toLowerCase().includes("us")) return "us";
   } catch(e) {}
-  return "us"; // Default: US/Other
+  return "global"; // Default: global (other countries)
 }
 
 // Allow manual switch
@@ -66,12 +66,6 @@ function productCardHTML(product) {
     userCountry === "india" && product.priceINR ? `₹${product.priceINR}` :
     userCountry === "us" && product.priceUSD ? `$${product.priceUSD}` :
     product.priceUSD ? `$${product.priceUSD}` : "";
-  // Pick affiliate link
-  let affiliateLink =
-    product.availability === "global" ? product.affiliate.global :
-    userCountry === "india" ? product.affiliate.india || product.affiliate.global :
-    userCountry === "us" ? product.affiliate.us || product.affiliate.global :
-    product.affiliate.global || "#";
   return `
     <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'" style="cursor:pointer;">
       <img src="${img}" alt="${product.title}">
@@ -130,11 +124,15 @@ function renderProductPage() {
     userCountry === "india" && product.priceINR ? `₹${product.priceINR}` :
     userCountry === "us" && product.priceUSD ? `$${product.priceUSD}` :
     product.priceUSD ? `$${product.priceUSD}` : "";
-  let affiliateLink =
-    product.availability === "global" ? product.affiliate.global :
-    userCountry === "india" ? product.affiliate.india || product.affiliate.global :
-    userCountry === "us" ? product.affiliate.us || product.affiliate.global :
-    product.affiliate.global || "#";
+  // Countrywise buy link
+  let affiliateLink = "#";
+  if (userCountry === "india" && product.affiliate.india) {
+    affiliateLink = product.affiliate.india;
+  } else if (userCountry === "us" && product.affiliate.us) {
+    affiliateLink = product.affiliate.us;
+  } else if (product.affiliate.global) {
+    affiliateLink = product.affiliate.global;
+  }
   let gallery = product.images.map(img => `<img src="${img}" alt="${product.title}">`).join('');
   let features = product.features ? `<ul class="features">${product.features.map(f => `<li>${f}</li>`).join('')}</ul>` : '';
   document.getElementById("productDetails").innerHTML = `
