@@ -1,62 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>All Products - Smart Kitchen Gadgets</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script defer src="scripts.js"></script>
+  <meta charset="UTF-8">
+  <title>All Products | Smart Kitchen Gadgets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <div class="navbar sticky">
-            <div class="logo-space">
-                <span class="logo-text">Smart Kitchen Gadgets</span>
-            </div>
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html" class="active">Products</a></li>
-                    <li class="has-dropdown">
-                        <a href="#">Categories <i class="fa fa-chevron-down"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="category-low.html">Low Budget Finds</a></li>
-                            <li><a href="category-mid.html">Mid Range Picks</a></li>
-                            <li><a href="category-premium.html">Premium Products</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div class="currency-toggle">
-                <label>
-                    <input type="radio" name="currency" value="INR" checked>
-                    INR
-                </label>
-                <label>
-                    <input type="radio" name="currency" value="USD">
-                    USD
-                </label>
-            </div>
-        </div>
-    </header>
-    <main>
-        <h1 class="page-title">All Smart Kitchen Gadgets</h1>
-        <div class="products-list" id="all-products"></div>
-    </main>
-    <footer>
-        <div class="footer-content">
-            <span>© 2025 Smart Kitchen Gadgets</span>
-            <span>Amazon Affiliate Website for India & US</span>
-        </div>
-    </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            renderProducts(products, "all-products");
-            document.querySelectorAll('input[name="currency"]').forEach(input => {
-                input.addEventListener("change", () => renderProducts(products, "all-products"));
-            });
-        });
-    </script>
+  <header>
+    <!-- Reuse navbar from index.html -->
+  </header>
+  <main>
+    <h1>All Products</h1>
+    <div class="product-list" id="allProductsList"></div>
+  </main>
+  <footer>
+    <p>&copy; 2025 Smart Kitchen Gadgets. Amazon Affiliate Disclaimer.</p>
+  </footer>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
