@@ -554,3 +554,24 @@ footer {
         padding: 0 .5em;
     }
 }
+.buy-now-btn {
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 9px;
+    padding: 0.7em 2.1em;
+    font-weight: 700;
+    font-size: 1.07em;
+    box-shadow: 0 2px 8px rgba(255,122,0,.13);
+    text-decoration: none;
+    margin-top: .3em;
+    margin-bottom: .1em;
+    transition: background .2s;
+    cursor: pointer;
+    display: inline-block;
+}
+.buy-now-btn:hover {
+    background: var(--accent2);
+    color: #fff;
+}
