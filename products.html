@@ -5,21 +5,22 @@
     <title>All Products - Smart Kitchen Gadgets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="scripts.js"></script>
 </head>
 <body>
     <header>
-        <!-- Same navbar as index.html -->
-        <div class="navbar">
+        <div class="navbar sticky">
             <div class="logo-space">
                 <span class="logo-text">Smart Kitchen Gadgets</span>
             </div>
             <nav>
-                <ul>
+                <ul class="nav-list">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="products.html" class="active">Products</a></li>
-                    <li>
-                        <a href="#">Categories</a>
+                    <li class="has-dropdown">
+                        <a href="#">Categories <i class="fa fa-chevron-down"></i></a>
                         <ul class="dropdown">
                             <li><a href="category-low.html">Low Budget Finds</a></li>
                             <li><a href="category-mid.html">Mid Range Picks</a></li>
@@ -41,16 +42,17 @@
         </div>
     </header>
     <main>
-        <section>
-            <h2>All Smart Kitchen Gadgets</h2>
-            <div class="products-grid" id="all-products"></div>
-        </section>
+        <h1 class="page-title">All Smart Kitchen Gadgets</h1>
+        <div class="products-list" id="all-products"></div>
     </main>
     <footer>
-        <p>© 2025 Smart Kitchen Gadgets. Amazon Affiliate Website for India & US.</p>
+        <div class="footer-content">
+            <span>© 2025 Smart Kitchen Gadgets</span>
+            <span>Amazon Affiliate Website for India & US</span>
+        </div>
     </footer>
     <script>
-        // Render all products
+        // JS render function for improved card layout
         document.addEventListener("DOMContentLoaded", () => {
             renderProducts(products, "all-products");
             document.querySelectorAll('input[name="currency"]').forEach(input => {
