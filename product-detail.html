@@ -2,53 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Product Detail - Smart Kitchen Gadgets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="product-detail-title">Product Details - GreenTrend</title>
-    <meta name="description" id="product-detail-description" content="Detailed information about a smart kitchen gadget from GreenTrend.">
-    <meta name="keywords" id="product-detail-keywords" content="smart kitchen gadget, kitchen tech, GreenTrend, product details">
-    <meta property="og:title" id="og-title" content="">
-    <meta property="og:description" id="og-description" content="">
-    <meta property="og:image" id="og-image" content="">
-    <meta property="og:url" id="og-url" content="">
-    <meta property="og:type" content="product">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="scripts.js"></script>
 </head>
 <body>
     <header>
-        <nav>
-            <div class="logo"><a href="index.html">GreenTrend</a></div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Categories</a>
-                    <div class="dropdown-content">
-                        <a href="products.html?category=low-budget">Low Budget Finds</a>
-                        <a href="products.html?category=mid-range">Mid Range Picks</a>
-                        <a href="products.html?category=premium">Premium Products</a>
-                    </div>
-                </li>
-                <li>
-                    <button id="currency-toggle" class="currency-button" aria-label="Toggle Currency between USD and INR">USD / INR</button>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="product-detail-container">
-        <section class="product-detail-card" id="product-detail-section">
-            <p>Loading product details...</p>
-        </section>
-        <div class="back-to-products">
-            <a href="products.html" class="button-small">← Back to All Products</a>
+        <div class="navbar sticky">
+            <div class="logo-space">
+                <img src="logo.png" alt="Logo" class="logo-img"/>
+                <span class="logo-text">Smart Kitchen Gadgets</span>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">Categories <i class="fa fa-chevron-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="category-low.html">Low Budget Finds</a></li>
+                            <li><a href="category-mid.html">Mid Range Picks</a></li>
+                            <li><a href="category-premium.html">Premium Products</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="currency-toggle">
+                <button class="currency-btn" data-currency="INR">INR</button>
+                <button class="currency-btn" data-currency="USD">USD</button>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fa fa-bars"></i></button>
         </div>
+    </header>
+    <main>
+        <section class="product-detail" id="productDetail">
+            <!-- Dynamic content loaded via JS -->
+        </section>
+        <section class="related-products">
+            <h3>Related Gadgets</h3>
+            <div class="products-grid" id="relatedProducts"></div>
+        </section>
     </main>
-
     <footer>
-        <p>&copy; 2025 GreenTrend. All rights reserved. As an Amazon Associate, we earn from qualifying purchases.</p>
+        <div class="footer-content">
+            <div>
+                <span>© 2025 Smart Kitchen Gadgets</span>
+                <span>Amazon Affiliate Website for India & US</span>
+            </div>
+            <div>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
     </footer>
+    <script>
+        // Get product id from URL query param
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
 
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const prodTitle = getQueryParam("product");
+            const prod = products.find(p => p.title === prodTitle) || products[0];
+
+            // Product Detail Rendering
+            const container = document.getElementById("productDetail");
+            container.innerHTML = `
+                <div class="product-detail-card">
+                    <div class="detail-img-wrap">
+                        <img src="${prod.image}" alt="${prod.title}" class="product-image"/>
+                    </div>
+                    <div class="detail-content">
+                        <h2>${prod.title}</h2>
+                        <div class="product-rating">⭐ ${prod.rating || "4.5"} <span style="color:#888;">(${prod.reviews || "25"})</span></div>
+                        <div class="price-row">
+                            <span class="price-label">₹${prod.priceINR}</span>
+                            <span class="price-label">$${prod.priceUSD}</span>
+                        </div>
+                        <div class="buy-links">
+                            <a class="buy-now-btn" href="${prod.affiliateIN}" target="_blank">Buy for India</a>
+                            <a class="buy-now-btn" href="${prod.affiliateUS}" target="_blank">Buy for US</a>
+                        </div>
+                        <div class="product-specs">
+                            <h4>Specifications</h4>
+                            <ul>
+                                ${prod.specs ? prod.specs.map(s => `<li>${s}</li>`).join("") : `
+                                    <li>Material: Stainless Steel & BPA Free Plastic</li>
+                                    <li>Capacity: 1.7 Liters</li>
+                                    <li>Connectivity: WiFi Enabled</li>
+                                    <li>Warranty: 1 Year</li>
+                                `}
+                            </ul>
+                        </div>
+                        <div class="product-description">
+                            <h4>Description</h4>
+                            <p>${prod.description || "A smart kitchen gadget designed to simplify your daily cooking needs. Energy efficient, safe, and packed with latest technology for ultimate convenience."}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Related Products
+            const related = products.filter(p => p.category === prod.category && p.title !== prod.title).slice(0, 3);
+            renderProducts(related, "relatedProducts");
+        });
+    </script>
 </body>
 </html>
