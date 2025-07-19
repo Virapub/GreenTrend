@@ -1,3 +1,111 @@
+// --- Product Data ---
+const products = [
+    {
+        title: "Smart Electric Kettle",
+        image: "https://images-na.ssl-images-amazon.com/images/I/71ie6vWckhL._AC_SL1500_.jpg",
+        priceINR: 2499,
+        priceUSD: 29.99,
+        affiliateIN: "https://www.amazon.in/dp/B07XY7Q6N6/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B07XY7Q6N6/?tag=yourtag-20",
+        category: "Low Budget Finds",
+        featured: true,
+        badge: "Best Seller",
+        rating: 4.6,
+        reviews: 31,
+        specs: [
+            "Material: Stainless Steel & BPA Free Plastic",
+            "Capacity: 1.7 Liters",
+            "Connectivity: WiFi Enabled",
+            "Warranty: 1 Year",
+            "Auto Shut-off: Yes"
+        ],
+        description: "This smart electric kettle boils water quickly with WiFi-enabled controls. Use your phone to set the temperature, enjoy auto shut-off and child lock features. Perfect for modern kitchens and safe for families."
+    },
+    {
+        title: "Automatic Roti Maker",
+        image: "https://images-na.ssl-images-amazon.com/images/I/81WbGd+BbXL._AC_SL1500_.jpg",
+        priceINR: 5999,
+        priceUSD: 72.99,
+        affiliateIN: "https://www.amazon.in/dp/B08FZ8FH5K/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B08FZ8FH5K/?tag=yourtag-20",
+        category: "Mid Range Picks",
+        featured: true,
+        badge: "Deal",
+        rating: 4.3,
+        reviews: 18,
+        specs: [
+            "Material: Non-Stick Ceramic Plate",
+            "Auto Press & Cook: Yes",
+            "Size: 10 inch Diameter",
+            "Warranty: 2 Years",
+            "Voltage: 220V/110V"
+        ],
+        description: "Make perfect rotis in seconds! This automatic roti maker saves you time and effort with its non-stick plate and auto-press features. Ideal for Indian kitchens and busy families."
+    },
+    {
+        title: "Smart WiFi Air Fryer",
+        image: "https://images-na.ssl-images-amazon.com/images/I/81TfU8vXQkL._AC_SL1500_.jpg",
+        priceINR: 10999,
+        priceUSD: 129.99,
+        affiliateIN: "https://www.amazon.in/dp/B07V3H7J8V/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B07V3H7J8V/?tag=yourtag-20",
+        category: "Premium Products",
+        featured: true,
+        badge: "Premium",
+        rating: 4.8,
+        reviews: 45,
+        specs: [
+            "Capacity: 5.5 Liters",
+            "Connectivity: WiFi + App Control",
+            "Preset Cooking Modes: 12",
+            "Warranty: 1 Year",
+            "Dishwasher Safe Basket"
+        ],
+        description: "Fry, bake, grill and roast with this smart air fryer! Control everything from your phone, choose among 12 preset modes, and enjoy healthy oil-free cooking. A must-have for tech-savvy kitchen enthusiasts."
+    },
+    {
+        title: "Mini Blender Portable",
+        image: "https://images-na.ssl-images-amazon.com/images/I/71KNSJzH4QL._AC_SL1500_.jpg",
+        priceINR: 1399,
+        priceUSD: 16.99,
+        affiliateIN: "https://www.amazon.in/dp/B08HRW4X7S/?tag=yourtag-21",
+        affiliateUS: "https://www.amazon.com/dp/B08HRW4X7S/?tag=yourtag-20",
+        category: "Low Budget Finds",
+        featured: false,
+        badge: "New",
+        rating: 4.2,
+        reviews: 12,
+        specs: [
+            "Material: BPA Free Plastic",
+            "Capacity: 400ml",
+            "Battery: USB Rechargeable",
+            "Usage: Smoothies, Juices",
+            "Colors: Multiple"
+        ],
+        description: "Blend your favorite smoothies anywhere! This portable mini blender is lightweight, rechargeable, and safe for travel. Make juices, smoothies, and shakes in seconds."
+    }
+];
+
+// --- Wishlist Functions ---
+function isWishlisted(title) {
+    const wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    return wishes.includes(title);
+}
+function toggleWishlist(title, btn) {
+    let wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    if (wishes.includes(title)) {
+        wishes = wishes.filter(t => t !== title);
+        btn.classList.remove("active");
+        btn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+    } else {
+        wishes.push(title);
+        btn.classList.add("active");
+        btn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+    }
+    localStorage.setItem("wishlist", JSON.stringify(wishes));
+}
+
+// --- Product List Render ---
 function renderProducts(productsToShow, containerId) {
     const grid = document.getElementById(containerId);
     if (!grid) return;
@@ -61,14 +169,12 @@ function renderProducts(productsToShow, containerId) {
         priceRow.appendChild(usdPrice);
         card.appendChild(priceRow);
 
-        // Product Details Button (instead of Buy for India/US)
+        // Product Details Button
         const detailsBtn = document.createElement('a');
         detailsBtn.className = "buy-now-btn";
         detailsBtn.textContent = "Product Details";
-        // Encode product title for URL
         detailsBtn.href = `product-detail.html?product=${encodeURIComponent(prod.title)}`;
         detailsBtn.style.textAlign = "center";
-        // Open in same tab
         card.appendChild(detailsBtn);
 
         grid.appendChild(card);
