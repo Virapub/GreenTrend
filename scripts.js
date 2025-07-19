@@ -86,7 +86,7 @@ const products = [
     }
 ];
 
-// --- Wishlist Functions ---
+// Wishlist
 function isWishlisted(title) {
     const wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
     return wishes.includes(title);
@@ -105,7 +105,7 @@ function toggleWishlist(title, btn) {
     localStorage.setItem("wishlist", JSON.stringify(wishes));
 }
 
-// --- Product List Render ---
+// Product List Render
 function renderProducts(productsToShow, containerId) {
     const grid = document.getElementById(containerId);
     if (!grid) return;
@@ -180,3 +180,75 @@ function renderProducts(productsToShow, containerId) {
         grid.appendChild(card);
     });
 }
+
+// Category Chips Render and click
+function renderCategoryChips(categories, chipContainerId, productsContainerId) {
+    const chipContainer = document.getElementById(chipContainerId);
+    chipContainer.innerHTML = "";
+    const allChip = document.createElement("button");
+    allChip.className = "chip active";
+    allChip.textContent = "All";
+    allChip.onclick = () => {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove("active"));
+        allChip.classList.add("active");
+        renderProducts(products, productsContainerId);
+    };
+    chipContainer.appendChild(allChip);
+
+    categories.forEach(cat => {
+        const chip = document.createElement("button");
+        chip.className = "chip";
+        chip.textContent = cat;
+        chip.onclick = () => {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            renderProducts(products.filter(p => p.category === cat), productsContainerId);
+        };
+        chipContainer.appendChild(chip);
+    });
+}
+
+// Hamburger menu, category dropdown logic
+document.addEventListener("DOMContentLoaded", () => {
+    // Hamburger mobile nav
+    const navToggle = document.querySelector('.nav-toggle');
+    const navList = document.querySelector('.nav-list');
+    navToggle && navToggle.addEventListener("click", () => {
+        navList.classList.toggle("mobile-active");
+    });
+
+    // Category dropdown
+    document.querySelectorAll('.has-dropdown > a').forEach(drop => {
+        drop.onclick = (e) => {
+            e.preventDefault();
+            const parent = drop.parentElement;
+            document.querySelectorAll('.has-dropdown').forEach(d => {
+                if (d !== parent) d.classList.remove("open");
+            });
+            parent.classList.toggle("open");
+        };
+    });
+
+    // Category chips (if element exists)
+    const chipContainer = document.getElementById("category-chips");
+    const productsContainerId = "all-products";
+    if (chipContainer) {
+        const categories = [...new Set(products.map(p => p.category))];
+        renderCategoryChips(categories, "category-chips", productsContainerId);
+    }
+
+    // Initial products render
+    if (document.getElementById(productsContainerId)) {
+        renderProducts(products, productsContainerId);
+    }
+
+    // Currency toggle
+    document.querySelectorAll('input[name="currency"]').forEach(input => {
+        input.addEventListener("change", () => renderProducts(
+            document.querySelector(".chip.active")?.textContent === "All"
+                ? products
+                : products.filter(p => p.category === document.querySelector(".chip.active").textContent),
+            productsContainerId
+        ));
+    });
+});
