@@ -8,14 +8,10 @@
     --card-radius: 16px;
     --shadow: 0 2px 12px rgba(0,0,0,.08);
     --gradient: linear-gradient(90deg, #ff7a00 0%, #ffb347 100%);
-    --gradient2: linear-gradient(90deg, #00b894 0%, #ffb347 100%);
     --danger: #d33;
     --success: #00b894;
-    --link: #0c7cd5;
-    --gray: #888;
 }
 
-/* Reset and base styles */
 body {
     margin: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -26,7 +22,7 @@ body {
 }
 
 a {
-    color: var(--link);
+    color: #0c7cd5;
     text-decoration: none;
     transition: color .2s;
 }
@@ -144,104 +140,16 @@ nav {
     cursor: pointer;
 }
 
-/* Hero Banner */
-.hero-banner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--gradient);
-    padding: 2em 1.5em 1em 1.5em;
-    color: var(--white);
-    position: relative;
-}
-.hero-content {
-    max-width: 480px;
-}
-.hero-content h1 {
-    font-size: 2.2em;
-    font-weight: bold;
-    margin: 0 0 .3em 0;
-}
-.highlight-gradient {
-    background: var(--gradient2);
-    color: var(--white);
-    padding: .1em .3em;
-    border-radius: 4px;
-}
-.hero-btn {
-    background: var(--white);
-    color: var(--accent);
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    padding: .7em 1.4em;
-    margin-top: 1em;
-    text-decoration: none;
-    box-shadow: var(--shadow);
-    transition: background .2s, color .2s;
-    display: inline-block;
-}
-.hero-btn:hover {
-    background: var(--accent2);
-    color: var(--white);
-}
-.carousel {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    position: relative;
-    min-width: 230px;
-}
-.carousel-img {
-    width: 230px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: var(--card-radius);
-    opacity: 0;
-    position: absolute;
-    transition: opacity .6s;
-}
-.carousel-img.active {
-    opacity: 1;
-    position: relative;
+/* Page Title */
+.page-title {
+    text-align: center;
+    font-size: 1.7em;
+    margin: 1em 0 .5em 0;
+    color: var(--primary);
+    letter-spacing: 2px;
 }
 
-/* Category Chips */
-.category-chips {
-    display: flex;
-    gap: .7em;
-    overflow-x: auto;
-    padding: .9em 1em;
-    background: var(--white);
-    margin-top: 1em;
-}
-.chip {
-    border: none;
-    background: var(--accent2);
-    color: var(--white);
-    padding: .5em 1.1em;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: .97em;
-    cursor: pointer;
-    transition: background .2s, box-shadow .2s;
-    box-shadow: 0 2px 6px rgba(0,184,148,.08);
-}
-.chip.active, .chip:hover {
-    background: var(--accent);
-    box-shadow: 0 4px 10px rgba(255,122,0,.10);
-}
-
-/* Products Grid - Home/Featured */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.3em;
-    margin: 2em 0;
-}
-
-/* Products List - Products Page */
+/* Products List */
 .products-list {
     display: flex;
     flex-direction: column;
@@ -347,6 +255,7 @@ nav {
 }
 .buy-now-btn:hover {
     background: var(--accent2);
+    color: #fff;
 }
 .wishlist-btn {
     position: absolute;
@@ -365,14 +274,6 @@ nav {
 }
 .wishlist-btn.active {
     color: var(--accent2);
-}
-
-.page-title {
-    text-align: center;
-    font-size: 1.7em;
-    margin: 1em 0 .5em 0;
-    color: var(--primary);
-    letter-spacing: 2px;
 }
 
 /* Breadcrumbs for detail page */
@@ -532,13 +433,6 @@ footer {
     .nav-toggle {
         display: inline-block;
     }
-    .carousel-img {
-        width: 90vw;
-        height: 120px;
-    }
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
     .products-list {
         max-width: 98vw;
         padding: 0 .1em;
@@ -553,25 +447,4 @@ footer {
     main {
         padding: 0 .5em;
     }
-}
-.buy-now-btn {
-    background: var(--gradient);
-    color: #fff;
-    border: none;
-    outline: none;
-    border-radius: 9px;
-    padding: 0.7em 2.1em;
-    font-weight: 700;
-    font-size: 1.07em;
-    box-shadow: 0 2px 8px rgba(255,122,0,.13);
-    text-decoration: none;
-    margin-top: .3em;
-    margin-bottom: .1em;
-    transition: background .2s;
-    cursor: pointer;
-    display: inline-block;
-}
-.buy-now-btn:hover {
-    background: var(--accent2);
-    color: #fff;
 }
