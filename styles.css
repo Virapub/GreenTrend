@@ -5,11 +5,10 @@
     --accent3: #ffb347;
     --bg: #f7fafc;
     --white: #fff;
-    --card-radius: 16px;
-    --shadow: 0 2px 12px rgba(0,0,0,.08);
+    --card-radius: 18px;
+    --shadow: 0 2px 16px rgba(0,0,0,.10);
     --gradient: linear-gradient(90deg, #ff7a00 0%, #ffb347 100%);
-    --danger: #d33;
-    --success: #00b894;
+    --gray: #888;
 }
 
 body {
@@ -18,17 +17,6 @@ body {
     background: var(--bg);
     color: #222;
     min-height: 100vh;
-    scroll-behavior: smooth;
-}
-
-a {
-    color: #0c7cd5;
-    text-decoration: none;
-    transition: color .2s;
-}
-a:hover {
-    color: var(--accent);
-    text-decoration: underline;
 }
 
 /* Navbar */
@@ -76,6 +64,10 @@ nav {
     gap: 1em;
     margin: 0;
     padding: 0;
+    transition: max-height .3s;
+}
+.nav-list li {
+    position: relative;
 }
 .nav-list li a {
     color: var(--primary);
@@ -83,35 +75,57 @@ nav {
     padding: .6em 1em;
     border-radius: 8px;
     font-weight: 500;
+    transition: background .2s, color .2s;
 }
 .nav-list li a.active, .nav-list li a:hover {
     background: var(--gradient);
     color: var(--white);
 }
-.has-dropdown {
-    position: relative;
-}
-.has-dropdown:hover .dropdown {
-    display: block;
+.has-dropdown > a {
+    display: flex;
+    align-items: center;
+    gap: .3em;
+    cursor: pointer;
 }
 .dropdown {
     display: none;
     position: absolute;
+    left: 0;
+    top: 110%;
     background: var(--white);
     box-shadow: var(--shadow);
     border-radius: 8px;
-    margin-top: .5em;
     min-width: 170px;
     z-index: 10;
+    padding: .4em 0;
+}
+.has-dropdown.open .dropdown {
+    display: block;
+}
+.dropdown li {
+    padding: 0;
 }
 .dropdown li a {
     color: var(--primary);
     padding: .5em 1em;
     border-radius: 6px;
+    display: block;
 }
 .dropdown li a:hover {
     background: var(--accent);
     color: var(--white);
+}
+
+/* Hamburger (mobile) */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: var(--primary);
+    margin-left: .7em;
+    cursor: pointer;
+    z-index: 100;
 }
 
 .currency-toggle {
@@ -123,33 +137,49 @@ nav {
     font-size: 1em;
     display: flex;
     align-items: center;
-    gap: 1em;
+    gap: .7em;
 }
 .currency-toggle label {
     cursor: pointer;
     font-weight: 500;
 }
 
-.nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.4em;
-    color: var(--primary);
-    margin-left: .7em;
-    cursor: pointer;
-}
-
-/* Page Title */
 .page-title {
     text-align: center;
-    font-size: 1.7em;
-    margin: 1em 0 .5em 0;
+    font-size: 2em;
+    margin: 1.2em 0 .8em 0;
     color: var(--primary);
     letter-spacing: 2px;
+    font-weight: 700;
 }
 
-/* Products List */
+/* Category Chips */
+.category-chips {
+    display: flex;
+    gap: .7em;
+    overflow-x: auto;
+    padding: 1em 1em .5em 1em;
+    background: var(--white);
+    margin-bottom: 1em;
+}
+.chip {
+    border: none;
+    background: var(--accent2);
+    color: var(--white);
+    padding: .6em 1.3em;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1.05em;
+    cursor: pointer;
+    transition: background .2s, box-shadow .2s;
+    box-shadow: 0 2px 6px rgba(0,184,148,.08);
+    outline: none;
+}
+.chip.active, .chip:focus, .chip:hover {
+    background: var(--accent);
+    box-shadow: 0 4px 10px rgba(255,122,0,.10);
+}
+
 .products-list {
     display: flex;
     flex-direction: column;
@@ -276,94 +306,6 @@ nav {
     color: var(--accent2);
 }
 
-/* Breadcrumbs for detail page */
-.breadcrumbs {
-    display: block;
-    font-size: 1em;
-    margin: 1em 0 0 1em;
-    color: #999;
-}
-.breadcrumbs a {
-    color: var(--accent2);
-    text-decoration: none;
-}
-.breadcrumbs span {
-    color: #222;
-    font-weight: bold;
-}
-
-/* Product Detail Page Styles */
-.product-detail-card {
-    display: flex;
-    flex-wrap: wrap;
-    background: var(--white);
-    border-radius: 18px;
-    box-shadow: var(--shadow);
-    margin: 2em 0;
-    padding: 1.5em;
-    gap: 2em;
-    align-items: flex-start;
-}
-.detail-img-wrap {
-    flex: 1 1 260px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.detail-img-wrap .product-image {
-    width: 280px;
-    height: 200px;
-    object-fit: contain;
-    border-radius: 12px;
-    background: #f7f7f7;
-    box-shadow: 0 2px 8px rgba(0,184,148,.09);
-}
-.detail-content {
-    flex: 2 1 320px;
-    min-width: 260px;
-    padding-left: 1em;
-}
-.product-specs, .product-description {
-    margin-top: 1.3em;
-}
-.product-specs ul {
-    margin: .7em 0 0 1.2em;
-    padding: 0;
-    font-size: 1em;
-}
-.product-specs h4,
-.product-description h4 {
-    margin-bottom: .3em;
-    color: var(--accent);
-    font-size: 1.08em;
-    letter-spacing: 1px;
-}
-.product-description p {
-    margin: 0;
-    line-height: 1.7;
-    color: #444;
-}
-.product-notfound {
-    margin: 3em auto;
-    padding: 2em;
-    background: #fff3f3;
-    border-radius: 10px;
-    text-align: center;
-    color: var(--danger);
-    max-width: 400px;
-    box-shadow: 0 2px 10px rgba(255,0,0,.08);
-}
-
-/* Related products */
-.related-products {
-    margin-bottom: 2em;
-}
-.related-products h3 {
-    color: var(--accent2);
-    margin-bottom: 1em;
-    font-size: 1.2em;
-}
-
 /* Footer */
 footer {
     background: var(--white);
@@ -412,26 +354,35 @@ footer {
 
 @media (max-width: 700px) {
     .navbar {
-        flex-direction: column;
+        flex-direction: row;
         gap: .7em;
         padding: .7em .7em;
+        position: relative;
     }
     .nav-list {
         flex-direction: column;
         gap: .3em;
         width: 100%;
-        display: none;
-    }
-    .nav-list.mobile-active {
-        display: flex;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        top: 100%;
         background: var(--white);
-        padding: 1em 0;
         box-shadow: var(--shadow);
         border-radius: 12px;
         margin-top: .5em;
+        transition: max-height .4s;
+    }
+    .nav-list.mobile-active {
+        display: flex;
+        max-height: 350px;
+        padding: 1em 0;
     }
     .nav-toggle {
         display: inline-block;
+        position: relative;
+        z-index: 100;
     }
     .products-list {
         max-width: 98vw;
@@ -446,5 +397,9 @@ footer {
     }
     main {
         padding: 0 .5em;
+    }
+    .category-chips {
+        padding: .7em .3em;
+        gap: .4em;
     }
 }
