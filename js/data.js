@@ -7,7 +7,7 @@ const PRODUCTS = [
     priceINR: 5999,
     priceUSD: 79,
     affiliate: {
-      india: "https://amazon.in/dp/B09XYZ/",
+      india: "https://amzn.to/3IQTDxY",
       us: "https://amazon.com/dp/B08XYZ/",
       global: "https://amazon.com/dp/B08XYZ/"
     },
