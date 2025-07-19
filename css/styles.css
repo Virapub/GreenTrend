@@ -60,6 +60,7 @@ header {
   color: #fff;
 }
 
+.country-switch select,
 .currency-switch select {
   padding: 0.3rem 0.7rem;
   border-radius: 6px;
