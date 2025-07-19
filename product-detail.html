@@ -5,18 +5,48 @@
     <title>Product Detail - Smart Kitchen Gadgets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="scripts.js"></script>
 </head>
 <body>
+    <header>
+        <div class="navbar sticky">
+            <div class="logo-space">
+                <span class="logo-text">Smart Kitchen Gadgets</span>
+            </div>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html" class="active">Products</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
     <main>
-        <section id="productDetail"></section>
+        <nav class="breadcrumbs">
+            <a href="index.html">Home</a> /
+            <a href="products.html">Products</a> /
+            <span id="breadcrumbProduct"></span>
+        </nav>
+        <section class="product-detail" id="productDetail">
+            <!-- Dynamic content loaded via JS -->
+        </section>
+        <section class="related-products">
+            <h3>Related Gadgets</h3>
+            <div class="products-list" id="relatedProducts"></div>
+        </section>
     </main>
+    <footer>
+        <div class="footer-content">
+            <span>© 2025 Smart Kitchen Gadgets</span>
+            <span>Amazon Affiliate Website for India & US</span>
+        </div>
+    </footer>
     <script>
         function getQueryParam(name) {
             const params = new URLSearchParams(window.location.search);
             return params.get(name);
         }
-        // Helper for loose matching (case insensitive)
         function findProduct(title) {
             return products.find(p => decodeURIComponent(title).toLowerCase() === p.title.toLowerCase());
         }
@@ -24,29 +54,46 @@
             const prodTitle = getQueryParam("product");
             const prod = findProduct(prodTitle);
             const container = document.getElementById("productDetail");
+            const breadcrumb = document.getElementById("breadcrumbProduct");
             if (!prod) {
-                container.innerHTML = `<div style="padding:2em;text-align:center;color:#d33;">Product Not Found</div>`;
+                container.innerHTML = `<div class="product-notfound">Product Not Found</div>`;
+                breadcrumb.textContent = "Not Found";
+                document.getElementById("relatedProducts").innerHTML = "";
                 return;
             }
+            breadcrumb.textContent = prod.title;
             container.innerHTML = `
                 <div class="product-detail-card">
-                    <img src="${prod.image}" alt="${prod.title}" class="product-image" style="max-width:220px;margin-bottom:1em;">
-                    <h2>${prod.title}</h2>
-                    <div style="color:#00b894;font-size:1.05em;">⭐ ${prod.rating || ''} (${prod.reviews || ''})</div>
-                    <div style="margin:.5em 0;">
-                        <span style="font-weight:bold;">₹${prod.priceINR}</span>
-                        <span style="color:#888;margin-left:1em;">$${prod.priceUSD}</span>
+                    <div class="detail-img-wrap">
+                        <img src="${prod.image}" alt="${prod.title}" class="product-image"/>
                     </div>
-                    <a class="buy-now-btn" href="${prod.affiliateIN}" target="_blank">Buy for India</a>
-                    <a class="buy-now-btn" href="${prod.affiliateUS}" target="_blank" style="margin-left:1em;">Buy for US</a>
-                    <h4 style="margin-top:1.3em;color:#ff7a00;">Specifications</h4>
-                    <ul style="margin-left:1.3em;">
-                        ${(prod.specs||[]).map(s => `<li>${s}</li>`).join("")}
-                    </ul>
-                    <h4 style="margin-top:1em;color:#ff7a00;">Description</h4>
-                    <p style="color:#444;">${prod.description||''}</p>
+                    <div class="detail-content">
+                        <h2>${prod.title}</h2>
+                        <div class="product-rating">⭐ ${prod.rating || ""} <span style="color:#888;">(${prod.reviews || ""})</span></div>
+                        <div class="price-row">
+                            <span class="price-label">₹${prod.priceINR}</span>
+                            <span class="price-label">$${prod.priceUSD}</span>
+                        </div>
+                        <div class="buy-links" style="margin-bottom:1em;">
+                            <a class="buy-now-btn" href="${prod.affiliateIN}" target="_blank">Buy for India</a>
+                            <a class="buy-now-btn" href="${prod.affiliateUS}" target="_blank" style="margin-left:1em;">Buy for US</a>
+                        </div>
+                        <div class="product-specs">
+                            <h4>Specifications</h4>
+                            <ul>
+                                ${(prod.specs||[]).map(s => `<li>${s}</li>`).join("")}
+                            </ul>
+                        </div>
+                        <div class="product-description">
+                            <h4>Description</h4>
+                            <p>${prod.description||""}</p>
+                        </div>
+                    </div>
                 </div>
             `;
+            // Related
+            const related = products.filter(p => p.category === prod.category && p.title !== prod.title);
+            renderProducts(related, "relatedProducts");
         });
     </script>
 </body>
