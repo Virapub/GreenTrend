@@ -1,79 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Kitchen Gadgets - Amazon Affiliate</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script defer src="scripts.js"></script>
+  <meta charset="UTF-8">
+  <title>Smart Kitchen Gadgets | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/logo.png">
 </head>
 <body>
-    <header>
-        <div class="navbar sticky">
-            <div class="logo-space">
-                <!-- Custom Logo -->
-                <img src="logo.png" alt="Logo" class="logo-img"/>
-                <span class="logo-text">Smart Kitchen Gadgets</span>
-            </div>
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li class="has-dropdown">
-                        <a href="#">Categories <i class="fa fa-chevron-down"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="category-low.html">Low Budget Finds</a></li>
-                            <li><a href="category-mid.html">Mid Range Picks</a></li>
-                            <li><a href="category-premium.html">Premium Products</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-            <div class="currency-toggle">
-                <button class="currency-btn" data-currency="INR">INR</button>
-                <button class="currency-btn" data-currency="USD">USD</button>
-            </div>
-            <button class="nav-toggle" id="navToggle"><i class="fa fa-bars"></i></button>
-        </div>
-        <div class="hero-banner">
-            <div class="hero-content">
-                <h1>Upgrade Your Kitchen <span class="highlight-gradient">Smartly</span></h1>
-                <p>Find the best kitchen gadgets for every budget. Shop with confidence!</p>
-                <a href="#featured-products" class="hero-btn">Shop Featured</a>
-            </div>
-            <div class="carousel" id="carousel">
-                <img src="https://images.unsplash.com/photo-1519864600456-9d0aecb5a5f4?auto=format&fit=crop&w=600&q=80" alt="Kitchen" class="carousel-img active">
-                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Blender" class="carousel-img">
-                <img src="https://images.unsplash.com/photo-1519864600456-9d0aecb5a5f4?auto=format&fit=crop&w=600&q=80" alt="Air Fryer" class="carousel-img">
-            </div>
-        </div>
-    </header>
-    <main>
-        <section class="category-chips" id="categoryChips">
-            <button data-category="All" class="chip active">All</button>
-            <button data-category="Low Budget Finds" class="chip">Low Budget</button>
-            <button data-category="Mid Range Picks" class="chip">Mid Range</button>
-            <button data-category="Premium Products" class="chip">Premium</button>
-        </section>
-        <section class="featured-products">
-            <h2>Featured Smart Kitchen Gadgets</h2>
-            <div class="products-grid" id="featured-products"></div>
-        </section>
-    </main>
-    <footer>
-        <div class="footer-content">
-            <div>
-                <span>© 2025 Smart Kitchen Gadgets</span>
-                <span>Amazon Affiliate Website for India & US</span>
-            </div>
-            <div>
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
-    </footer>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"></a>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="category.html?cat=budget">Budget-Friendly Finds</a></li>
+        <li><a href="category.html?cat=midrange">Mid-Range Marvels</a></li>
+        <li><a href="category.html?cat=premium">Premium Innovations</a></li>
+      </ul>
+      <div class="currency-switch">
+        <label>
+          <select id="currencyToggle">
+            <option value="INR">INR ₹</option>
+            <option value="USD">USD $</option>
+          </select>
+        </label>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search products...">
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section id="editors-picks" class="section">
+      <h2>Editor's Picks</h2>
+      <div class="product-list" id="editorsPicksList"></div>
+    </section>
+    <section id="trending-gadgets" class="section">
+      <h2>Trending Gadgets</h2>
+      <div class="product-list" id="trendingList"></div>
+    </section>
+    <section id="new-arrivals" class="section">
+      <h2>New Arrivals</h2>
+      <div class="product-list" id="newArrivalsList"></div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Smart Kitchen Gadgets. Amazon Affiliate Disclaimer.</p>
+  </footer>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
