@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Kitchen Gadgets - Amazon Affiliate</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script defer src="scripts.js"></script>
 </head>
 <body>
     <header>
-        <div class="navbar">
+        <div class="navbar sticky">
             <div class="logo-space">
-                <!-- Place your custom logo here -->
+                <!-- Custom Logo -->
+                <img src="logo.png" alt="Logo" class="logo-img"/>
                 <span class="logo-text">Smart Kitchen Gadgets</span>
             </div>
             <nav>
-                <ul>
+                <ul class="nav-list">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="products.html">Products</a></li>
-                    <li>
-                        <a href="#">Categories</a>
+                    <li class="has-dropdown">
+                        <a href="#">Categories <i class="fa fa-chevron-down"></i></a>
                         <ul class="dropdown">
                             <li><a href="category-low.html">Low Budget Finds</a></li>
                             <li><a href="category-mid.html">Mid Range Picks</a></li>
@@ -29,25 +32,48 @@
                 </ul>
             </nav>
             <div class="currency-toggle">
-                <label>
-                    <input type="radio" name="currency" value="INR" checked>
-                    INR
-                </label>
-                <label>
-                    <input type="radio" name="currency" value="USD">
-                    USD
-                </label>
+                <button class="currency-btn" data-currency="INR">INR</button>
+                <button class="currency-btn" data-currency="USD">USD</button>
+            </div>
+            <button class="nav-toggle" id="navToggle"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="hero-banner">
+            <div class="hero-content">
+                <h1>Upgrade Your Kitchen <span class="highlight-gradient">Smartly</span></h1>
+                <p>Find the best kitchen gadgets for every budget. Shop with confidence!</p>
+                <a href="#featured-products" class="hero-btn">Shop Featured</a>
+            </div>
+            <div class="carousel" id="carousel">
+                <img src="https://images.unsplash.com/photo-1519864600456-9d0aecb5a5f4?auto=format&fit=crop&w=600&q=80" alt="Kitchen" class="carousel-img active">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Blender" class="carousel-img">
+                <img src="https://images.unsplash.com/photo-1519864600456-9d0aecb5a5f4?auto=format&fit=crop&w=600&q=80" alt="Air Fryer" class="carousel-img">
             </div>
         </div>
     </header>
     <main>
+        <section class="category-chips" id="categoryChips">
+            <button data-category="All" class="chip active">All</button>
+            <button data-category="Low Budget Finds" class="chip">Low Budget</button>
+            <button data-category="Mid Range Picks" class="chip">Mid Range</button>
+            <button data-category="Premium Products" class="chip">Premium</button>
+        </section>
         <section class="featured-products">
             <h2>Featured Smart Kitchen Gadgets</h2>
             <div class="products-grid" id="featured-products"></div>
         </section>
     </main>
     <footer>
-        <p>© 2025 Smart Kitchen Gadgets. Amazon Affiliate Website for India & US.</p>
+        <div class="footer-content">
+            <div>
+                <span>© 2025 Smart Kitchen Gadgets</span>
+                <span>Amazon Affiliate Website for India & US</span>
+            </div>
+            <div>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
