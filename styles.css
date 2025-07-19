@@ -373,3 +373,61 @@ footer {
 .footer-content a:hover {
     color: var(--accent2);
 }
+/* Add after existing styles, for product detail page */
+.product-detail-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    margin: 2em 0;
+    padding: 1.5em;
+    gap: 2em;
+}
+.detail-img-wrap {
+    flex: 1 1 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.detail-img-wrap .product-image {
+    width: 280px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #f7f7f7;
+}
+.detail-content {
+    flex: 2 1 320px;
+    min-width: 260px;
+}
+.product-specs, .product-description {
+    margin-top: 1.3em;
+}
+.product-specs ul {
+    margin: .7em 0 0 1.2em;
+    padding: 0;
+    font-size: 1em;
+}
+.product-specs h4,
+.product-description h4 {
+    margin-bottom: .3em;
+    color: var(--accent);
+}
+.product-description p {
+    margin: 0;
+    line-height: 1.7;
+    color: #444;
+}
+@media (max-width: 900px) {
+    .product-detail-card {
+        flex-direction: column;
+        gap: 1em;
+        padding: 1em;
+    }
+    .detail-img-wrap .product-image {
+        width: 90vw;
+        height: 180px;
+        margin-bottom: 1em;
+    }
+}
