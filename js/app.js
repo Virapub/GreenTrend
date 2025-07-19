@@ -15,10 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
-      renderAllProducts(PRODUCTS.filter(p =>
-        p.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        p.description.toLowerCase().includes(e.target.value.toLowerCase())
-      ));
+      const filterText = e.target.value.toLowerCase();
+      renderAllProducts(
+        PRODUCTS.filter(p =>
+          p.title.toLowerCase().includes(filterText) ||
+          p.description.toLowerCase().includes(filterText)
+        )
+      );
     });
   }
   renderAllSections();
@@ -31,6 +34,23 @@ function renderAllSections() {
   if (document.getElementById("allProductsList")) renderAllProducts(PRODUCTS);
   if (document.getElementById("categoryProductsList")) renderCategoryPage();
   if (document.getElementById("productDetails")) renderProductPage();
+}
+
+// Home & Listing Page Product Card
+function productCardHTML(product) {
+  let img = product.images && product.images.length ? product.images[0] : "assets/placeholder.jpg";
+  return `
+    <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'" style="cursor:pointer;">
+      <img src="${img}" alt="${product.title}">
+      <div class="product-title">${product.title}</div>
+      <div class="product-desc">${product.description}</div>
+      <div class="product-price">${currentCurrency === "INR" ? `₹${product.priceINR}` : `$${product.priceUSD}`}</div>
+      <div class="buy-buttons" onclick="event.stopPropagation();">
+        <button class="buy-btn" onclick="event.stopPropagation(); window.location.href='product.html?id=${product.id}'">Amazon IN</button>
+        <button class="buy-btn" onclick="event.stopPropagation(); window.location.href='product.html?id=${product.id}'">Amazon US</button>
+      </div>
+    </div>
+  `;
 }
 
 function renderSection(tag, elementId) {
@@ -55,6 +75,7 @@ function renderCategoryPage() {
   document.getElementById("categoryProductsList").innerHTML = products.map(productCardHTML).join('');
 }
 
+// Product Detail Page
 function renderProductPage() {
   const url = new URL(window.location.href);
   const id = url.searchParams.get("id");
@@ -74,28 +95,10 @@ function renderProductPage() {
         <span>${currentCurrency === "INR" ? `₹${product.priceINR}` : `$${product.priceUSD}`}</span>
       </div>
       <div class="buy-buttons">
-        <a class="buy-btn" href="${product.affiliateIN}" target="_blank">Buy on Amazon India</a>
-        <a class="buy-btn" href="${product.affiliateUS}" target="_blank">Buy on Amazon US</a>
-      </div>
-      ${features}
-    </div>
-  `;
-}
-
-function productCardHTML(product) {
-  let img = product.images && product.images.length ? product.images[0] : "assets/placeholder.jpg";
-  return `
-    <div class="product-card">
-      <a href="product.html?id=${product.id}">
-        <img src="${img}" alt="${product.title}">
-        <div class="product-title">${product.title}</div>
-      </a>
-      <div class="product-desc">${product.description}</div>
-      <div class="product-price">${currentCurrency === "INR" ? `₹${product.priceINR}` : `$${product.priceUSD}`}</div>
-      <div class="buy-buttons">
         <a class="buy-btn" href="${product.affiliateIN}" target="_blank">Amazon IN</a>
         <a class="buy-btn" href="${product.affiliateUS}" target="_blank">Amazon US</a>
       </div>
+      ${features}
     </div>
   `;
 }
