@@ -1,5 +1,5 @@
-// Product data (add "badge" property for badges)
-// Add these fields in each product for details demo
+// --- Product Data ---
+// For best UX and maintainability, you can add more fields here as needed.
 const products = [
     {
         title: "Smart Electric Kettle",
@@ -85,19 +85,40 @@ const products = [
         ],
         description: "Blend your favorite smoothies anywhere! This portable mini blender is lightweight, rechargeable, and safe for travel. Make juices, smoothies, and shakes in seconds."
     }
-    // Add more products with similar specs and description fields as needed
+    // Add more products as needed
 ];
 
-// No change needed for existing rendering functions, as product-detail page loads directly from this array.
-
+// --- State Management ---
 let currentCurrency = "INR";
 
+// --- Utility Functions ---
 function getCurrency() {
     return currentCurrency;
 }
 
+function isWishlisted(title) {
+    const wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    return wishes.includes(title);
+}
+
+function toggleWishlist(title, btn) {
+    let wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    if (wishes.includes(title)) {
+        wishes = wishes.filter(t => t !== title);
+        btn.classList.remove("active");
+        btn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+    } else {
+        wishes.push(title);
+        btn.classList.add("active");
+        btn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+    }
+    localStorage.setItem("wishlist", JSON.stringify(wishes));
+}
+
+// --- Product Rendering ---
 function renderProducts(productsToShow, containerId) {
     const grid = document.getElementById(containerId);
+    if (!grid) return;
     grid.innerHTML = "";
     productsToShow.forEach(prod => {
         const card = document.createElement('div');
@@ -114,10 +135,12 @@ function renderProducts(productsToShow, containerId) {
         // Wishlist button
         const wishBtn = document.createElement('button');
         wishBtn.className = "wishlist-btn";
-        wishBtn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        wishBtn.setAttribute("aria-label", "Add to wishlist");
+        wishBtn.innerHTML = isWishlisted(prod.title)
+            ? `<i class="fa-solid fa-heart"></i>`
+            : `<i class="fa-regular fa-heart"></i>`;
         if (isWishlisted(prod.title)) {
             wishBtn.classList.add("active");
-            wishBtn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
         }
         wishBtn.onclick = () => toggleWishlist(prod.title, wishBtn);
         card.appendChild(wishBtn);
@@ -134,6 +157,14 @@ function renderProducts(productsToShow, containerId) {
         title.className = "product-title";
         title.textContent = prod.title;
         card.appendChild(title);
+
+        // Ratings
+        if (prod.rating) {
+            const rating = document.createElement('div');
+            rating.className = "product-rating";
+            rating.innerHTML = `⭐ ${prod.rating} <span style="color:#888;">(${prod.reviews})</span>`;
+            card.appendChild(rating);
+        }
 
         // Prices
         const priceRow = document.createElement('div');
@@ -170,16 +201,19 @@ function renderProducts(productsToShow, containerId) {
             usdPrice.style.opacity = "0.4";
             buyUS.style.display = "none";
             buyIN.style.display = "inline-block";
+            inrPrice.style.opacity = "1";
         } else {
             inrPrice.style.opacity = "0.4";
             buyIN.style.display = "none";
             buyUS.style.display = "inline-block";
+            usdPrice.style.opacity = "1";
         }
 
         grid.appendChild(card);
     });
 }
 
+// --- Featured Products Section ---
 function updateFeaturedProducts(filteredCategory = "All") {
     let featured = products.filter(p => p.featured);
     if (filteredCategory !== "All") {
@@ -188,25 +222,7 @@ function updateFeaturedProducts(filteredCategory = "All") {
     renderProducts(featured, "featured-products");
 }
 
-function isWishlisted(title) {
-    const wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    return wishes.includes(title);
-}
-function toggleWishlist(title, btn) {
-    let wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    if (wishes.includes(title)) {
-        wishes = wishes.filter(t => t !== title);
-        btn.classList.remove("active");
-        btn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
-    } else {
-        wishes.push(title);
-        btn.classList.add("active");
-        btn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
-    }
-    localStorage.setItem("wishlist", JSON.stringify(wishes));
-}
-
-// Currency toggle event
+// --- DOMContentLoaded Handler ---
 document.addEventListener("DOMContentLoaded", () => {
     // Currency toggle
     document.querySelectorAll('.currency-btn').forEach(btn => {
@@ -214,34 +230,44 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll('.currency-btn').forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
             currentCurrency = btn.dataset.currency;
-            updateFeaturedProducts(document.querySelector(".chip.active").dataset.category);
+            // Try to filter by selected chip, fallback to "All"
+            const activeChip = document.querySelector(".chip.active");
+            const filterCategory = activeChip ? activeChip.dataset.category : "All";
+            updateFeaturedProducts(filterCategory);
         };
         if (btn.dataset.currency === currentCurrency) btn.classList.add("active");
     });
 
-    // Auto-detect country using browser language
-    const lang = navigator.language || navigator.userLanguage;
-    if (lang && lang.endsWith("IN")) {
-        currentCurrency = "INR";
-    } else if (lang && lang.endsWith("US")) {
-        currentCurrency = "USD";
+    // Auto-detect country using browser language (once, on first load)
+    if (!localStorage.getItem("currencySet")) {
+        const lang = navigator.language || navigator.userLanguage;
+        if (lang && lang.endsWith("IN")) {
+            currentCurrency = "INR";
+        } else if (lang && lang.endsWith("US")) {
+            currentCurrency = "USD";
+        }
+        localStorage.setItem("currencySet", "1");
     }
 
-    // Hero carousel (simple)
-    let carouselIdx = 0;
+    // Simple hero carousel
     const imgs = document.querySelectorAll('.carousel-img');
-    setInterval(() => {
-        imgs.forEach((img, i) => img.classList.toggle('active', i === carouselIdx));
-        carouselIdx = (carouselIdx + 1) % imgs.length;
-    }, 3500);
+    if (imgs.length) {
+        let carouselIdx = 0;
+        setInterval(() => {
+            imgs.forEach((img, i) => img.classList.toggle('active', i === carouselIdx));
+            carouselIdx = (carouselIdx + 1) % imgs.length;
+        }, 3500);
+    }
 
     // Mobile nav toggle
     const navToggle = document.getElementById("navToggle");
-    navToggle.onclick = () => {
-        document.querySelector(".nav-list").classList.toggle("mobile-active");
-    };
+    if (navToggle) {
+        navToggle.onclick = () => {
+            document.querySelector(".nav-list").classList.toggle("mobile-active");
+        };
+    }
 
-    // Category chips
+    // Category chips filtering
     document.querySelectorAll(".chip").forEach(chip => {
         chip.onclick = () => {
             document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
@@ -250,6 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     });
 
-    // Initial render
+    // Initial featured products render
     updateFeaturedProducts();
 });
