@@ -1,4 +1,4 @@
-// Product data (edit/add products here!)
+// Product data (add "badge" property for badges)
 const products = [
     {
         title: "Smart Electric Kettle",
@@ -8,7 +8,8 @@ const products = [
         affiliateIN: "https://www.amazon.in/dp/B07XY7Q6N6/?tag=yourtag-21",
         affiliateUS: "https://www.amazon.com/dp/B07XY7Q6N6/?tag=yourtag-20",
         category: "Low Budget Finds",
-        featured: true
+        featured: true,
+        badge: "Best Seller"
     },
     {
         title: "Automatic Roti Maker",
@@ -18,7 +19,8 @@ const products = [
         affiliateIN: "https://www.amazon.in/dp/B08FZ8FH5K/?tag=yourtag-21",
         affiliateUS: "https://www.amazon.com/dp/B08FZ8FH5K/?tag=yourtag-20",
         category: "Mid Range Picks",
-        featured: true
+        featured: true,
+        badge: "Deal"
     },
     {
         title: "Smart WiFi Air Fryer",
@@ -28,7 +30,8 @@ const products = [
         affiliateIN: "https://www.amazon.in/dp/B07V3H7J8V/?tag=yourtag-21",
         affiliateUS: "https://www.amazon.com/dp/B07V3H7J8V/?tag=yourtag-20",
         category: "Premium Products",
-        featured: true
+        featured: true,
+        badge: "Premium"
     },
     {
         title: "Mini Blender Portable",
@@ -38,22 +41,43 @@ const products = [
         affiliateIN: "https://www.amazon.in/dp/B08HRW4X7S/?tag=yourtag-21",
         affiliateUS: "https://www.amazon.com/dp/B08HRW4X7S/?tag=yourtag-20",
         category: "Low Budget Finds",
-        featured: false
+        featured: false,
+        badge: "New"
     }
-    // Add more products as needed...
+    // Add more products with badges if desired
 ];
 
+let currentCurrency = "INR";
+
 function getCurrency() {
-    return document.querySelector('input[name="currency"]:checked').value;
+    return currentCurrency;
 }
 
 function renderProducts(productsToShow, containerId) {
     const grid = document.getElementById(containerId);
     grid.innerHTML = "";
-    let currency = getCurrency();
     productsToShow.forEach(prod => {
         const card = document.createElement('div');
         card.className = "product-card";
+
+        // Badge
+        if (prod.badge) {
+            const badge = document.createElement('span');
+            badge.className = "product-badge";
+            badge.textContent = prod.badge;
+            card.appendChild(badge);
+        }
+
+        // Wishlist button
+        const wishBtn = document.createElement('button');
+        wishBtn.className = "wishlist-btn";
+        wishBtn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        if (isWishlisted(prod.title)) {
+            wishBtn.classList.add("active");
+            wishBtn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+        }
+        wishBtn.onclick = () => toggleWishlist(prod.title, wishBtn);
+        card.appendChild(wishBtn);
 
         // Image
         const img = document.createElement('img');
@@ -98,8 +122,8 @@ function renderProducts(productsToShow, containerId) {
         buyLinks.appendChild(buyUS);
         card.appendChild(buyLinks);
 
-        // Show only selected currency (hide other price)
-        if (currency === "INR") {
+        // Show only selected currency (hide other price/link)
+        if (getCurrency() === "INR") {
             usdPrice.style.opacity = "0.4";
             buyUS.style.display = "none";
             buyIN.style.display = "inline-block";
@@ -113,25 +137,76 @@ function renderProducts(productsToShow, containerId) {
     });
 }
 
-function updateFeaturedProducts() {
-    const featured = products.filter(p => p.featured);
+function updateFeaturedProducts(filteredCategory = "All") {
+    let featured = products.filter(p => p.featured);
+    if (filteredCategory !== "All") {
+        featured = featured.filter(p => p.category === filteredCategory);
+    }
     renderProducts(featured, "featured-products");
+}
+
+function isWishlisted(title) {
+    const wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    return wishes.includes(title);
+}
+function toggleWishlist(title, btn) {
+    let wishes = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    if (wishes.includes(title)) {
+        wishes = wishes.filter(t => t !== title);
+        btn.classList.remove("active");
+        btn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+    } else {
+        wishes.push(title);
+        btn.classList.add("active");
+        btn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
+    }
+    localStorage.setItem("wishlist", JSON.stringify(wishes));
 }
 
 // Currency toggle event
 document.addEventListener("DOMContentLoaded", () => {
-    updateFeaturedProducts();
-    document.querySelectorAll('input[name="currency"]').forEach(input => {
-        input.addEventListener("change", updateFeaturedProducts);
+    // Currency toggle
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+        btn.onclick = () => {
+            document.querySelectorAll('.currency-btn').forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentCurrency = btn.dataset.currency;
+            updateFeaturedProducts(document.querySelector(".chip.active").dataset.category);
+        };
+        if (btn.dataset.currency === currentCurrency) btn.classList.add("active");
     });
 
-    // Optional: Auto-detect country using browser language
-    // India: ['en-IN', 'hi-IN', ...], US: ['en-US', ...]
+    // Auto-detect country using browser language
     const lang = navigator.language || navigator.userLanguage;
     if (lang && lang.endsWith("IN")) {
-        document.querySelector('input[value="INR"]').checked = true;
+        currentCurrency = "INR";
     } else if (lang && lang.endsWith("US")) {
-        document.querySelector('input[value="USD"]').checked = true;
+        currentCurrency = "USD";
     }
+
+    // Hero carousel (simple)
+    let carouselIdx = 0;
+    const imgs = document.querySelectorAll('.carousel-img');
+    setInterval(() => {
+        imgs.forEach((img, i) => img.classList.toggle('active', i === carouselIdx));
+        carouselIdx = (carouselIdx + 1) % imgs.length;
+    }, 3500);
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    navToggle.onclick = () => {
+        document.querySelector(".nav-list").classList.toggle("mobile-active");
+    };
+
+    // Category chips
+    document.querySelectorAll(".chip").forEach(chip => {
+        chip.onclick = () => {
+            document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            updateFeaturedProducts(chip.dataset.category);
+        };
+    });
+
+    // Initial render
     updateFeaturedProducts();
 });
